@@ -278,7 +278,7 @@ export default function SearchDialog({ dialogId = 'docs-search-dialog', onClose 
                   </div>
                 </a>
                 <a
-                  href="https://discord.gg/fzjDKHxv8Q"
+                  href="https://github.com/bernardofernandezz/helix/issues"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={onClose}
@@ -287,9 +287,9 @@ export default function SearchDialog({ dialogId = 'docs-search-dialog', onClose 
                   <div className="flex items-center gap-2.5 text-left">
                     <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
                     <div className="min-w-0">
-                      <div className="font-medium">Join Discord</div>
+                      <div className="font-medium">Report an issue</div>
                       <div className="truncate text-[11px] text-muted-foreground">
-                        Ask the community
+                        Bugs and feature requests
                       </div>
                     </div>
                   </div>
