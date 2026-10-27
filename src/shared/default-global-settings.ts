@@ -129,7 +129,7 @@ export function buildDefaultSettings(args: {
     terminalLinkClickBehavior: 'actions',
     terminalUrlMiddleClickBehavior: 'open',
     // Research users start in chat; agents without a structured session still open in the terminal.
-    experimentalNativeChat: true,
+    experimentalNativeChat: false,
     nativeChatResumeWorkOnRestart: false,
     nativeChatQueueFollowUps: true,
     nativeChatInlineVisuals: true,
