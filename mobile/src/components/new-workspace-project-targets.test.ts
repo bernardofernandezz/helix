@@ -1,0 +1,105 @@
+import { describe, expect, it } from 'vitest'
+import { getLocalExecutionHostLabel } from '../../../src/shared/execution-host'
+import {
+  buildNewWorkspaceProjectOptions,
+  buildNewWorkspaceRunTargetOptions,
+  getNewWorkspaceRunTarget
+} from './new-workspace-project-targets'
+
+const LOCAL_HOST_LABEL = getLocalExecutionHostLabel('darwin')
+
+describe('new workspace project targets', () => {
+  it('groups local and SSH checkouts of the same project', () => {
+    const upstream = { owner: 'bernardofernandezz', repo: 'helix' }
+    const options = buildNewWorkspaceProjectOptions([
+      { id: 'local', displayName: 'helix', path: '/src/helix', upstream },
+      {
+        id: 'ssh',
+        displayName: 'helix',
+        path: '/home/dev/helix',
+        connectionId: 'build-server',
+        upstream
+      }
+    ])
+
+    expect(options).toHaveLength(1)
+    expect(options[0]).toMatchObject({ label: 'helix', detail: 'bernardofernandezz/helix' })
+  })
+
+  it('shows the provider slug recovered from canonical git identity', () => {
+    const options = buildNewWorkspaceProjectOptions([
+      {
+        id: 'local',
+        displayName: 'helix',
+        path: '/src/helix',
+        gitRemoteIdentity: {
+          canonicalKey: 'github.com/bernardofernandezz/helix',
+          remoteName: 'origin',
+          remoteUrl: 'git@github.com:bernardofernandezz/helix.git'
+        }
+      }
+    ])
+
+    expect(options[0]).toMatchObject({ label: 'helix', detail: 'bernardofernandezz/helix' })
+  })
+
+  it('labels local, SSH, and paired runtime targets as the host list names them', () => {
+    expect(
+      getNewWorkspaceRunTarget({ id: 'local', displayName: 'helix', path: '/src/helix' }, 'darwin')
+    ).toEqual({ hostId: 'local', label: LOCAL_HOST_LABEL, detail: '/src/helix' })
+    expect(
+      getNewWorkspaceRunTarget({ id: 'local', displayName: 'helix', path: 'C:\\src\\helix' })
+    ).toMatchObject({ label: 'This computer' })
+    expect(
+      getNewWorkspaceRunTarget(
+        { id: 'local', displayName: 'helix', path: 'C:\\src\\helix' },
+        'win32'
+      )
+    ).toMatchObject({ label: 'Local Windows' })
+    expect(
+      getNewWorkspaceRunTarget({
+        id: 'ssh',
+        displayName: 'helix',
+        path: 'C:\\src\\helix',
+        executionHostId: 'ssh:Windows%20VM'
+      })
+    ).toEqual({ hostId: 'ssh:Windows%20VM', label: 'Windows VM', detail: 'C:\\src\\helix' })
+    const server = {
+      id: 'runtime',
+      displayName: 'helix',
+      path: '/src/helix',
+      executionHostId: 'runtime:20269ff3-60aa-4e79-a581-513a3f8e394b'
+    } as const
+    const labels = new Map([[server.executionHostId, 'scratch-server']] as const)
+    expect(getNewWorkspaceRunTarget(server, 'darwin', labels)).toEqual({
+      hostId: server.executionHostId,
+      label: 'scratch-server',
+      detail: '/src/helix'
+    })
+  })
+
+  it('shows one target per host when the project has multiple local worktrees', () => {
+    const upstream = { owner: 'bernardofernandezz', repo: 'helix' }
+    const repos = [
+      { id: 'local-a', displayName: 'helix-a', path: '/src/helix-a', upstream },
+      { id: 'local-b', displayName: 'helix-b', path: '/src/helix-b', upstream },
+      {
+        id: 'ssh',
+        displayName: 'helix',
+        path: '/home/dev/helix',
+        connectionId: 'build-server',
+        upstream
+      }
+    ]
+    const projectId = buildNewWorkspaceProjectOptions(repos)[0]?.id ?? null
+
+    expect(buildNewWorkspaceRunTargetOptions(repos, projectId, 'darwin')).toEqual([
+      expect.objectContaining({ id: 'local', label: LOCAL_HOST_LABEL, detail: '/src/helix-a' }),
+      expect.objectContaining({
+        id: 'ssh:build-server',
+        label: 'build-server',
+        detail: '/home/dev/helix'
+      })
+    ])
+  })
+})

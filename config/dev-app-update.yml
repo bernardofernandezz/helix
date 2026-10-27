@@ -1,0 +1,4 @@
+provider: github
+owner: bernardofernandezz
+repo: helix
+updaterCacheDirName: helix-updater

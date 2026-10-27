@@ -1,0 +1,250 @@
+import { mkdirSync, writeFileSync } from 'node:fs'
+import path from 'node:path'
+import { expect, test } from './helpers/helix-app'
+import type { AiVaultSearchResponse } from '../../src/shared/ai-vault-search-types'
+
+test('search excerpts keep matches visible after long leading context', async ({
+  electronApp,
+  helixPage,
+  seededRepoPath
+}, testInfo) => {
+  const excerpts = [
+    '…/Users/example/Documents/projects/application/apps/server/src/server.ts:534).\n\n**Codex, [[inspected with REA]]:** Version `26.1013.40934` contains three relevant…',
+    `https://example.com/${'W'.repeat(80)}[[inspected with REA]] after a long URL`,
+    `${'😀'.repeat(40)}x[[inspected with REA]] after Unicode context`,
+    `Earlier analysis. ${'W'.repeat(15)} [[inspected with REA]] after a wide word`
+  ]
+  const response: AiVaultSearchResponse = {
+    kind: 'results',
+    hits: excerpts.map((snippet, index) => ({
+      agent: 'codex',
+      sessionId: `excerpt-layout-${index}`,
+      title: `Search excerpt ${index + 1}`,
+      cwd: seededRepoPath,
+      branch: null,
+      updatedAt: null,
+      messageCount: 67,
+      score: 1,
+      source: { presence: 'present', filePath: '/synthetic/transcript.jsonl' },
+      evidence: {
+        role: 'assistant',
+        timestamp: null,
+        snippet
+      }
+    })),
+    page: { cursor: null, hasMore: false },
+    generation: 1,
+    truncated: { candidates: false, snippets: 0, query: false, freshness: false },
+    durationMs: 1
+  }
+  await electronApp.evaluate(({ ipcMain }, result) => {
+    ipcMain.removeHandler('aiVault:searchSessions')
+    ipcMain.handle('aiVault:searchSessions', () => result)
+  }, response)
+  await helixPage.evaluate(async () => {
+    const state = window.__store?.getState()
+    await state?.updateSettingsOrThrow({ aiVaultSearch: { enabled: true, historyDays: null } })
+    state?.setRightSidebarOpen(true)
+    state?.setRightSidebarTab('vault')
+    state?.setRightSidebarWidth(400)
+  })
+  await helixPage
+    .getByRole('textbox', { name: 'Search sessions', exact: true })
+    .fill('inspected with REA')
+  const match = helixPage.locator('mark').filter({ hasText: 'inspected with REA' })
+  await expect(match).toHaveCount(excerpts.length)
+  const cdp = await helixPage.context().newCDPSession(helixPage)
+  for (const appearance of [
+    { theme: 'light', width: 400 },
+    { theme: 'dark', width: 220 }
+  ] as const) {
+    await helixPage.evaluate(async ({ theme, width }) => {
+      await window.__store?.getState().updateSettingsOrThrow({ theme })
+      window.__store?.getState().setRightSidebarWidth(width)
+    }, appearance)
+    for (const details of ['collapsed', 'expanded']) {
+      await expect
+        .poll(() =>
+          match.evaluateAll((elements) =>
+            elements.map((element) => {
+              const rect = element.getBoundingClientRect()
+              const container = element.closest('.line-clamp-2')?.getBoundingClientRect()
+              return (
+                container !== undefined &&
+                rect.top >= container.top &&
+                rect.bottom <= container.bottom &&
+                rect.left >= container.left &&
+                rect.right <= container.right
+              )
+            })
+          )
+        )
+        .toEqual(excerpts.map(() => true))
+      const { data } = await cdp.send('Page.captureScreenshot', { format: 'png' })
+      writeFileSync(
+        testInfo.outputPath(`excerpt-${appearance.theme}-${details}.png`),
+        Buffer.from(data, 'base64')
+      )
+      for (let index = 0; index < excerpts.length; index++) {
+        await helixPage.getByText(`Search excerpt ${index + 1}`, { exact: true }).click()
+      }
+    }
+  }
+  await cdp.detach()
+})
+
+test('panel consent enables real local transcript search; clearing restores history', async ({
+  electronApp,
+  helixPage,
+  seededRepoPath
+}, testInfo) => {
+  const home = await electronApp.evaluate(({ app }) => app.getPath('home'))
+  const directory = path.join(home, '.claude', 'projects', '-synthetic-pr7')
+  mkdirSync(directory, { recursive: true })
+  const sessionId = 'aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee'
+  writeFileSync(
+    path.join(directory, `${sessionId}.jsonl`),
+    `${[
+      {
+        type: 'user',
+        sessionId,
+        cwd: seededRepoPath,
+        timestamp: new Date().toISOString(),
+        message: { role: 'user', content: 'Synthetic panel transcript' }
+      },
+      {
+        type: 'assistant',
+        sessionId,
+        timestamp: new Date().toISOString(),
+        message: {
+          role: 'assistant',
+          content: 'The nebulariver implementation handles <script>literal text</script> safely.'
+        }
+      }
+    ]
+      .map((record) => JSON.stringify(record))
+      .join('\n')}\n`
+  )
+  await helixPage.evaluate(() => {
+    const state = window.__store?.getState()
+    state?.setRightSidebarOpen(true)
+    state?.setRightSidebarTab('vault')
+    state?.setRightSidebarWidth(400)
+  })
+  await helixPage.getByRole('button', { name: 'Agents', exact: true }).click()
+  await helixPage.getByRole('radio', { name: 'All', exact: true }).click()
+  const input = helixPage.getByRole('textbox', { name: 'Search sessions', exact: true })
+  await input.fill('nebulariver')
+  await expect(helixPage.getByText('Enable full-text search?', { exact: false })).toBeVisible()
+  const cdp = await helixPage.context().newCDPSession(helixPage)
+  async function screenshot(name: string) {
+    const { data } = await cdp.send('Page.captureScreenshot', { format: 'png' })
+    const screenshotPath = testInfo.outputPath(name)
+    writeFileSync(screenshotPath, Buffer.from(data, 'base64'))
+    await testInfo.attach(name, { path: screenshotPath, contentType: 'image/png' })
+  }
+  await screenshot('consent.png')
+  await helixPage.getByRole('button', { name: 'Enable', exact: true }).click()
+  // Indexed searches are snapshots; enabling starts indexing independently of the panel.
+  await expect
+    .poll(
+      () =>
+        helixPage.evaluate(
+          async () => (await window.api.aiVault.searchStatus('local')).filesIndexed
+        ),
+      { timeout: 30_000 }
+    )
+    .toBeGreaterThan(0)
+  await helixPage.getByRole('button', { name: 'Refresh Session History', exact: true }).click()
+  await expect(helixPage.locator('mark').filter({ hasText: 'nebulariver' })).toBeVisible()
+  await expect(helixPage.getByText('Synthetic panel transcript', { exact: true })).toBeVisible()
+  await screenshot('results.png')
+  await helixPage.getByTitle('Drag to resume in a new tab', { exact: true }).click()
+  await expect(helixPage.locator('mark').filter({ hasText: 'nebulariver' })).toBeVisible()
+  await helixPage.getByTitle('Drag to resume in a new tab', { exact: true }).click()
+  const title = helixPage.getByText('Synthetic panel transcript', { exact: true })
+  await expect(title).toHaveAttribute('draggable', 'true')
+  const drag = await title.evaluate((element) => {
+    const dataTransfer = new DataTransfer()
+    element.dispatchEvent(new DragEvent('dragstart', { bubbles: true, dataTransfer }))
+    const payload = dataTransfer.getData('application/x-helix-ai-vault-session')
+    element.dispatchEvent(new DragEvent('dragend', { bubbles: true, dataTransfer }))
+    return payload
+  })
+  expect(JSON.parse(drag)).toMatchObject({ sessionId, sessionExecutionHostId: 'local' })
+  await title.click({ button: 'right' })
+  await expect(
+    helixPage.getByRole('menuitem', { name: 'Copy Session ID', exact: true })
+  ).toBeVisible()
+  await helixPage.keyboard.press('Escape')
+  await expect(helixPage.locator('[role="menu"]')).toHaveCount(0)
+  await helixPage.evaluate(async () => {
+    await window.__store?.getState().updateSettingsOrThrow({ theme: 'dark' })
+    window.__store?.getState().setRightSidebarWidth(280)
+  })
+  await expect(helixPage.locator('html')).toHaveClass(/dark/)
+  await screenshot('results-dark-narrow.png')
+  await title.click({ button: 'right' })
+  await helixPage.getByRole('menuitem', { name: 'Delete', exact: true }).click()
+  await helixPage.getByRole('button', { name: 'Delete', exact: true }).click()
+  await expect(title).toHaveCount(0)
+  await expect(helixPage.locator('mark')).toHaveCount(0)
+  await input.fill('nothingmatchesprseven')
+  await expect(
+    helixPage.getByText('No matching sessions in the indexed history.', { exact: false })
+  ).toBeVisible()
+  await screenshot('empty.png')
+  await input.press('Escape')
+  await expect(input).toHaveValue('')
+  await expect(helixPage.getByText('Indexed history · best matches', { exact: false })).toHaveCount(
+    0
+  )
+  await cdp.detach()
+})
+
+// Title-only fallback persists for the host, so each reason needs a fresh panel.
+for (const reason of ['disabled', 'not-ready', 'no-service'] as const) {
+  test(`panel retries transport failure and handles ${reason} search availability`, async ({
+    electronApp,
+    helixPage
+  }, testInfo) => {
+    await helixPage.evaluate(async () => {
+      await window.__store
+        ?.getState()
+        .updateSettingsOrThrow({ aiVaultSearch: { enabled: true, historyDays: null } })
+      window.__store?.getState().setRightSidebarOpen(true)
+      window.__store?.getState().setRightSidebarTab('vault')
+    })
+    await electronApp.evaluate(({ ipcMain }) => {
+      ipcMain.removeHandler('aiVault:searchSessions')
+      ipcMain.handle('aiVault:searchSessions', () => {
+        throw new Error('Synthetic transport failure')
+      })
+    })
+    const input = helixPage.getByRole('textbox', { name: 'Search sessions', exact: true })
+    await input.fill('needle')
+    await expect(
+      helixPage.getByText('Could not search this computer.', { exact: false })
+    ).toBeVisible()
+    await helixPage.screenshot({ path: testInfo.outputPath('failure.png') })
+    await electronApp.evaluate(({ ipcMain }, value) => {
+      ipcMain.removeHandler('aiVault:searchSessions')
+      ipcMain.handle('aiVault:searchSessions', () => ({ kind: 'unavailable', reason: value }))
+    }, reason)
+    const retry = helixPage.getByRole('button', { name: 'Try again', exact: true })
+    await retry.click()
+    const copy =
+      reason === 'not-ready'
+        ? 'The search index is not ready yet.'
+        : 'Full-text search is off on this computer, so only session titles are matched.'
+    await expect(helixPage.getByText(copy, { exact: false })).toBeVisible()
+    if (reason === 'not-ready') {
+      await expect(retry).toBeVisible()
+    } else {
+      await expect(retry).toHaveCount(0)
+      await input.fill('another needle')
+      await expect(helixPage.getByText(copy, { exact: false })).toBeVisible()
+    }
+    await helixPage.screenshot({ path: testInfo.outputPath(`${reason}.png`) })
+  })
+}

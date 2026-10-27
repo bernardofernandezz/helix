@@ -1,0 +1,71 @@
+---
+title: Research tools (helix-mcp)
+description: Give agents PubMed, NCBI, UniProt, PDB, AlphaFold and Ensembl, plus Nextflow, Snakemake and SLURM status, through one MCP server.
+---
+
+import { Callout } from '@/components/docs/prose'
+
+`helix-mcp` is the MCP server that connects your agents to the databases and compute a life-science
+project uses. Any agent that speaks MCP (Claude Code, Codex, Gemini CLI, OpenCode, Goose, Cursor) can use it.
+
+## What agents can do
+
+| Ask the agent to…                                            | Tools it uses                                                   |
+| ------------------------------------------------------------ | --------------------------------------------------------------- |
+| Find and summarize recent papers on a topic                  | `pubmed_search`, `pubmed_fetch_abstracts`                       |
+| Pull a gene record, a RefSeq sequence or SRA runs            | `ncbi_search`, `ncbi_fetch_sequence`                            |
+| Describe a protein: function, location, structures, sequence | `uniprot_search`, `uniprot_entry`                               |
+| Compare experimental structures with the AlphaFold model     | `pdb_search`, `pdb_entry`, `alphafold_prediction`               |
+| Annotate a variant (consequence, SIFT, PolyPhen)             | `ensembl_variant_effect`, `ensembl_lookup`                      |
+| Tell you why a pipeline failed                               | `nextflow_runs`, `nextflow_trace_summary`, `snakemake_progress` |
+| Check your cluster jobs                                      | `slurm_queue`, `slurm_job`                                      |
+
+Every database answer includes its source and retrieval time, so the agent can cite PMIDs, DOIs and
+accessions and you can report which database release you used.
+
+## Set it up
+
+In the desktop app, open the project's settings, find **MCP Configs** and click **Set up research
+project**. Helix adds `helix-research` to the project's `.mcp.json` (keeping any servers already there)
+and creates the missing pieces of a research layout: `data/raw`, `data/processed`, `notebooks`,
+`workflows`, `results`, an `environment.yml` and a `README.md`. Existing files are never overwritten. The
+server runs with Helix's own runtime, so you do not need Node installed. This is available for local
+projects; for SSH and paired servers, configure the server by hand as below.
+
+To configure it by hand, build it once from the Helix checkout:
+
+```bash
+pnpm --filter @helix/mcp build
+```
+
+Then add it to the project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "helix-research": {
+      "command": "node",
+      "args": ["/path/to/helix/src/packages/helix-mcp/dist/cli.js"]
+    }
+  }
+}
+```
+
+Set `NCBI_API_KEY` and `NCBI_EMAIL` in the server's `env` to raise the NCBI limit from 3 to 10
+requests per second.
+
+## Sensitive data
+
+<Callout title="Patient or unpublished data">
+  Start the server with `--offline` (or `HELIX_MCP_OFFLINE=1`). No public-database tool is
+  registered, so agents cannot send identifiers or sequences from your project to an external
+  service. Pipeline and SLURM tools keep working.
+</Callout>
+
+## Clusters
+
+Pipeline and SLURM tools take an optional `host`: an alias from `~/.ssh/config` or `user@host`. They use
+your system `ssh` in batch mode, so key login must already work (`ssh hpc true` without a prompt).
+
+Reading state is always allowed. Submitting and cancelling jobs (`slurm_submit`, `slurm_cancel`) only
+exist when the server starts with `--allow-slurm-write`, and agents are instructed to ask you first.

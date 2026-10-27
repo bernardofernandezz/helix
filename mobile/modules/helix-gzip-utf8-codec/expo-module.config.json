@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modules": ["HelixGzipUtf8CodecModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.helixgziputf8codec.HelixGzipUtf8CodecModule"]
+  }
+}

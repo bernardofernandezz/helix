@@ -1,0 +1,67 @@
+---
+title: Install
+description: Build Helix from source on macOS, Windows or Linux.
+---
+
+import { Callout } from '@/components/docs/prose'
+
+<Callout title="Early preview">
+  Helix has no published builds yet. Until the first release, build it from source. Packaged builds
+  for macOS, Windows and Linux will be listed here.
+</Callout>
+
+## Build from source
+
+```bash
+git clone https://github.com/bernardofernandezz/helix.git
+cd helix
+pnpm install
+pnpm dev
+```
+
+You need:
+
+- Node.js 24 or newer and pnpm.
+- Build tools for native modules: Xcode command line tools on macOS, `build-essential` and Python on
+  Linux, Visual Studio Build Tools on Windows.
+- At least one agent CLI on your `PATH`, such as Claude Code, Codex, Gemini CLI, OpenCode, Goose or
+  Aider. Sign in to it once from a regular terminal before you start Helix.
+
+## Recommended research tooling
+
+Helix works with the tools you already use. Agents get much more done when these are installed:
+
+- **conda, mamba or micromamba** for analysis environments.
+- **Nextflow** or **Snakemake** if you run genomic pipelines.
+- **Docker, Apptainer or Singularity** for containerized tools.
+- **Jupyter** (`ipykernel`) so notebooks can run in your environments.
+
+## First launch
+
+On first launch Helix asks which agent you want to use by default, offers to import existing agent
+settings from `~/.claude` and `~/.codex`, and lets you choose a theme. You can change all of this
+later under [Settings](/docs/settings).
+
+## Platform notes
+
+### macOS
+
+Development builds are unsigned. If macOS blocks a locally packaged build, allow it under **System
+Settings → Privacy & Security**.
+
+### Windows
+
+Set the default shell to PowerShell or CMD under [Settings → Terminal](/docs/settings).
+
+### Linux
+
+On Linux the [Helix CLI](/docs/cli/reference) installs as **`helix-ide`**, not `helix`, because the
+Helix text editor is packaged as `/usr/bin/helix` on some distributions. Inside Helix's own
+terminals, bare `helix` works: Helix puts a shim on the `PATH` of the terminals it manages.
+
+Use `helix-ide` in your own shell. If you do not use the Helix editor and want the short name
+everywhere, link it yourself:
+
+```bash
+ln -s "$(command -v helix-ide)" ~/.local/bin/helix
+```

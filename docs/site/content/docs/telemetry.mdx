@@ -1,0 +1,40 @@
+---
+title: Privacy & Telemetry
+description: What leaves your machine, what never does, and how sensitive data is handled.
+---
+
+import { Callout } from '@/components/docs/prose'
+
+Research data is often unpublished, confidential or regulated. Helix is designed so that your data
+stays on your machine or on servers you control.
+
+## Summary
+
+- **No telemetry in source builds.** Builds you make from source do not send usage data.
+- **Your data stays local.** Helix never uploads files, prompts, agent output, terminal output,
+  paths or project names to a Helix service.
+- **Agents talk to their own providers.** When you use a cloud agent such as Claude Code or Codex,
+  that agent sends your prompts and the files it reads to its provider, under that provider's terms.
+  Choose a local model when that is not acceptable.
+
+## Turning usage data off
+
+If a packaged build ever ships with optional usage analytics, it will stay off when either of these
+is set:
+
+- `DO_NOT_TRACK=1`
+- `HELIX_TELEMETRY_DISABLED=1`
+
+## Sensitive data
+
+<Callout title="Planned: sensitive data mode">
+  A per-project mode for human genomic, clinical and other regulated data is on the roadmap. It will
+  force agents onto local models, block external network calls and database lookups, and show a
+  visible badge while it is on. Helix will enforce it in the app, not just through prompts.
+</Callout>
+
+Until then, for sensitive projects:
+
+- Use an agent configured with a local model (for example OpenCode or Goose with a local provider).
+- Keep raw data on a server you control and work on it through an SSH host.
+- Review what each agent is allowed to read before you start it.

@@ -1,0 +1,350 @@
+=== groupBy=none pinnedInGroups=false ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=all collapseKey=all:host:ssh:gpu-vm label="All" count=2 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=all collapseKey=all:host:ssh:gpu-vm label="All" count=2 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=all label="All" count=2 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+renderedKeys: 6
+placeholders: -
+selectionOrder: |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/helix-ssh 2=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+=== groupBy=none pinnedInGroups=true ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=all collapseKey=all:host:ssh:gpu-vm label="All" count=4 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=all:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=all:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> all:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> all:ssh:gpu-vm|shared::/w/same
+renderedKeys: 10
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=all collapseKey=all:host:ssh:gpu-vm label="All" count=4 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=all:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=all:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=all label="All" count=4 tone="text-foreground" icon=List hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=all:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=all:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=all:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> all:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> all:ssh:gpu-vm|shared::/w/same
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+=== groupBy=repo pinnedInGroups=false ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=1 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+ITEM rowKey=project:p-helix:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+SECTION project:repo:api: -
+renderedKeys: 10
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same ssh:gpu-vm|folder:fw-remote |helix-ssh::/helix-ssh
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=folder:fw-remote@ssh:gpu-vm 4=helix-ssh::/helix-ssh
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=folder:fw-remote@ssh:gpu-vm 4=helix-ssh::/helix-ssh
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same folder:fw-remote helix-ssh::/helix-ssh
+-- collapsed: pinned:host:ssh:gpu-vm project:p-helix --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=1 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+-- rows before host sections --
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=1 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+SECTION project:p-helix: project:p-helix:|helix-ssh::/helix-ssh
+SECTION project:repo:api: -
+renderedKeys: 7
+placeholders: -
+selectionOrder: ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same folder:fw-remote
+=== groupBy=repo pinnedInGroups=true ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=2 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+ITEM rowKey=project:p-helix:|helix-ssh::/helix-ssh depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=project:p-helix:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=project:repo:shared label="shared" count=1 tone="text-foreground" icon=FolderTree repo=shared projectGroupDepth=0
+ITEM rowKey=project:repo:shared:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:repo:shared
+SECTION project:repo:api: -
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> project:p-helix:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> project:repo:shared:ssh:gpu-vm|shared::/w/same
+renderedKeys: 13
+placeholders: -
+selectionOrder: ssh:gpu-vm|folder:fw-remote |helix-ssh::/helix-ssh ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same
+cmd1-9 mounted: 1=folder:fw-remote@ssh:gpu-vm 2=helix-ssh::/helix-ssh 3=helix-ssh::/w/remote-x@ssh:gpu-vm 4=shared::/w/same@ssh:gpu-vm
+cmd1-9 unmounted: 1=folder:fw-remote@ssh:gpu-vm 2=helix-ssh::/helix-ssh 3=helix-ssh::/w/remote-x@ssh:gpu-vm 4=shared::/w/same@ssh:gpu-vm
+cmd ids unmounted: folder:fw-remote helix-ssh::/helix-ssh helix-ssh::/w/remote-x shared::/w/same
+-- collapsed: pinned:host:ssh:gpu-vm project:p-helix project:repo:shared --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=2 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=project:repo:shared label="shared" count=1 tone="text-foreground" icon=FolderTree repo=shared projectGroupDepth=0
+-- rows before host sections --
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=project-group:pg-remote-folders label="Remote folders" count=1 tone="text-foreground" icon=FolderTree projectGroup=pg-remote-folders projectGroupDepth=0
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=1
+HEADER key=project:p-helix label="helix" count=2 tone="text-foreground" icon=FolderTree repo=helix-ssh projectGroupDepth=0
+HEADER key=project:repo:api label="api" count=0 tone="text-foreground" icon=FolderTree repo=api projectGroupDepth=0
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=project:repo:shared label="shared" count=1 tone="text-foreground" icon=FolderTree repo=shared projectGroupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+SECTION project:p-helix: project:p-helix:|helix-ssh::/helix-ssh project:p-helix:ssh:gpu-vm|helix-ssh::/w/remote-x
+SECTION project:repo:api: -
+SECTION project:repo:shared: project:repo:shared:ssh:gpu-vm|shared::/w/same
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> project:p-helix:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> project:repo:shared:ssh:gpu-vm|shared::/w/same
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same folder:fw-remote
+=== groupBy=workspace-status pinnedInGroups=false ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=workspace-status:in-progress collapseKey=workspace-status:in-progress:host:ssh:gpu-vm label="In progress" count=2 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=workspace-status:in-progress collapseKey=workspace-status:in-progress:host:ssh:gpu-vm label="In progress" count=2 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=workspace-status:in-progress label="In progress" count=2 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+renderedKeys: 6
+placeholders: -
+selectionOrder: |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/helix-ssh 2=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+=== groupBy=workspace-status pinnedInGroups=true ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=workspace-status:in-progress collapseKey=workspace-status:in-progress:host:ssh:gpu-vm label="In progress" count=4 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> workspace-status:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> workspace-status:in-progress:ssh:gpu-vm|shared::/w/same
+renderedKeys: 10
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=workspace-status:in-progress collapseKey=workspace-status:in-progress:host:ssh:gpu-vm label="In progress" count=4 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=workspace-status:in-progress label="In progress" count=4 tone="text-[#d4a300]" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=workspace-status:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=workspace-status:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> workspace-status:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> workspace-status:in-progress:ssh:gpu-vm|shared::/w/same
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+=== groupBy=pr-status pinnedInGroups=false ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=pr:in-progress collapseKey=pr:in-progress:host:ssh:gpu-vm label="In progress" count=2 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=pr:in-progress collapseKey=pr:in-progress:host:ssh:gpu-vm label="In progress" count=2 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=pr:in-progress label="In progress" count=2 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/helix-ssh]} ids=[helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+renderedKeys: 6
+placeholders: -
+selectionOrder: |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/helix-ssh 2=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+=== groupBy=pr-status pinnedInGroups=true ===
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=pr:in-progress collapseKey=pr:in-progress:host:ssh:gpu-vm label="In progress" count=4 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> pr:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> pr:in-progress:ssh:gpu-vm|shared::/w/same
+renderedKeys: 10
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote
+-- collapsed: pinned:host:ssh:gpu-vm --
+visible: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned collapseKey=pinned:host:ssh:gpu-vm label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+HEADER key=pr:in-progress collapseKey=pr:in-progress:host:ssh:gpu-vm label="In progress" count=4 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+-- rows before host sections --
+PENDING key=pending:creation-1 creation=creation-1 repo=api
+HEADER key=pinned label="Pinned" count=2 tone="text-foreground" icon=Pin hostCounts={ssh:gpu-vm:2} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same]} ids=[helix-ssh::/w/remote-x,shared::/w/same]
+ITEM rowKey=pinned:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=pinned owning=project:p-helix
+ITEM rowKey=pinned:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 lastChild=true children=0 placement=pinned owning=project:repo:shared
+HEADER key=pr:in-progress label="In progress" count=4 tone="text-workspace-status-progress" icon=ConductorProgressIcon hostCounts={ssh:gpu-vm:4} hostIds={ssh:gpu-vm:[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]} ids=[helix-ssh::/w/remote-x,shared::/w/same,helix-ssh::/helix-ssh]
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x depth=0 groupDepth=0 children=0 placement=natural owning=project:p-helix
+ITEM rowKey=pr:in-progress:ssh:gpu-vm|shared::/w/same depth=0 groupDepth=0 children=0 placement=natural owning=project:repo:shared
+ITEM rowKey=pr:in-progress:|helix-ssh::/helix-ssh depth=0 groupDepth=0 lastChild=true children=0 placement=natural owning=project:p-helix
+FOLDER key=folder-workspace:ssh:gpu-vm|folder:fw-remote projectGroup=pg-remote-folders depth=0 groupDepth=0
+SECTION pinned: pinned:ssh:gpu-vm|helix-ssh::/w/remote-x pinned:ssh:gpu-vm|shared::/w/same
+PREFERRED ssh:gpu-vm|helix-ssh::/w/remote-x -> pr:in-progress:ssh:gpu-vm|helix-ssh::/w/remote-x
+PREFERRED ssh:gpu-vm|shared::/w/same -> pr:in-progress:ssh:gpu-vm|shared::/w/same
+renderedKeys: 8
+placeholders: -
+selectionOrder: ssh:gpu-vm|helix-ssh::/w/remote-x ssh:gpu-vm|shared::/w/same |helix-ssh::/helix-ssh ssh:gpu-vm|folder:fw-remote
+cmd1-9 mounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd1-9 unmounted: 1=helix-ssh::/w/remote-x@ssh:gpu-vm 2=shared::/w/same@ssh:gpu-vm 3=helix-ssh::/helix-ssh 4=folder:fw-remote@ssh:gpu-vm
+cmd ids unmounted: helix-ssh::/w/remote-x shared::/w/same helix-ssh::/helix-ssh folder:fw-remote

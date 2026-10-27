@@ -1,0 +1,9 @@
+{
+  "platforms": ["ios", "android"],
+  "ios": {
+    "modules": ["HelixMobileWebShellModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.helixmobilewebshell.HelixMobileWebShellModule"]
+  }
+}

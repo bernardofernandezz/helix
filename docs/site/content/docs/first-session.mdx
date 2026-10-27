@@ -1,0 +1,50 @@
+---
+title: Your first analysis
+description: From an empty app to an agent analyzing your data in a few minutes.
+---
+
+import { Callout } from '@/components/docs/prose'
+
+This walkthrough takes a table of results, hands it to an agent and ends with a plot and a short
+report you can check.
+
+## 1. Create a research project
+
+Click **Add Project** in the sidebar and choose a folder. Helix works with any folder; it does not
+need git. If the folder is a git repository, Helix can also give each line of work its own
+worktree.
+
+A tidy layout helps both you and the agent:
+
+```text
+my-study/
+  data/        raw inputs, never edited
+  results/     tables and figures the analysis produces
+  notebooks/   exploratory notebooks
+  refs/        papers and reference files
+```
+
+## 2. Pick an agent
+
+Open the project and choose an agent from the launcher, for example Claude Code or Codex. Helix
+starts the agent's CLI in the project folder and tracks its status in the sidebar.
+
+## 3. Ask a concrete question
+
+Drop a file from `data/` into the chat or mention its path, then ask something specific:
+
+> Load `data/counts.csv`, check for missing values, run a differential expression analysis between
+> the `treated` and `control` columns and save a volcano plot to `results/`.
+
+The agent runs commands in a real terminal. You can open that terminal at any time, approve or reject
+steps, and read every command it ran.
+
+## 4. Check the result
+
+Open the generated table in the grid viewer and the figure in the image viewer. Ask the agent to
+explain the method it used and to list the package versions, so the analysis can be reproduced.
+
+<Callout title="Work in parallel">
+  Start a second agent in the same project to search the literature on your top hits while the first
+  one refines the analysis. Each agent keeps its own terminal and history.
+</Callout>

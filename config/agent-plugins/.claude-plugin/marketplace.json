@@ -1,0 +1,12 @@
+{
+  "name": "helix-agent-plugins",
+  "owner": { "name": "Helix" },
+  "description": "Repository-local plugins for coding agents working in Helix",
+  "plugins": [
+    {
+      "name": "helix-typescript",
+      "source": "./helix-typescript",
+      "description": "TypeScript 7 diagnostics and code navigation from the repo's own compiler"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 3,
+  "skills": [
+    {
+      "name": "computer-use",
+      "sourcePath": "skills/computer-use",
+      "packageDigest": "0ebcb092317a7cbe7ca31633ca08d03f1c82a816a6fd1d56af5df5114b9f3b6b",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2236,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "e0f06b68428ce5241f93d91045379c9027106fba7f2ced7c1b3f2c241f432cba",
+          "textNormalizedSha256": "e0f06b68428ce5241f93d91045379c9027106fba7f2ced7c1b3f2c241f432cba",
+          "identitySha256": "e0f06b68428ce5241f93d91045379c9027106fba7f2ced7c1b3f2c241f432cba"
+        }
+      ]
+    },
+    {
+      "name": "helix-cli",
+      "sourcePath": "skills/helix-cli",
+      "packageDigest": "3da04fa641a97e0e7fee307d0971ee7a828ff039bbb61755c85ed8c81e993d96",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2406,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "98384f263fb78d89ae90cd30147d1fb2b4975e41bc6bb0b9e93d2c3aa5317b6d",
+          "textNormalizedSha256": "98384f263fb78d89ae90cd30147d1fb2b4975e41bc6bb0b9e93d2c3aa5317b6d",
+          "identitySha256": "98384f263fb78d89ae90cd30147d1fb2b4975e41bc6bb0b9e93d2c3aa5317b6d"
+        }
+      ]
+    },
+    {
+      "name": "helix-jira",
+      "sourcePath": "skills/helix-jira",
+      "packageDigest": "cff46841eea396eb9e7bee8361639de055138d3f53dc283fe340df1f71ef92cb",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2106,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "8d136a3b439f2d79b50bab63797f2b397ad1f598329b67a4d51810b5ddc18b80",
+          "textNormalizedSha256": "8d136a3b439f2d79b50bab63797f2b397ad1f598329b67a4d51810b5ddc18b80",
+          "identitySha256": "8d136a3b439f2d79b50bab63797f2b397ad1f598329b67a4d51810b5ddc18b80"
+        }
+      ]
+    },
+    {
+      "name": "helix-linear",
+      "sourcePath": "skills/helix-linear",
+      "packageDigest": "a51f89b80b91a34fe7a1e8aff1714817a76f43b6699d460583beb146d787a4e0",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2114,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "a3417824f438a74ffdefaa8a57a013c954d7db456cb65087dbd3e4f491a4f2c8",
+          "textNormalizedSha256": "a3417824f438a74ffdefaa8a57a013c954d7db456cb65087dbd3e4f491a4f2c8",
+          "identitySha256": "a3417824f438a74ffdefaa8a57a013c954d7db456cb65087dbd3e4f491a4f2c8"
+        }
+      ]
+    },
+    {
+      "name": "helix-per-workspace-env",
+      "sourcePath": "skills/helix-per-workspace-env",
+      "packageDigest": "0829151dfdb95c3c3c1e85dbb6a51cb909a253110a52f99cbe625bc737c295e4",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2286,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "a7beaf4d4818b47ee037a4597450044583f4be8e4cbbff97de2f30e32ad89bfe",
+          "textNormalizedSha256": "a7beaf4d4818b47ee037a4597450044583f4be8e4cbbff97de2f30e32ad89bfe",
+          "identitySha256": "a7beaf4d4818b47ee037a4597450044583f4be8e4cbbff97de2f30e32ad89bfe"
+        }
+      ]
+    },
+    {
+      "name": "jira-tickets",
+      "sourcePath": "skills/jira-tickets",
+      "packageDigest": "51b8ee488a1c3dbbd511aa93e4bdf99dc20fb71e957a343d19e957111d0e81f3",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2152,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "1fa4350a295cade72cc33759c99cfd6520cfd6a4b07955e8e4c2ea01dec106de",
+          "textNormalizedSha256": "1fa4350a295cade72cc33759c99cfd6520cfd6a4b07955e8e4c2ea01dec106de",
+          "identitySha256": "1fa4350a295cade72cc33759c99cfd6520cfd6a4b07955e8e4c2ea01dec106de"
+        }
+      ]
+    },
+    {
+      "name": "linear-tickets",
+      "sourcePath": "skills/linear-tickets",
+      "packageDigest": "64caf3c31dcf6c3819d3762c0420a0855330d356f4471db6b71801fa8b2cd6bc",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 2256,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "031b0c6f7e7d74b4fe7e1554199c58419106da924a890a4bf59f3081c0a1350c",
+          "textNormalizedSha256": "031b0c6f7e7d74b4fe7e1554199c58419106da924a890a4bf59f3081c0a1350c",
+          "identitySha256": "031b0c6f7e7d74b4fe7e1554199c58419106da924a890a4bf59f3081c0a1350c"
+        }
+      ]
+    },
+    {
+      "name": "orchestration",
+      "sourcePath": "skills/orchestration",
+      "packageDigest": "77341a2443320ebd7a147e647d26f2755441ac267507cc11eb005b97828ec353",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 3704,
+          "executable": false,
+          "classification": "text",
+          "exactSha256": "6449693ef8cb063ee7ecd03e74cf8889f5b00fb2f2ac25430efbf909937c6c1a",
+          "textNormalizedSha256": "6449693ef8cb063ee7ecd03e74cf8889f5b00fb2f2ac25430efbf909937c6c1a",
+          "identitySha256": "6449693ef8cb063ee7ecd03e74cf8889f5b00fb2f2ac25430efbf909937c6c1a"
+        }
+      ]
+    }
+  ]
+}

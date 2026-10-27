@@ -1,0 +1,12 @@
+{
+  "title": "The Helix Model",
+  "defaultOpen": true,
+  "pages": [
+    "worktrees",
+    "helix-yaml",
+    "tabs-panes-splits",
+    "agents-sessions",
+    "session-restore",
+    "quick-open"
+  ]
+}

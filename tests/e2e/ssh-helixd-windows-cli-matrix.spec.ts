@@ -1,0 +1,575 @@
+// Run bundled CLI against real Windows OpenSSH host cells; invoke-windows-host-cells.ps1 selects @helixd-cli-managed/@helixd-cli-convert.
+// Managed covers deploy/list, terminal reconnect, decommission/redeploy and unverifiable→live restart; convert preserves relay-era source and reaches migrated projects.
+// HELIX_E2E_HELIXD_CONVERT_HOST names the descriptor; HELIX_E2E_HELIXD_CONVERT_TEMPLATE must match its target.
+import { mkdirSync, rmSync } from 'node:fs'
+import os from 'node:os'
+import path from 'node:path'
+import type { ElectronApplication, Page } from '@playwright/test'
+import { expect, test } from './helpers/helix-app'
+import { waitForSessionReady } from './helpers/store'
+import { createRestartSession } from './helpers/helix-restart'
+import { convertAndRetain, managedServer, reconnect } from './helpers/helixd-convert-flow'
+import { seedRelayEraProfile } from './helpers/helixd-upgrade-profile'
+import { HELIXD_CONVERT_HOST_ENV, startHelixdConvertHost } from './helpers/helixd-convert-host'
+import { helixCliResult, runCompiledHelixCli } from './helpers/compiled-helix-cli'
+import {
+  killHostHelixd,
+  listHostHelixdProcesses,
+  listHostHelixdServerProcesses
+} from './helpers/windows-host-helixd-processes'
+import { readWindowsHostCellDescriptor } from '../../src/main/ssh/ssh-windows-host-cells'
+import { runtimeHostContactFromSnapshot } from '../../src/shared/runtime-host-contact'
+import type {
+  RuntimeTerminalListResult,
+  RuntimeTerminalRead
+} from '../../src/shared/runtime-terminal-contracts'
+
+const HOST = process.env[HELIXD_CONVERT_HOST_ENV]
+const TEMPLATE = process.env.HELIX_E2E_HELIXD_CONVERT_TEMPLATE
+const SCRATCH = path.join(os.tmpdir(), `helix-helixd-cli-matrix-${process.pid}`)
+const MANAGED_TIMEOUT_MS = 8 * 60_000
+
+type HostRow = {
+  kind: string
+  id: string
+  connected?: boolean
+  platform?: string
+}
+type EnvironmentRow = { id: string; name: string }
+
+function skipUnlessWindowsHost(): void {
+  test.skip(
+    !HOST || !TEMPLATE || HOST === 'docker',
+    `Set ${HELIXD_CONVERT_HOST_ENV} to a Windows host-cell descriptor and HELIX_E2E_HELIXD_CONVERT_TEMPLATE`
+  )
+}
+
+function resetScratch(): void {
+  rmSync(SCRATCH, { recursive: true, force: true })
+  mkdirSync(SCRATCH, { recursive: true })
+}
+
+function launchEnv(): Record<string, string> {
+  return {
+    HELIX_HELIXD_TEMPLATE_PATH: TEMPLATE!
+  }
+}
+
+/** Keeps the app's SSH lines in the test output, so a failed connect explains itself. */
+function sshStderr(chunk: string): void {
+  if (chunk.includes('[ssh]') || chunk.includes('helixd')) {
+    process.stderr.write(chunk)
+  }
+}
+
+/** A Windows profile a crashed launch still holds must not replace the test's own failure. */
+async function disposeQuietly(session: { dispose: () => Promise<void> }): Promise<void> {
+  try {
+    await session.dispose()
+  } catch (error) {
+    console.warn('[e2e] Restart profile cleanup failed:', error)
+  }
+}
+
+async function waitForManaged(page: Page, targetId: string): Promise<string> {
+  let environmentId = ''
+  await expect
+    .poll(
+      async () => {
+        const server = await managedServer(page, targetId)
+        if (server && typeof server === 'object' && 'environmentId' in server) {
+          environmentId = String(server.environmentId)
+          return 'managed'
+        }
+        return JSON.stringify(server)
+      },
+      { timeout: MANAGED_TIMEOUT_MS }
+    )
+    .toBe('managed')
+  return environmentId
+}
+
+function samePath(left: string, right: string): boolean {
+  const normalize = (value: string): string => value.replaceAll('\\', '/').toLowerCase()
+  return normalize(left) === normalize(right)
+}
+
+async function hostRows(userData: string): Promise<HostRow[]> {
+  return (await helixCliResult<{ hosts: HostRow[] }>(userData, ['host', 'list'])).hosts
+}
+
+async function environmentIds(userData: string): Promise<string[]> {
+  const listed = await helixCliResult<{ environments: EnvironmentRow[] }>(userData, [
+    'environment',
+    'list'
+  ])
+  return listed.environments.map((entry) => entry.id)
+}
+
+async function readTerminal(
+  userData: string,
+  environmentId: string,
+  handle: string
+): Promise<RuntimeTerminalRead> {
+  return (
+    await helixCliResult<{ terminal: RuntimeTerminalRead }>(userData, [
+      'terminal',
+      'read',
+      '--environment',
+      environmentId,
+      '--terminal',
+      handle,
+      '--limit',
+      '500'
+    ])
+  ).terminal
+}
+
+/** An echoed line on its own: the typed command line carries the prompt in front of it. */
+async function waitForEchoedLine(
+  userData: string,
+  environmentId: string,
+  handle: string,
+  marker: string
+): Promise<void> {
+  await expect
+    .poll(
+      async () => {
+        const read = await readTerminal(userData, environmentId, handle)
+        return read.tail.some((line) => line.trim() === marker)
+          ? 'echoed'
+          : `${read.status}: ${read.tail.slice(-6).join(' | ')}`
+      },
+      { timeout: 60_000 }
+    )
+    .toBe('echoed')
+}
+
+async function sendLine(
+  userData: string,
+  environmentId: string,
+  handle: string,
+  text: string
+): Promise<void> {
+  await helixCliResult(userData, [
+    'terminal',
+    'send',
+    '--environment',
+    environmentId,
+    '--terminal',
+    handle,
+    '--text',
+    text,
+    '--enter'
+  ])
+}
+
+/** Host Node is hidden on the lane, so the listener is Windows PowerShell's own TcpListener. */
+// Avoid $ expansion by the outer PowerShell; append the worktree path for Windows scanners, which cannot read process cwd.
+const DETECTED_PORT = 4317
+
+async function expectWorkspacePortDetected(
+  page: Page,
+  userData: string,
+  environmentId: string,
+  repoId: string,
+  worktree: { id: string; path: string }
+): Promise<void> {
+  const worktreeId = worktree.id
+  const listener = await helixCliResult<{ terminal: { handle: string } }>(userData, [
+    'terminal',
+    'create',
+    '--environment',
+    environmentId,
+    '--worktree',
+    `id:${worktreeId}`,
+    '--title',
+    'port-listener'
+  ])
+  await sendLine(
+    userData,
+    environmentId,
+    listener.terminal.handle,
+    `powershell -NoProfile -Command "[Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback,${DETECTED_PORT}) | Tee-Object -Variable keep | ForEach-Object Start; Write-Output HELIX_PORT_LISTENING; Start-Sleep 900 # ${worktree.path}"`
+  )
+  await waitForEchoedLine(userData, environmentId, listener.terminal.handle, 'HELIX_PORT_LISTENING')
+  let last = ''
+  await expect
+    .poll(
+      async () => {
+        const response = await page.evaluate((args) => window.api.runtimeEnvironments.call(args), {
+          selector: environmentId,
+          method: 'workspacePorts.scan',
+          params: { repoId },
+          timeoutMs: 30_000
+        })
+        last = JSON.stringify(response)
+        const result =
+          response.ok && response.result && typeof response.result === 'object'
+            ? response.result
+            : null
+        const ports = result && 'ports' in result && Array.isArray(result.ports) ? result.ports : []
+        const entry = ports.find((port: { port?: unknown }) => port?.port === DETECTED_PORT)
+        if (entry) {
+          last = JSON.stringify(entry)
+        }
+        return entry
+          ? `${entry.kind}:${entry.owner?.worktreeId ?? ''}:${entry.owner?.confidence ?? ''}:${typeof entry.pid}`
+          : 'absent'
+      },
+      { timeout: 90_000 }
+    )
+    .toBe(`workspace:${worktreeId}:command:number`)
+    .catch((error: unknown) => {
+      throw new Error(
+        `workspacePorts.scan never attributed ${DETECTED_PORT}: ${last.slice(0, 3_000)}`,
+        {
+          cause: error
+        }
+      )
+    })
+  console.log(`[cli-matrix] workspace port detected: ${last.slice(0, 1_500)}`)
+  await helixCliResult(userData, [
+    'terminal',
+    'close',
+    '--environment',
+    environmentId,
+    '--terminal',
+    listener.terminal.handle
+  ])
+}
+
+/** The terminal is still listed after an helixd restart, kept its output and still takes input. */
+async function expectTerminalSurvives(
+  userData: string,
+  environmentId: string,
+  handle: string,
+  label: string
+): Promise<void> {
+  const listed = await helixCliResult<RuntimeTerminalListResult>(userData, [
+    'terminal',
+    'list',
+    '--environment',
+    environmentId
+  ])
+  console.log(
+    `[cli-matrix] terminals after ${label}: ${JSON.stringify(listed.terminals.map((terminal) => ({ handle: terminal.handle, connected: terminal.connected, exitCause: terminal.exitCause })))}`
+  )
+  expect(
+    listed.terminals.map((terminal) => terminal.handle),
+    label
+  ).toContain(handle)
+  const marker = `HELIX_CLI_SURVIVED_${Date.now()}`
+  await sendLine(userData, environmentId, handle, `echo ${marker}`)
+  await waitForEchoedLine(userData, environmentId, handle, marker)
+}
+
+/** The client's verdict on the managed server, after asking it once through the main process. */
+async function hostVerdict(page: Page, environmentId: string): Promise<string> {
+  const snapshot = await page.evaluate(async (id) => {
+    await window.api.runtimeEnvironments
+      .call({ selector: id, method: 'status.get', timeoutMs: 5_000 })
+      .catch(() => null)
+    const snapshots = await window.api.runtimeEnvironments.getStatusSnapshots()
+    return snapshots.find((entry) => entry.environmentId === id) ?? null
+  }, environmentId)
+  if (!snapshot) {
+    return 'no-snapshot'
+  }
+  const contact = runtimeHostContactFromSnapshot(snapshot)
+  return contact.verdict === 'unverifiable' ? `unverifiable:${contact.reason}` : contact.verdict
+}
+
+test('@helixd-cli-managed an empty Windows host deploys, serves CLI terminals through reconnect, decommissions and redeploys, then survives an helixd restart', async (// oxlint-disable-next-line no-empty-pattern -- This test owns its launch through a restart session.
+{}, testInfo) => {
+  skipUnlessWindowsHost()
+  test.setTimeout(40 * 60_000)
+  resetScratch()
+  const host = startHelixdConvertHost(HOST!, testInfo)
+  const descriptor = readWindowsHostCellDescriptor(HOST!)
+  const session = createRestartSession(testInfo, launchEnv())
+  let app: ElectronApplication | null = null
+  try {
+    const launched = await session.launch({ onStderr: sshStderr })
+    app = launched.app
+    const { page } = launched
+    const userData = session.userDataDir
+    await waitForSessionReady(page)
+
+    const targetId = await page.evaluate(
+      async (input) => (await window.api.ssh.addTarget({ target: input })).target.id,
+      host.input
+    )
+    const connected = await reconnect(page, targetId)
+    testInfo.annotations.push({
+      type: 'first-connect',
+      description: connected
+    })
+    const environmentId = await waitForManaged(page, targetId)
+    expect(await listHostHelixdProcesses(descriptor.home)).not.toHaveLength(0)
+
+    const sshRow = (await hostRows(userData)).find((row) => row.id === targetId)
+    expect(sshRow, 'helix host list names the SSH target').toMatchObject({
+      kind: 'ssh',
+      connected: true
+    })
+    testInfo.annotations.push({
+      type: 'host-list-platform',
+      description: String(sshRow?.platform)
+    })
+    expect(await environmentIds(userData)).toContain(environmentId)
+    const shown = await helixCliResult<{ environment: EnvironmentRow }>(userData, [
+      'environment',
+      'show',
+      '--environment',
+      environmentId
+    ])
+    expect(shown.environment.id).toBe(environmentId)
+    const status = await helixCliResult(userData, [
+      'environment',
+      'status',
+      '--environment',
+      environmentId
+    ])
+    testInfo.annotations.push({ type: 'environment-status', description: JSON.stringify(status) })
+
+    const added = await helixCliResult<{ repo: { id: string } }>(userData, [
+      'repo',
+      'add',
+      '--environment',
+      environmentId,
+      '--path',
+      host.remoteRepoPath
+    ])
+    const worktrees = await helixCliResult<{
+      worktrees: { id: string; path: string }[]
+    }>(userData, ['worktree', 'list', '--environment', environmentId])
+    const worktree = worktrees.worktrees.find((entry) => samePath(entry.path, host.remoteRepoPath))
+    expect(worktree, `a worktree at ${host.remoteRepoPath}`).toBeTruthy()
+    const created = await helixCliResult<{ terminal: { handle: string } }>(userData, [
+      'terminal',
+      'create',
+      '--environment',
+      environmentId,
+      '--worktree',
+      `id:${worktree!.id}`,
+      '--title',
+      'cli-matrix'
+    ])
+    const handle = created.terminal.handle
+    const before = `HELIX_CLI_BEFORE_${Date.now()}`
+    await sendLine(userData, environmentId, handle, `echo ${before}`)
+    await waitForEchoedLine(userData, environmentId, handle, before)
+
+    await expectWorkspacePortDetected(page, userData, environmentId, added.repo.id, worktree!)
+
+    expect(await reconnect(page, targetId)).toContain('"managed"')
+    expect(await waitForManaged(page, targetId)).toBe(environmentId)
+    const relisted = await helixCliResult<RuntimeTerminalListResult>(userData, [
+      'terminal',
+      'list',
+      '--environment',
+      environmentId
+    ])
+    expect(relisted.terminals.map((terminal) => terminal.handle)).toContain(handle)
+    await waitForEchoedLine(userData, environmentId, handle, before)
+    const after = `HELIX_CLI_AFTER_${Date.now()}`
+    await sendLine(userData, environmentId, handle, `echo ${after}`)
+    await waitForEchoedLine(userData, environmentId, handle, after)
+
+    const refused = await runCompiledHelixCli(userData, [
+      'environment',
+      'rm',
+      '--environment',
+      environmentId,
+      '--json'
+    ])
+    expect(refused.code, refused.stdout).not.toBe(0)
+    expect(`${refused.stdout}${refused.stderr}`).toContain(
+      'Helix runs this server on an SSH host for you'
+    )
+    expect(`${refused.stdout}${refused.stderr}`).toContain('helix environment stop')
+    const unconfirmed = await runCompiledHelixCli(userData, [
+      'environment',
+      'stop',
+      '--environment',
+      environmentId,
+      '--json'
+    ])
+    expect(unconfirmed.json?.error?.code, unconfirmed.stdout).toBe('confirmation_required')
+    await helixCliResult(userData, [
+      'terminal',
+      'close',
+      '--environment',
+      environmentId,
+      '--worktree',
+      `id:${worktree!.id}`,
+      '--all'
+    ])
+    const stopped = await helixCliResult(userData, [
+      'environment',
+      'stop',
+      '--environment',
+      environmentId,
+      '--yes'
+    ])
+    expect(stopped, JSON.stringify(stopped)).toMatchObject({
+      outcome: 'unlinked',
+      verdict: 'exited'
+    })
+    await expect
+      .poll(async () => (await listHostHelixdProcesses(descriptor.home)).length, {
+        timeout: 60_000
+      })
+      .toBe(0)
+    expect(await environmentIds(userData)).not.toContain(environmentId)
+
+    // A reconnect after decommission redeploys onto the cleaned host.
+    testInfo.annotations.push({
+      type: 'redeploy-connect',
+      description: await reconnect(page, targetId)
+    })
+    const redeployed = await waitForManaged(page, targetId)
+    expect(await environmentIds(userData)).toContain(redeployed)
+    expect(await listHostHelixdProcesses(descriptor.home)).not.toHaveLength(0)
+
+    // Create a terminal before restart; do not assume the decommissioned server retained its repo catalog.
+    await runCompiledHelixCli(userData, [
+      'repo',
+      'add',
+      '--environment',
+      redeployed,
+      '--path',
+      host.remoteRepoPath,
+      '--json'
+    ])
+    const redeployedWorktree = (
+      await helixCliResult<{ worktrees: { id: string; path: string }[] }>(userData, [
+        'worktree',
+        'list',
+        '--environment',
+        redeployed
+      ])
+    ).worktrees.find((entry) => samePath(entry.path, host.remoteRepoPath))
+    expect(redeployedWorktree, `a worktree at ${host.remoteRepoPath}`).toBeTruthy()
+    const restartHandle = (
+      await helixCliResult<{ terminal: { handle: string } }>(userData, [
+        'terminal',
+        'create',
+        '--environment',
+        redeployed,
+        '--worktree',
+        `id:${redeployedWorktree!.id}`
+      ])
+    ).terminal.handle
+    const beforeRestart = `HELIX_CLI_RESTART_${Date.now()}`
+    await sendLine(userData, redeployed, restartHandle, `echo ${beforeRestart}`)
+    await waitForEchoedLine(userData, redeployed, restartHandle, beforeRestart)
+
+    // (d) Last, since a relaunch on connect is still landing: helixd restart: unreachable reads unverifiable, never retired or refused, then live again.
+    expect(await hostVerdict(page, redeployed)).toBe('live')
+    const killed = await killHostHelixd(descriptor.home)
+    expect(killed, 'an helixd process to restart').not.toHaveLength(0)
+    console.log(`[cli-matrix] killed helixd: ${JSON.stringify(killed)}`)
+    const verdicts: string[] = []
+    const sample = async (): Promise<string> => {
+      const verdict = await hostVerdict(page, redeployed)
+      if (verdicts.at(-1) !== verdict) {
+        verdicts.push(verdict)
+      }
+      return verdict
+    }
+    await expect.poll(sample, { timeout: 90_000 }).toMatch(/^unverifiable:/u)
+    let recoveredBy = 'automatic'
+    try {
+      await expect.poll(sample, { timeout: 120_000 }).toBe('live')
+    } catch {
+      recoveredBy = 'reconnect'
+      testInfo.annotations.push({
+        type: 'restart-reconnect',
+        description: await reconnect(page, targetId)
+      })
+      await expect.poll(sample, { timeout: 4 * 60_000 }).toBe('live')
+    }
+    const relaunched = await listHostHelixdServerProcesses(descriptor.home)
+    console.log(
+      `[cli-matrix] helixd restart ${recoveredBy}: ${verdicts.join(' -> ')}; killed ${killed.map((entry) => entry.pid).join(',')}, now ${relaunched.map((entry) => entry.pid).join(',')}`
+    )
+    expect(verdicts.filter((verdict) => !/^(live|unverifiable:)/u.test(verdict))).toEqual([])
+    expect(relaunched).not.toHaveLength(0)
+    expect(relaunched.some((entry) => killed.some((victim) => victim.pid === entry.pid))).toBe(
+      false
+    )
+    // The terminal daemon outlives helixd, so the relaunched server adopts its terminal.
+    await expectTerminalSurvives(userData, redeployed, restartHandle, 'automatic restart')
+
+    // Killed again, then disconnect/connect: the connect itself starts helixd and stays managed.
+    const killedAgain = await killHostHelixd(descriptor.home)
+    expect(killedAgain, 'an helixd process to restart').not.toHaveLength(0)
+    const reconnected = await reconnect(page, targetId)
+    console.log(`[cli-matrix] connect after second kill: ${reconnected}`)
+    expect(reconnected).toContain('"managed"')
+    expect(await waitForManaged(page, targetId)).toBe(redeployed)
+    await expect.poll(() => hostVerdict(page, redeployed), { timeout: 4 * 60_000 }).toBe('live')
+    const afterConnect = await listHostHelixdServerProcesses(descriptor.home)
+    expect(
+      afterConnect.some((entry) => killedAgain.some((victim) => victim.pid === entry.pid))
+    ).toBe(false)
+    await expectTerminalSurvives(userData, redeployed, restartHandle, 'reconnect restart')
+  } finally {
+    if (app) {
+      await session.close(app)
+    }
+    await disposeQuietly(session)
+    host.cleanup()
+    rmSync(SCRATCH, { recursive: true, force: true })
+  }
+})
+
+test('@helixd-cli-convert a seeded relay-era profile converts its Windows host, keeps its source retained, and the CLI reaches its projects', async (// oxlint-disable-next-line no-empty-pattern -- This test owns its launches through a restart session.
+{}, testInfo) => {
+  skipUnlessWindowsHost()
+  test.setTimeout(20 * 60_000)
+  resetScratch()
+  const host = startHelixdConvertHost(HOST!, testInfo)
+  const session = createRestartSession(testInfo, launchEnv())
+  let app: ElectronApplication | null = null
+  try {
+    const first = await session.launch()
+    app = first.app
+    await waitForSessionReady(first.page)
+    await session.close(app)
+    app = null
+    const seeded = seedRelayEraProfile(session.userDataDir, host.input, {
+      repoPath: host.remoteRepoPath,
+      folderPath: host.remoteFolderPath
+    })
+    const upgraded = await session.launch({ onStderr: sshStderr })
+    app = upgraded.app
+    await waitForSessionReady(upgraded.page)
+    await convertAndRetain(upgraded.page, session.userDataDir, seeded)
+
+    const environmentId = await waitForManaged(upgraded.page, seeded.targetId)
+    expect(await environmentIds(session.userDataDir)).toContain(environmentId)
+    expect(
+      (await hostRows(session.userDataDir)).find((row) => row.id === seeded.targetId)
+    ).toMatchObject({
+      kind: 'ssh',
+      connected: true
+    })
+    const repos = await helixCliResult<{ repos: { path: string }[] }>(session.userDataDir, [
+      'repo',
+      'list',
+      '--environment',
+      environmentId
+    ])
+    expect(repos.repos.some((repo) => samePath(repo.path, seeded.repoPath))).toBe(true)
+  } finally {
+    if (app) {
+      await session.close(app)
+    }
+    await disposeQuietly(session)
+    host.cleanup()
+    rmSync(SCRATCH, { recursive: true, force: true })
+  }
+})

@@ -1,0 +1,36 @@
+{
+  "settings": {
+    "appearance": {
+      "language": {
+        "title": "Idioma",
+        "description": "Escolha o idioma usado na interface do Helix.",
+        "system": "Sistema",
+        "english": "Inglês",
+        "chinese": "Chinês simplificado",
+        "korean": "Coreano",
+        "japanese": "Japonês",
+        "spanish": "Espanhol"
+      }
+    }
+  },
+  "menu": {
+    "checkForUpdates": "Verificar atualizações...",
+    "settings": "Configurações",
+    "file": "Arquivo",
+    "exit": "Sair",
+    "edit": "Editar",
+    "appearance": "Aparência",
+    "view": "Visualizar",
+    "reload": "Recarregar",
+    "window": "Janela",
+    "help": "Ajuda",
+    "paste": "Colar"
+  },
+  "tray": {
+    "openHelix": "Abrir o Helix",
+    "quit": "Encerrar",
+    "minimizeNotice": {
+      "body": "O Helix continua em execução na bandeja do sistema"
+    }
+  }
+}

@@ -1,0 +1,260 @@
+# Contributing to Helix
+
+Thanks for contributing to Helix.
+
+## Before You Start
+
+Helix is an agentic research environment for the life sciences. Keep these principles in mind:
+
+- **Research data is sensitive by default.** Do not send project files, prompts, agent output or paths to any new destination without making it explicit to the user. Prefer local processing.
+- **Analyses must stay reproducible.** Commands, tool versions, parameters and database releases an agent uses should remain visible and recoverable.
+- **Not every project is a git repository.** Support folder projects as well as git worktrees.
+- **Compute is often remote.** Changes must work on SSH hosts and HPC login nodes, where you cannot assume a desktop, a long-running daemon or root access.
+- **Cross-platform.** Helix targets macOS, Linux and Windows. Guard platform-specific behavior with runtime checks, use `CmdOrCtrl` in menu accelerators, show `⌘`/`⇧` on macOS and `Ctrl+`/`Shift+` elsewhere, and build paths with `path.join`.
+- **Provider-neutral.** Helix supports many CLI agents. Keep generic behavior neutral and guard agent-specific logic behind explicit checks.
+- **Quality.** Follow the existing architecture, avoid unnecessary work in hot paths, clean up owned resources and use concrete module names. For UI work, follow [`docs/STYLEGUIDE.md`](../docs/STYLEGUIDE.md) and verify light/dark mode and SSH latency.
+
+## Local Setup
+
+Install Node 24, pnpm, and the Bun version in [`config/.bun-version`](../config/.bun-version).
+`pnpm test` runs Vitest on Bun, with Node workers for runtime contracts such as SQLite,
+native PTYs, socket liveness, and V8 memory behavior. `pnpm test:node` runs the same suites
+entirely on Node. Builds and dependency installation still use Node and pnpm.
+
+```bash
+pnpm install
+pnpm dev
+```
+
+### Dev Profiles and Parallel Instances
+
+`pnpm dev` in a linked Git worktree uses its own userData profile, renderer port, and remote
+debugging (CDP) port, so dev instances in different worktrees run side by side. The main checkout
+keeps the shared `helix-dev` profile. Ports are derived from the worktree path and move to the next
+free port when taken: renderer ports start at 15200 and CDP ports at 9333.
+
+On startup the runner prints one stdout line and writes the same JSON to `out/dev-instance.json`:
+
+```text
+HELIX_DEV_INSTANCE {"userData":".../helix-dev-wt/1d3830d4d3","profile":"worktree","rendererPort":15339,"rendererUrl":"http://localhost:15339","cdpPort":9513,"cdpUrl":"http://127.0.0.1:9513","repoRoot":"...","runnerPid":4242}
+```
+
+| Option                                                                   | Effect                                                     |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `pnpm dev --shared-profile` or `HELIX_DEV_PROFILE=shared`                | Use the shared `helix-dev` profile                         |
+| `pnpm dev --worktree-profile` or `HELIX_DEV_PROFILE=worktree`            | Use a per-worktree profile, including in the main checkout |
+| `HELIX_DEV_USER_DATA_PATH=<dir>`                                         | Use an explicit profile directory                          |
+| `REMOTE_DEBUGGING_PORT=<port>`, `HELIX_DEV_RENDERER_PORT=<port>`         | Pin a port                                                 |
+| `pnpm dev --seed-profile[=<dir>]` or `HELIX_DEV_SEED_PROFILE=<dir or 1>` | Seed an empty profile on first launch                      |
+
+Per-worktree profiles live in `helix-dev-wt/<hash>` next to `helix-dev` (`~/Library/Application
+Support` on macOS, `%APPDATA%` on Windows, `$XDG_CONFIG_HOME` or `~/.config` on Linux). The
+automatic storage cleanup removes them once their worktree is gone and nothing still runs from
+them. `config/scripts/helix-dev.mjs` and the `helix-dev` terminal wrapper target the profile this
+checkout's `pnpm dev` used.
+
+Seeding copies a slim set of state from another profile: projects, workspaces, settings, SSH
+targets, and the Helix account session. Terminal sessions, PTY leases, automations, caches, logs,
+and lock files are not copied, and the source profile is only read. The default source is
+`helix-dev`, or the installed app's profile when `helix-dev` is empty. Seed from `helix-dev` when you
+need the signed-in account session: dev builds cannot decrypt secrets the installed app encrypted.
+
+```bash
+pnpm dev:seed-profile [--from=<profile dir>] [--to=<profile dir>] [--reset]
+pnpm dev:fresh [--keep] [--seed-from[=<profile dir>]]   # temporary profile, removed on exit
+```
+
+### Targeting Local Tests
+
+Use a test file or directory when you know the relevant suites. For dependency-based
+feedback, Vitest can select tests affected by your edits:
+
+```bash
+pnpm test:changed src/main/runtime --maxWorkers=2
+pnpm test --changed=origin/main --maxWorkers=2
+pnpm test src/shared/app-version.test.ts --maxWorkers=2
+```
+
+`test:changed` considers staged, unstaged, and untracked files. `--changed=origin/main`
+also includes committed changes since the branch's merge base. Update that ref when
+you need a newer baseline. Both accept the same path filters and options as `pnpm test`.
+When Git reports no changed files at all, the launcher exits before starting Vitest.
+
+Local runs enable Vitest's [dependency recording](https://vitest.dev/config/experimental#experimental-recorddependencies).
+Ordinary test runs populate the cache; later changed-file runs read it instead of
+transforming every test's import graph. Records are separate for the Bun and Node
+projects and live in each checkout's `node_modules/.vite`. A test without a record
+runs when at most 100 such tests are in scope, which records them. Beyond that, as in
+a new worktree, unrecorded tests are selected with Vitest's static import graph
+instead of running all of them. Keep Vite's local test cache between runs. Use
+`--experimental.recordDependencies=false` to use the static import graph for every test.
+
+This is local feedback, not a complete regression check. Vitest records loaded
+imports, including executed dynamic imports, but cannot infer arbitrary filesystem
+reads, subprocess inputs, or externalized module dependencies. Explicitly run tests
+for changed fixtures, generated files, CLI entry points, and other indirect inputs.
+After changing imports, run the affected suites before committing those changes so
+later edits use current records. Configuration, lockfile, patch, and workspace-package
+changes rerun every test within the requested scope. CI does not enable recording;
+the existing CI selection policy is unchanged. The static graph has the same blind spots
+and also misses dynamic imports with computed specifiers, so the first changed-file run
+in a new worktree is a little less complete than later ones.
+
+`pnpm build:packages` (which `pnpm test` runs first) skips compiling workspace packages
+when their sources, build script, and compiler are unchanged and `dist` is intact.
+
+Vitest also supports [`related --run <source-files>`](https://vitest.dev/guide/cli#vitest-related)
+and dependency-aware watch mode. `pnpm test --changed` uses Git to provide the source
+inputs automatically and exits after one run.
+
+To reduce main-process rebuild CPU and memory when you do not need its source maps,
+set `HELIX_DEV_MAIN_SOURCEMAPS=0` before `pnpm dev`. In Bash/zsh:
+
+```bash
+HELIX_DEV_MAIN_SOURCEMAPS=0 pnpm dev
+```
+
+In PowerShell, use `$env:HELIX_DEV_MAIN_SOURCEMAPS='0'` before `pnpm dev`.
+Remove the variable when debugging the main process with source maps. Renderer and
+preload settings are unaffected; production builds always keep their hidden main maps.
+
+`pnpm dev` serves the renderer with Vite's bundled dev mode: a few bundled chunks instead of
+thousands of module requests, so the first render and full reloads are faster. While a rebuild is
+pending, a newly opened pop-out, space, or web window may briefly get placeholder HTML. If the
+renderer misbehaves, set `HELIX_DEV_BUNDLED=0` (PowerShell: `$env:HELIX_DEV_BUNDLED='0'`) and report it.
+
+Local installs use pnpm's global virtual store: each package version is one slot
+under `~/pnpm/store` that every worktree links to, instead of a full `node_modules` per worktree.
+An existing worktree converts on its next `pnpm install`, and an older branch without the setting
+converts back the same way. CI always uses the normal layout. On Windows, pnpm links with
+junctions when you lack the symlink privilege, so no administrator rights or Developer Mode are
+needed. Things to know:
+
+- Keep `~/node_modules` (and any other `node_modules` above the store) out of your home
+  directory. Node resolves upward from the store slot, so a stray one there supplies
+  dependencies the package never declared and hides missing-dependency bugs; `pnpm install` warns
+  when it finds one.
+- Native addons are never rebuilt in place in a shared slot: each CPU gets its own build
+  beside it (see [`native-build-entry.cjs`](../config/scripts/native-build-entry.cjs)), so
+  cross-arch packaging is safe for other worktrees.
+- `HELIX_PNPM_GLOBAL_VIRTUAL_STORE=0` opts out. Keep it set
+  in your shell: `pnpm run` re-checks the install and relinks a worktree whose layout no longer
+  matches.
+
+Ordinary installs include native optional dependencies for the current OS and CPU only.
+Before a cross-architecture build (including `pnpm build:mac`, which produces both x64 and
+arm64 artifacts by default), run `pnpm install:release` to add the other CPU's variants.
+
+Linux `pnpm build`, `pnpm build:native`, and Linux packaging require a running Docker
+daemon to build the clipboard helper against Ubuntu 20.04 rather than the host's
+newer libraries. A verified cached helper can be reused without Docker. For native
+Wayland development, run `pnpm build:native` before `pnpm dev` to make text copying
+available. See the [clipboard build guide](../native/wayland-clipboard/README.md#building-and-testing).
+macOS and Windows builds do not use this helper or require Docker for it.
+
+## Branch Naming
+
+Use a clear, descriptive branch name that reflects the change.
+
+Good examples:
+
+- `fix/ctrl-backspace-delete-word`
+- `feat/shift-enter-newline`
+- `chore/update-contributor-guide`
+
+Avoid vague names like `test`, `misc`, or `changes`.
+
+## Before Opening a PR
+
+Run the same checks that CI runs:
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+For repeated local typechecks, use `pnpm tc` (or `pnpm tc:node`, `pnpm tc:web`,
+and `pnpm tc:cli`). On Apple Silicon macOS and x64/arm64 Linux, these use the pinned
+`tsrs` compiler with incremental caches. Keep `.cache/typecheck/` between checks;
+delete it to force a fresh check. Caches are separate for each project, compiler
+version, and worktree. At most two projects run together, subject to the memory budget.
+Windows, Intel macOS, and other unsupported platforms use pinned Bun automatically.
+Pass `--compiler=bun` to explicitly use Bun, or `--compiler=native` to use TypeScript.
+CI uses `pnpm typecheck:ci`, which explicitly selects Bun and its CI concurrency.
+Shared tests are checked by the
+Node project; shared production code is checked in all three environments.
+Run `pnpm tc:node` after editing shared tests, or `pnpm tc` to check everything.
+
+Add high-quality tests for behavior changes and bug fixes. Prefer tests that would actually catch a regression, not shallow coverage that only exercises the happy path.
+
+If your change affects UI or interaction behavior, verify it on the platforms it could impact.
+
+## Type Declarations: Prefer `.ts` Over `.d.ts`
+
+Project-owned type declarations belong in `.ts` files. `.d.ts` is reserved for ambient shims (e.g., `env.d.ts`, `vite/client.d.ts`). TypeScript's `skipLibCheck: true` setting applies globally, including to our own `.d.ts` files, which means any unresolved type reference in a `.d.ts` silently becomes `any` at its call sites. Write your types in `.ts` files so the compiler actually checks them.
+
+CI enforces this for `src/preload/` and `src/shared/`.
+
+## Pull Requests
+
+Each pull request follows [`.github/pull_request_template.md`](./pull_request_template.md):
+
+- outside contributors link the issue the PR addresses
+- open with a plain-language summary; the PR title is the one-liner
+- explain what changed and why, and keep each PR to a single topic
+- attach before and after screenshots for UI or interaction changes, or write `N/A` with a reason
+- add tests when behavior changes or a bug is fixed
+- note any platform-specific, SSH/HPC-specific or agent-specific behavior and how you tested it
+- fill in the research and data impact checklist
+
+## Release Process
+
+Version bumps, tags, and releases are maintainer-managed. Do not include release version changes in a normal contribution unless a maintainer asks for them.
+
+### Cutting a release (maintainers)
+
+All releases are cut from the **Cut Release** GitHub Actions workflow. There is no local `pnpm release:*` script — running releases locally is too easy to get wrong (dirty tree, wrong branch, stale main).
+
+**To cut a release:**
+
+1. Open [Actions → Cut Release](../../actions/workflows/release-cut.yml).
+2. Click **Run workflow** and pick:
+   - **kind**: one of `rc`, `patch`, `minor`, `major`.
+   - **ref**: the branch, tag, or SHA to build from. Defaults to `main`.
+3. Run it.
+
+The workflow resolves the next version from GitHub Releases, bumps `package.json`, tags, pushes, and runs the multi-platform build + publish inline.
+
+**How the next version is chosen:**
+
+All stable kinds (`patch`, `minor`, `major`) are computed off the latest _stable_ release, ignoring any RCs in between.
+
+- `kind=rc` + last tag was stable (e.g. `v1.3.14`) → `v1.3.15-rc.0`.
+- `kind=rc` + active RC series (e.g. `v1.3.15-rc.2`) → `v1.3.15-rc.3`.
+- `kind=patch` + latest stable `v1.3.14` → `v1.3.15` (regardless of any intermediate RCs).
+- `kind=minor` + latest stable `v1.3.14` → `v1.4.0`.
+- `kind=major` + latest stable `v1.3.14` → `v2.0.0`.
+
+**Safety guarantees:**
+
+- Stable releases are refused if the new version isn't strictly greater than the latest published stable. This is the only rule `electron-updater` actually needs — it compares semver within the `latest` channel, so a regressing stable is the one thing that breaks auto-update for fresh installs.
+- Complete RC draft releases created by the release workflow are published before cutting a new tag only when the draft tag was built from the current release ref. Stale drafts are skipped so fixes cut a fresh RC instead of exposing old artifacts.
+- If the latest RC tag exists but is still draft-only or missing its GitHub Release, the workflow resumes that tag only when it was built from the current release ref. Otherwise the next RC number is cut.
+- RC numbering also considers release commits on `main`, so deleting a stale tag does not let a later cut reuse the same RC number.
+- Off-main releases (when `ref` is not the tip of `main`) only push the tag. `main` is never mutated from a non-main ref, so you can safely release an older commit without polluting history.
+- When `ref` is the tip of `main`, the workflow tries to fast-forward the version-bump commit onto `main`. If main requires pull requests, it leaves main unchanged and pushes only the release tag. Other push errors still stop the cut.
+
+**Common scenarios:**
+
+- **Normal release:** `kind=patch`, `ref=main`.
+- **"A bad commit just landed on main, release the commit before it":** `kind=patch`, `ref=<good-sha>`. `main` is left alone; the tag points at the good SHA. Fix forward on `main` afterward.
+- **One-off RC for a feature branch:** `kind=rc`, `ref=<branch-or-sha>`. Produces an RC tag that does not touch `main`.
+- **Minor or major bump:** `kind=minor` or `kind=major`.
+
+The scheduled 2x/day RC cron in [`release-rc.yml`](../../actions/workflows/release-rc.yml) is independent and continues to run automatically from `main`.
+
+## Release Channels
+
+Helix has no published builds yet. Stable and release-candidate Homebrew casks live in [`Casks/`](../Casks) and will be published from a tap once the first release ships.

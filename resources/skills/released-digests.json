@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "skills": {
+    "computer-use": [
+      "e0f06b68428ce5241f93d91045379c9027106fba7f2ced7c1b3f2c241f432cba"
+    ],
+    "helix-cli": [
+      "98384f263fb78d89ae90cd30147d1fb2b4975e41bc6bb0b9e93d2c3aa5317b6d"
+    ],
+    "helix-emulator": [
+      "ba8c9c08e96c8f61d3df358f9ec5f2a36f8be156b79c74867515f660bff1304e"
+    ],
+    "helix-emulator-android": [
+      "ef5c412e94ce77e8283de34c7cdbfb9e6c5508be781de67f6cbfa2b417a30fe3"
+    ],
+    "helix-jira": [
+      "8d136a3b439f2d79b50bab63797f2b397ad1f598329b67a4d51810b5ddc18b80"
+    ],
+    "helix-linear": [
+      "a3417824f438a74ffdefaa8a57a013c954d7db456cb65087dbd3e4f491a4f2c8"
+    ],
+    "helix-per-workspace-env": [
+      "a7beaf4d4818b47ee037a4597450044583f4be8e4cbbff97de2f30e32ad89bfe"
+    ],
+    "jira-tickets": [
+      "1fa4350a295cade72cc33759c99cfd6520cfd6a4b07955e8e4c2ea01dec106de"
+    ],
+    "linear-tickets": [
+      "031b0c6f7e7d74b4fe7e1554199c58419106da924a890a4bf59f3081c0a1350c"
+    ],
+    "orchestration": [
+      "6449693ef8cb063ee7ecd03e74cf8889f5b00fb2f2ac25430efbf909937c6c1a"
+    ]
+  }
+}

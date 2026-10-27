@@ -1,0 +1,411 @@
+---
+title: Helix CLI reference
+description: Commands, selectors, and agent-friendly patterns for driving Helix from a shell.
+---
+
+import { Callout } from '@/components/docs/prose'
+
+The `helix` CLI talks to a running Helix runtime. Use it when a shell script or agent needs to inspect worktrees, launch terminals, open files, automate the built-in browser, or report progress back into Helix.
+
+## Verify the runtime
+
+Register the CLI under [Settings → General → Helix CLI](/docs/settings), then check that it can reach Helix.
+
+<Callout title="On Linux the command is helix-ide">
+  The Helix text editor is packaged as `/usr/bin/helix` on some distributions, so Helix's Linux CLI
+  installs as `helix-ide`. Do not check for it with `command -v helix`: where the editor is
+  installed, that resolves to the editor, not to Helix. This page writes `helix` throughout — read
+  it as `helix-ide` on Linux. See [Install → Linux](/docs/install#linux).
+</Callout>
+
+On macOS and Windows:
+
+```bash
+command -v helix
+helix status --json
+```
+
+On Linux:
+
+```bash
+command -v helix-ide
+helix-ide status --json
+```
+
+If Helix is not already running:
+
+```bash
+helix open --json
+helix status --json
+```
+
+Use `--json` when another tool will parse the result. Human-readable output is for quick terminal checks.
+
+## Selectors
+
+Most commands accept selectors instead of requiring long IDs:
+
+```bash
+helix repo show --repo id:<repoId> --json
+helix worktree show --worktree active --json
+helix worktree show --worktree path:/abs/path/to/worktree --json
+helix worktree show --worktree branch:feature-name --json
+helix worktree show --worktree issue:123 --json
+```
+
+`active` and `current` resolve to the enclosing Helix-managed worktree from the shell's current directory or terminal context. Use explicit selectors in scripts that may run outside the target worktree. For remote runtimes, prefer full server-side selectors such as `id:<repoId>::<absolute-worktree-path>` or `path:<absolute-server-path>` because the local shell's current directory may not exist on the runtime host.
+
+## Choose a host
+
+List every machine the current Helix host can target and the selector for each one:
+
+```bash
+helix host list --json
+```
+
+The result includes this machine, its registered [SSH targets](/docs/ssh), and paired [Remote Helix Servers](/docs/remote-servers). Use `--host local` for this machine, `--host ssh:<target-id>` for an SSH target, and `--environment <server-name>` for a paired server. SSH rows include the detected remote platform (`linux`, `darwin`, or `win32`) after the target connects; older or disconnected targets report `platform unknown`. They also include `connected` and, when known, the SSH lifecycle `connectionStatus`. If you put a machine name on the wrong selector, Helix reports the matching machine and the flag to use instead of returning an empty result.
+
+`--host` also takes the bare name shown in the `name` column, on either axis — `--host trader-local` reaches the same machine as `--host ssh:ssh-1783599077486-fyasux`. Names resolve only when they are unique: a name held by two SSH targets, by two paired servers, or by one of each is refused, and the error hands back the id form for each candidate — `--host ssh:<target-id>` for an SSH target and `--host runtime:<environment-id>` for a paired server. Use those to settle it, since `--environment <server-name>` cannot separate two servers sharing a name.
+
+## Runtime commands
+
+```bash
+helix open --json
+helix status --json
+helix serve --port 6768 --pairing-address 100.64.1.20 --json
+```
+
+`helix serve` starts a runtime server in the foreground without opening the desktop window. Use it for [Remote Helix Servers](/docs/remote-servers) or headless environments, and stop it with `Ctrl-C`.
+
+## Repos
+
+```bash
+helix repo list --json
+helix repo add --path /abs/path/to/repo --json
+helix repo show --repo id:<repoId> --json
+helix repo set-base-ref --repo id:<repoId> --ref origin/main --json
+helix repo search-refs --repo id:<repoId> --query main --limit 10 --json
+```
+
+Set the repo base ref before creating lots of worktrees so new tasks branch from the right place by default.
+
+## Worktrees
+
+```bash
+helix worktree list --repo id:<repoId> --json
+helix worktree ps --json
+helix worktree current --json
+helix worktree show --worktree active --json
+helix worktree create --repo id:<repoId> --name fix-login --json
+helix worktree create --name child-task --agent codex --prompt "Investigate the flaky login test" --json
+helix worktree set --worktree active --comment "reproduced failure; testing token refresh fix" --json
+helix worktree set --worktree active --workspace-status in-review --unread --json
+helix worktree rm --worktree id:<worktreeId> --force --json
+```
+
+When `worktree create` runs from inside an Helix-managed worktree, Helix records the new worktree as a child when it can infer the relationship. Pass `--parent-worktree active` to be explicit, or `--no-parent` when the new work is independent.
+
+`worktree set --unread` puts the unread dot on the workspace in the sidebar, the same one Helix shows when an agent finishes; `--read` clears it.
+
+Agent startup flags:
+
+```bash
+helix worktree create --name review-api --agent claude --setup run --json
+helix worktree create --name quick-check --agent codex --prompt "Summarize the diff" --setup skip --json
+helix worktree create --name hidden-setup --setup inherit --json
+```
+
+`--agent` launches the selected agent in the first terminal. `--prompt` sends initial work to that agent. `--setup run|skip|inherit` controls repo setup hooks; `inherit` follows the repo policy.
+
+Link issues and reviews using the existing workspace metadata:
+
+```bash
+helix worktree create --repo id:<repoId> --name review-task --pr 123 --json
+helix worktree create --repo id:<repoId> --name gitlab-task --gitlab-issue 42 --gitlab-mr 77 --json
+helix worktree set --worktree active --gitlab-issue '#42' --gitlab-mr '!77' --json
+helix worktree set --worktree active --gitlab-issue https://gitlab.example.com/group/project/-/work_items/42 --json
+helix worktree set --worktree active --pr null --gitlab-mr null --json
+```
+
+`--pr` is a GitHub pull request number. `--gitlab-issue` accepts an issue number or `#42`; `--gitlab-mr` accepts a merge request number or `!77`. Numbers must be positive safe integers. The GitLab flags also accept HTTP(S) issue or merge request URLs, including self-hosted instances and nested groups. The URL's host and project must match the workspace's stored GitLab source context or the repository's stored remote. If that identity is missing or different, the command fails before updating metadata. A URL cannot choose another project, change the checkout, or fetch a review branch.
+
+Omitting a flag leaves its link unchanged. On `set`, literal `null` clears only the named link; `create` refuses `null`. Each provider has separate fields, so setting a GitLab issue or merge request preserves GitHub and Linear links.
+
+Folder-based repositories can store numeric links through these commands, but a number does not supply a provider host or project. Without existing source context or a stored remote, pasted GitLab URLs are refused and provider details or clickable links may be unavailable. These flags use fields already supported by the runtime; an older runtime that predates a field may ignore it, so check `worktree show --json` after writing to an older host.
+
+## Ports
+
+```bash
+helix ports --json
+helix ports --worktree branch:feature/login --json
+helix ports --all
+```
+
+`ports` lists the listening ports Helix tied to a workspace, from the host the workspace runs on. It defaults to the workspace that contains the current directory. Each row has `port`, `pid`, `processName`, `connectHost`, `protocol`, how Helix matched it (`owner.confidence`: `cwd` or `command`), and `advertisedUrl` when the dev server printed one in an Helix terminal. `--all` lists every listener on that host. Native folder workspaces need `--all`, because Helix does not tie ports to them. If `unavailableReason` is set, the scan could not run on that host; SSH workspaces opened directly from the desktop report this for now, while a workspace on a managed Helix server is scanned on that server.
+
+## References
+
+A workspace can link multiple reviews and issues, including sources outside its repository.
+
+```bash
+helix reference list --worktree name:api --json
+helix reference add https://github.com/acme/api/pull/5123 https://linear.app/acme/issue/BIO-1234 --worktree name:api --json
+helix reference remove https://github.com/acme/api/pull/5123 --worktree name:api --json
+helix reference remove --key '<key-from-list>' --worktree name:api --json
+helix worktree create --name fix --reference https://github.com/acme/api/pull/5123 --reference https://linear.app/acme/issue/BIO-1234 --json
+helix reference find --json
+```
+
+- **Writes:** full URLs only; no custom shorthand. `remove --key` supports older entries without URLs. Source-unknown legacy links cannot match an exact URL; native issue keys remain searchable when stored. Duplicate adds and absent removals are no-ops. Unrelated links and current selection are preserved. Older hosts without safe delta merging refuse writes.
+- **Create:** repeat `--reference`; incompatible with `--pr`, `--issue`, `--linear-issue`, `--gitlab-issue`, and `--gitlab-mr`. References persist before setup or agent startup.
+- **Find:** a full URL or native issue key; bare numbers are rejected. Keys search all matching sources. Reads stored metadata, without provider requests or conversation searches. Use `helix search` for conversation text.
+- **Scope:** `--worktree` selects a worktree or folder workspace. Find also accepts `--repo` instead, plus `--include-archived` and `--limit` (default 50 workspaces). `truncated: true` means more matched. Remote selectors refer to the execution host; `current` is local only.
+- **Output:** list returns `references` with opaque `key` and `selected`; writes also return `changes`. Worktree show/list/ps retain `linkedItems`. Find returns workspace matches and agents with `linked`, `liveness`, and available `terminal`/`mailbox` addresses. `linked: false` means ownership is unknown; sharing a workspace is insufficient evidence.
+
+Choose an agent from `find`, then use its exact address:
+
+```bash
+helix terminal send --terminal '<terminal-from-find>' --text 'Status?' --enter
+helix orchestration send --to '<mailbox-from-find>' --subject 'Status?' --type question
+```
+
+Mailboxes are `dispatch:<id>` or `helix_session_id:<id>`; a `run:<id>` addresses a coordinator. Find never sends messages or assigns ownership. Adding references from a shell does not associate that shell with an agent.
+
+## Terminals
+
+```bash
+helix terminal list --worktree active --json
+helix terminal show --terminal <handle> --json
+helix terminal read --terminal <handle> --json
+helix terminal read --terminal <handle> --screen --json
+helix terminal read --terminal <handle> --cursor <cursor> --limit 1000 --json
+helix terminal send --terminal <handle> --text "continue" --enter --json
+helix terminal wait --terminal <handle> --for tui-idle --timeout-ms 300000 --json
+helix terminal create --worktree active --title "tests" --command "npm test" --json
+helix terminal split --terminal <handle> --direction horizontal --command "npm run dev" --json
+helix terminal rename --terminal <handle> --title "runner" --json
+helix terminal set-pane-title --terminal <handle> --title "reviewer" --json
+helix terminal switch --terminal <handle> --json
+helix terminal close --terminal <handle> --json
+helix terminal close --worktree active --all --json
+```
+
+Omit `--terminal` to target the active terminal in the current worktree. Read before sending when you are not sure what the terminal is waiting for.
+
+Close stops the process as part of removing the terminal. Use `--terminal <handle>` for one
+terminal, or `--worktree <selector> --all` to durably close every terminal in exactly that
+workspace, including its saved layouts and agent-resume records. Use workspace Sleep when those
+terminals should resume later. If the execution host cannot confirm that every PTY stopped, bulk
+close returns a failing `unverifiable` result rather than claiming the processes exited.
+`terminal stop` remains only for compatibility with older tooling.
+
+<Callout title="Terminal handles">
+  Terminal handles are runtime-scoped. If Helix restarts or a command reports a stale terminal
+  handle, run `helix terminal list --json` and reacquire the handle.
+</Callout>
+
+`terminal list` reports each terminal's `executionHostId` when Helix can verify it, plus a result-level `hostScope` with covered and omitted host IDs. Treat a missing host identity or scope as **unverifiable**, not local. A missing terminal is evidence that it exited only when its execution host is listed in `hostScope.hostIds`.
+
+By default, `terminal read` returns the accumulated output stream with terminal escapes stripped. Programs that redraw lines can therefore appear as stacked fragments. Use `--screen` when you need the currently rendered frame; the response's `source` identifies `stream`, `screen`, or `screen-unavailable`. Screen reads have no history to page, so `--screen` and `--cursor` are mutually exclusive.
+
+For long output, use cursor reads. Save `nextCursor` from one stream read, then pass it back with `--cursor` to fetch only new output.
+
+## Files
+
+```bash
+helix file open src/App.tsx --worktree active --json
+helix file open src/App.tsx --line 42 --column 7 --worktree active --focus --json
+helix file diff src/App.tsx --staged --worktree active --json
+helix file open-changed --mode both --worktree active --json
+```
+
+Paths are relative to the selected worktree. `--line` and `--column` are 1-based; a column requires a line. Positions are applied when you select the file, or immediately with `--focus`. Markdown switches to source view for positioning. Older hosts open the file without positioning. `open-changed` reads git status and opens changed files in edit, diff, or both modes. Tabs open without changing what you are looking at; pass `--focus` to be brought to them.
+
+## Built-in browser
+
+Browser commands control Helix's embedded browser tab for the selected worktree. They do not control Chrome, Safari, or the Helix desktop UI.
+
+Use a snapshot -> act -> snapshot loop:
+
+```bash
+helix goto --url http://localhost:3000 --worktree active --json
+helix snapshot --worktree active --json
+helix click --element @e3 --worktree active --json
+helix fill --element @e1 --value "user@example.com" --worktree active --json
+helix wait --text "Welcome" --worktree active --json
+helix screenshot --worktree active --json
+```
+
+Refs such as `@e3` come from `snapshot`. Re-snapshot after navigation, tab switches, clicks that change the page, and any stale-ref error.
+
+Tab and capture commands:
+
+```bash
+helix tab list --worktree active --json
+helix tab create --url http://localhost:3000 --worktree active --json
+helix tab switch --index 1 --worktree active --json
+helix capture start --worktree active --json
+helix console --limit 50 --worktree active --json
+helix network --limit 50 --worktree active --json
+helix full-screenshot --worktree active --json
+helix pdf --worktree active --json
+```
+
+Use `helix exec --command "<agent-browser command>" --json` only for browser actions that do not have a typed Helix command yet.
+
+Browser device emulation:
+
+```bash
+helix set device --name "iPhone 12" --worktree active --json
+helix screenshot --worktree active --json
+```
+
+## Desktop computer use
+
+Use `helix computer` for native desktop apps outside the built-in browser:
+
+```bash
+helix computer permissions --json
+helix computer list-apps --json
+helix computer get-app-state --app com.apple.Safari --json
+helix computer click --app com.apple.Safari --element-index 12 --json
+helix computer paste-text --app com.apple.Safari --text "hello" --json
+```
+
+See [Computer use](/docs/cli/computer-use) for the full workflow and permission setup.
+
+## Linear
+
+The `helix linear` surface is what agents use via the `helix-linear` skill (legacy install name `linear-tickets` still works). Prefer `--json`. Linked worktrees resolve with `--current`.
+
+### Read
+
+```bash
+helix linear issue --current --full --json
+helix linear issue ENG-123 --comments --children --relations --activity --json
+helix linear search "auth bug" --workspace all --json
+helix linear list --filter assigned --limit 10 --json
+helix linear list-issues --team ENG --state started --assignee me --json
+helix linear list-issues --query auth --updated-at -P7D --cursor <cursor> --workspace <id> --json
+helix linear team list --json
+helix linear team states --team ENG --json
+helix linear team labels --team ENG --json
+helix linear project list --query launch --json
+```
+
+`--full` expands comments, children, attachments, relations, and activity. Section flags (`--comments`, `--children`, `--attachments`, `--relations`, `--activity`) work individually.
+
+### MCP-style write
+
+```bash
+# Create or update (omit id/--current to create; requires --team and --title on create)
+helix linear save-issue --team ENG --title "Fix auth" --priority high --json
+helix linear save-issue ENG-123 --state "In Progress" --assignee me --json
+helix linear save-issue --current --project null --due-date null --json
+
+helix linear relation add ENG-1 --related ENG-2 --type blocks --json
+helix linear relation remove ENG-1 --related ENG-2 --type related --json
+```
+
+`save-issue` labels **replace** the full label set (Linear MCP `save_issue` semantics). Literal `null` clears assignee, estimate, due date, project, or parent.
+
+### Field helpers (still valid)
+
+```bash
+helix linear status set --current --to "In Progress" --json
+helix linear assignee set --current --me --json
+helix linear priority set ENG-123 --to high --json
+helix linear estimate set --current --to 3 --json
+helix linear due-date set --current --to 2026-08-01 --json
+helix linear label add --current --label backend --json
+helix linear comment add --current --body "Investigating regression" --json
+helix linear attach --current --url https://example.com/repro --title "Repro" --json
+helix linear create --title "Flaky login test" --team ENG --priority high --json
+```
+
+Run `helix linear --help` or `helix skills get helix-linear` for the version-matched list. Pass an explicit issue id (e.g. `ENG-123`) when a script may run outside an Helix-linked worktree.
+
+## Skills (local, no runtime required)
+
+List bundled guides, print a version-matched guide, or install/update hybrid skill packages without the desktop Settings UI:
+
+```bash
+helix skills list
+helix skills get helix-cli
+helix skills get orchestration --references
+helix skills get orchestration --reference recovery-and-cleanup
+helix skills get orchestration --full
+helix skills install --skill helix-cli --skill orchestration
+helix skills install --all --dry-run
+helix skills update --all
+```
+
+`install` / `update` run Helix's own skill installer on the machine that runs them, the same planner the app's **Update skills** uses. They do not contact the Helix runtime or need `npx`. See [Helix skills](/docs/cli/skills#keep-skills-up-to-date).
+
+## Account (host-local runtime)
+
+On a headless host running Helix (`helix serve` or the desktop app), add managed Claude/Codex accounts when the remote client cannot use **Add account** (remote runtime scope disables that button):
+
+```bash
+helix account list
+helix account add                 # Claude by default
+helix account add --agent codex
+```
+
+`account add` runs `claude login` / `codex login` in **this** terminal on the host, then registers the captured credentials with the local runtime. Codex uses device authorization so the browser can finish on another machine. Run these on the machine that owns the accounts — not through a client-only remote session.
+
+## Artifacts
+
+Publish HTML or Markdown through the signed-in Helix account. Viewing a public link does not require sign-in; create/list/update/delete do. **Publishing is off by default** — a human must enable **Settings → Artifacts → Allow publishing public artifact links** on the device. There is no CLI flag that grants the gate. `list`, `unshare`, and `delete` stay available so you can audit or revoke links after turning publishing off.
+
+```bash
+helix artifacts share ./report.html --json
+helix artifacts share ./notes.md --json
+helix artifacts update ./notes.md --json
+helix artifacts unshare ./notes.md --json
+helix artifacts list --json
+helix artifacts list --cursor <cursor> --json
+helix artifacts delete <id> --json
+```
+
+- Accepted files: `.html`, `.htm`, `.md`, `.markdown`.
+- `share` stores the edit token in the active Helix profile and does not print it. `update` / `unshare` resolve by the same local path and profile that originally shared the file.
+- `list` is paged (`nextCursor` → `--cursor`). `delete` takes the artifact id from `list` and does not need the original file.
+- Relative HTML assets are not uploaded — share self-contained HTML or absolute asset URLs.
+- Denied publish/update fails with `artifact_sharing_disabled`; fix Settings instead of retrying.
+- Headless Helix servers have no Helix cloud sign-in, so artifact and skill-sharing commands there fail with `sharing_unavailable_on_host`; share from the desktop app.
+- Desktop: open a local HTML or Markdown file and use **Share as artifact**, or manage links from the sidebar **Artifacts** page.
+
+## Automations, environments, and hooks
+
+Scheduled prompts:
+
+```bash
+helix automations list --json
+helix automations create --name "Daily review" --trigger daily --time 09:00 --prompt "Review open changes" --provider codex --repo id:<repoId> --disabled --json
+helix automations run <automationId> --json
+```
+
+Remote runtime environments:
+
+```bash
+helix environment add --name work-laptop --pairing-code "helix://pair?code=..." --json
+helix environment list --json
+helix environment rm --environment <selector> --json
+```
+
+Agent status hooks:
+
+```bash
+helix agent hooks status --json
+helix agent hooks on --json
+helix agent hooks off --json
+```
+
+## Agent habits
+
+- Prefer `--json` for automation and agent calls.
+- Prefer selectors over parsing UI labels.
+- Read terminal state before sending input unless the next input is obvious.
+- Use worktree comments for progress checkpoints. See [Worktree checkpoints](/docs/cli/worktree-checkpoints).
+- Use [Orchestration](/docs/cli/orchestration) for tracked multi-agent dispatches instead of ad hoc terminal prompts.

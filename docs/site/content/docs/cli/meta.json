@@ -1,0 +1,13 @@
+{
+  "title": "Helix CLI & Skills",
+  "defaultOpen": true,
+  "pages": [
+    "overview",
+    "reference",
+    "orchestration",
+    "automations",
+    "computer-use",
+    "worktree-checkpoints",
+    "skills"
+  ]
+}

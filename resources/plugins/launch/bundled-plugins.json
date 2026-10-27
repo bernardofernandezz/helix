@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "plugins": [
+    {
+      "pluginKey": "bernardofernandezz.helix-navigation-shortcuts",
+      "path": "bernardofernandezz.helix-navigation-shortcuts",
+      "contentHash": "a0a911ccc562451ce65ed8865e4e1b429b1709d2ea49adc5374f495647f25284"
+    }
+  ]
+}
