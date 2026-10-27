@@ -136,7 +136,7 @@ describe('mobile E2EE v2 physical channel', () => {
     expect(JSON.parse(new TextDecoder().decode(plaintext))).toEqual({
       type: 'e2ee_auth',
       v: 2,
-      transcriptHashB64: '0MsOjvXsuyjwleiCNSASug/uFkz8+rYlIfG2h2p5OPk=',
+      transcriptHashB64: 'jzuHZ5g/10yhIP+GXZWYLoGp8ZpLf4LPL5qkuGtkCV4=',
       deviceToken: 'valid-token'
     })
     expect(ctx.onAuthenticated).toHaveBeenCalledOnce()

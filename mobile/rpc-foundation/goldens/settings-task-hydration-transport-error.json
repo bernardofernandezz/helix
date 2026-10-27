@@ -300,13 +300,6 @@
         "kind": "unknown"
       }
     },
-    "7d8029e889cf": {
-      "name": "projectRepoNotInHelix",
-      "ordinal": 27,
-      "value": {
-        "$rpc": "null"
-      }
-    },
     "8413a71cd880": {
       "name": "error",
       "ordinal": 53,
@@ -355,6 +348,13 @@
       "name": "showProviderPicker",
       "ordinal": 10,
       "value": false
+    },
+    "8b902811f764": {
+      "name": "projectRepoNotInHelix",
+      "ordinal": 27,
+      "value": {
+        "$rpc": "null"
+      }
     },
     "8d124d8922c8": {
       "name": "showGitHubProjectViewPicker",
@@ -693,7 +693,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -760,7 +760,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
