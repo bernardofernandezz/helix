@@ -19016,11 +19016,11 @@
         "pairHost": "Pair a host to view agent chat history.",
         "notAgent": {
           "title": "No conversation here",
-          "subtitle": "This terminal is not running a recognized coding agent."
+          "subtitle": "This terminal is not running a recognized agent."
         },
         "empty": {
           "title": "Start a chat with {{value0}}",
-          "subtitle": "Ask {{value0}} to inspect code, explain output, or make a change."
+          "subtitle": "Ask {{value0}} to search the literature, explore a dataset, or run an analysis."
         }
       },
       "stop": "Stop the agent",
@@ -20900,6 +20900,26 @@
           "jira": "jira",
           "linear": "linear",
           "github": "github"
+        }
+      }
+    },
+    "nativeChat": {
+      "suggestions": {
+        "literature": {
+          "label": "Search the literature",
+          "prompt": "Search PubMed for recent papers on "
+        },
+        "dataset": {
+          "label": "Summarize a dataset",
+          "prompt": "Summarize the tables in this project: columns, sample counts and missing values."
+        },
+        "variants": {
+          "label": "Annotate variants",
+          "prompt": "Annotate the variants in the VCF files of this project with gene and predicted impact."
+        },
+        "protein": {
+          "label": "Look up a protein",
+          "prompt": "Look up this protein in UniProt and summarize its function: "
         }
       }
     }

@@ -9,7 +9,7 @@ export const NATIVE_CHAT_EMPTY_STATE_COPY = {
   },
   empty: {
     title: 'Start a chat with {{value0}}',
-    subtitle: 'Ask {{value0}} to inspect code, explain output, or make a change.'
+    subtitle: 'Ask {{value0}} to search the literature, explore a dataset, or run an analysis.'
   },
   /** A chat whose conversation the host has not found: new, or not reported by the agent. */
   notFound: {
@@ -23,7 +23,7 @@ export const NATIVE_CHAT_EMPTY_STATE_COPY = {
   },
   notAgent: {
     title: 'No conversation here',
-    subtitle: 'This terminal is not running a recognized coding agent.'
+    subtitle: 'This terminal is not running a recognized agent.'
   }
 } as const satisfies Record<string, NativeChatEmptyStateCopy>
 

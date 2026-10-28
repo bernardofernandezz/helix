@@ -80,8 +80,18 @@ export const FEATURE_WALL_SETUP_STEPS: readonly FeatureWallSetupStep[] = [
 
 export const FEATURE_WALL_SETUP_STEP_IDS = FEATURE_WALL_SETUP_STEPS.map((step) => step.id)
 
-export function getFeatureWallSetupSteps(): readonly FeatureWallSetupStep[] {
-  return FEATURE_WALL_SETUP_STEPS
+// Worktree, multi-repo, setup-script and task-tracker steps only serve developer workflows.
+const ADVANCED_ONLY_SETUP_STEP_IDS: ReadonlySet<FeatureWallSetupStepId> = new Set([
+  'two-worktrees',
+  'task-sources',
+  'setup-script',
+  'add-two-repos'
+])
+
+export function getFeatureWallSetupSteps(advancedMode: boolean): readonly FeatureWallSetupStep[] {
+  return advancedMode
+    ? FEATURE_WALL_SETUP_STEPS
+    : FEATURE_WALL_SETUP_STEPS.filter((step) => !ADVANCED_ONLY_SETUP_STEP_IDS.has(step.id))
 }
 
 export function getFeatureWallSetupSectionId(
@@ -95,25 +105,29 @@ export function getFeatureWallSetupSectionId(
 }
 
 export function getFeatureWallSetupStepsForSection(
-  sectionId: FeatureWallSetupSectionId
+  sectionId: FeatureWallSetupSectionId,
+  advancedMode: boolean
 ): readonly FeatureWallSetupStep[] {
-  return FEATURE_WALL_SETUP_STEPS.filter(
+  return getFeatureWallSetupSteps(advancedMode).filter(
     (step) => getFeatureWallSetupSectionId(step.id) === sectionId
   )
 }
 
 export function getFirstIncompleteFeatureWallSetupStepId(
-  stepDone: Partial<Record<FeatureWallSetupStepId, boolean>>
+  stepDone: Partial<Record<FeatureWallSetupStepId, boolean>>,
+  advancedMode: boolean
 ): FeatureWallSetupStepId {
   // Onboarding prioritizes Setup; durable definitions retain their original order.
-  const setupStep = getFeatureWallSetupStepsForSection('setup').find((step) => !stepDone[step.id])
+  const setupStep = getFeatureWallSetupStepsForSection('setup', advancedMode).find(
+    (step) => !stepDone[step.id]
+  )
   if (setupStep) {
     return setupStep.id
   }
-  const parallelStep = getFeatureWallSetupStepsForSection('parallel-work').find(
+  const parallelStep = getFeatureWallSetupStepsForSection('parallel-work', advancedMode).find(
     (step) => !stepDone[step.id]
   )
-  return parallelStep?.id ?? FEATURE_WALL_SETUP_STEPS[0].id
+  return parallelStep?.id ?? getFeatureWallSetupSteps(advancedMode)[0].id
 }
 
 export function isFeatureWallSetupStepId(value: unknown): value is FeatureWallSetupStepId {

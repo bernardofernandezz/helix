@@ -13,10 +13,13 @@ describe('settings setup guide progress', () => {
   }
 
   it('tracks the full setup checklist total', () => {
-    const progress = getSettingsSetupGuideProgress({
-      ready: true,
-      stepDone: {}
-    })
+    const progress = getSettingsSetupGuideProgress(
+      {
+        ready: true,
+        stepDone: {}
+      },
+      true
+    )
 
     expect(progress).toEqual({
       ready: true,
@@ -34,7 +37,7 @@ describe('settings setup guide progress', () => {
       'task-sources': true
     } satisfies Partial<Record<FeatureWallSetupStepId, boolean>>
 
-    expect(getSettingsSetupGuideProgress({ ready: true, stepDone })).toEqual({
+    expect(getSettingsSetupGuideProgress({ ready: true, stepDone }, true)).toEqual({
       ready: true,
       doneCount: 4,
       total: FEATURE_WALL_SETUP_STEPS.length,
@@ -44,10 +47,13 @@ describe('settings setup guide progress', () => {
 
   it('does not mark Settings complete for fresh users when only the browser step is incomplete', () => {
     expect(
-      getSettingsSetupGuideProgress({
-        ready: true,
-        stepDone: makePreBrowserDoneStepState()
-      })
+      getSettingsSetupGuideProgress(
+        {
+          ready: true,
+          stepDone: makePreBrowserDoneStepState()
+        },
+        true
+      )
     ).toEqual({
       ready: true,
       doneCount: FEATURE_WALL_SETUP_STEPS.length - 1,
@@ -61,7 +67,7 @@ describe('settings setup guide progress', () => {
       FEATURE_WALL_SETUP_STEPS.map((step) => [step.id, true])
     ) as Record<FeatureWallSetupStepId, boolean>
 
-    expect(getSettingsSetupGuideProgress({ ready: true, stepDone })).toEqual({
+    expect(getSettingsSetupGuideProgress({ ready: true, stepDone }, true)).toEqual({
       ready: true,
       doneCount: FEATURE_WALL_SETUP_STEPS.length,
       total: FEATURE_WALL_SETUP_STEPS.length,
@@ -69,13 +75,25 @@ describe('settings setup guide progress', () => {
     })
   })
 
-  it('preserves progress readiness for the sidebar row gate', () => {
-    const progress = getSettingsSetupGuideProgress({
-      ready: false,
-      stepDone: {
-        'two-worktrees': true
-      }
+  it('leaves developer steps out of the total while Advanced mode is off', () => {
+    expect(getSettingsSetupGuideProgress({ ready: true, stepDone: {} }, false)).toEqual({
+      ready: true,
+      doneCount: 0,
+      total: 4,
+      firstIncompleteStepId: 'notifications'
     })
+  })
+
+  it('preserves progress readiness for the sidebar row gate', () => {
+    const progress = getSettingsSetupGuideProgress(
+      {
+        ready: false,
+        stepDone: {
+          'two-worktrees': true
+        }
+      },
+      true
+    )
 
     expect(progress.ready).toBe(false)
     expect(progress.doneCount).toBe(1)

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import { Check } from 'lucide-react'
 import type {
   FeatureWallSetupStep,
@@ -266,8 +267,9 @@ export function FeatureWallSetupChecklist(
     activeStep?.id === 'two-worktrees' ||
     activeStep?.id === 'browser' ||
     activeStep?.id === 'add-two-repos'
-  const setupSteps = getFeatureWallSetupStepsForSection('setup')
-  const parallelWorkSteps = getFeatureWallSetupStepsForSection('parallel-work')
+  const advancedMode = useAdvancedMode()
+  const setupSteps = getFeatureWallSetupStepsForSection('setup', advancedMode)
+  const parallelWorkSteps = getFeatureWallSetupStepsForSection('parallel-work', advancedMode)
   const visualBreakpoint = isEmbedded ? 'xl' : 'sm'
   const visualGridClass =
     visualBreakpoint === 'xl'

@@ -7,6 +7,8 @@ const mocks = vi.hoisted(() => ({
   useSetupGuideProgress: vi.fn()
 }))
 
+vi.mock('@/hooks/use-advanced-mode', () => ({ useAdvancedMode: () => true }))
+
 vi.mock('../setup-guide/use-setup-guide-progress', () => ({
   useSetupGuideProgress: mocks.useSetupGuideProgress
 }))

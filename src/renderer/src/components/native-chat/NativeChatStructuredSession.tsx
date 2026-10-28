@@ -298,7 +298,7 @@ export function NativeChatStructuredSession(
             {...(readFailure?.named ? { headline: readFailure.text } : {})}
           />
         ) : viewState.kind === 'empty' ? (
-          <NativeChatEmptyPane slot={install.slot} agent={props.agent} />
+          <NativeChatEmptyPane slot={install.slot} agent={props.agent} session={props.sessionId} />
         ) : (
           <NativeChatRewindContext.Provider value={controller.rewind.surface}>
             <NativeChatHelixStopContext.Provider value={continuation.view}>
