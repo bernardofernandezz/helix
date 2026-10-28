@@ -1,5 +1,14 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react'
-import { AlertTriangle, ExternalLink, FolderPlus, GitBranchPlus, Star, X } from 'lucide-react'
+import {
+  AlertTriangle,
+  ExternalLink,
+  FlaskConical,
+  FolderPlus,
+  GitBranchPlus,
+  Star,
+  X
+} from 'lucide-react'
+import { startResearchProject } from '@/lib/research-project-start'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../store'
 import { isGitRepoKind } from '../../../shared/repo-kind'
@@ -267,10 +276,21 @@ export default function Landing(): React.JSX.Element {
                   'auto.components.Landing.9c00bd4adf',
                   'Select a workspace from the sidebar to begin.'
                 )
-              : translate('auto.components.Landing.cd21242762', 'Add a project to get started.')}
+              : translate(
+                  'auto.components.Landing.cd21242762',
+                  'Start a research project, or add an existing folder.'
+                )}
           </p>
 
           <div className="flex items-center justify-center gap-2.5 flex-wrap">
+            <button
+              className="inline-flex items-center gap-1.5 bg-primary text-primary-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-primary/90 transition-colors"
+              onClick={() => void startResearchProject()}
+            >
+              <FlaskConical className="size-3.5" />
+              {translate('helix.researchProject.new', 'New research project')}
+            </button>
+
             <button
               className="inline-flex items-center gap-1.5 bg-secondary/70 border border-border/80 text-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-accent transition-colors"
               onClick={() => openModal('add-repo')}
@@ -279,14 +299,16 @@ export default function Landing(): React.JSX.Element {
               {translate('auto.components.Landing.f9eaa9e12d', 'Add project')}
             </button>
 
-            <button
-              className="inline-flex items-center gap-1.5 bg-secondary/70 border border-border/80 text-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-accent transition-colors"
-              onClick={() => openModal('new-workspace-composer', { telemetrySource: 'unknown' })}
-            >
-              <GitBranchPlus className="size-3.5" />
-              {translate('auto.components.Landing.76a95f7f47', 'Create')}{' '}
-              {createTargetLabel.toLowerCase()}
-            </button>
+            {hasProjects && (
+              <button
+                className="inline-flex items-center gap-1.5 bg-secondary/70 border border-border/80 text-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-accent transition-colors"
+                onClick={() => openModal('new-workspace-composer', { telemetrySource: 'unknown' })}
+              >
+                <GitBranchPlus className="size-3.5" />
+                {translate('auto.components.Landing.76a95f7f47', 'Create')}{' '}
+                {createTargetLabel.toLowerCase()}
+              </button>
+            )}
           </div>
 
           <div className="mt-6 w-full max-w-xs space-y-2">

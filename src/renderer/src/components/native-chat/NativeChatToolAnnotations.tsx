@@ -8,6 +8,7 @@ import {
   mcpToolIdentity,
   toolWebSearchResults
 } from '../../../../shared/native-chat/tools/native-chat-tool-identity'
+import { researchToolSource } from '../../../../shared/native-chat/tools/research-tool-source'
 
 export function NativeChatToolName({
   name,
@@ -16,7 +17,8 @@ export function NativeChatToolName({
   name: string
   mcpIdentity?: NativeChatMcpIdentity
 }): React.JSX.Element {
-  const identity = mcpToolIdentity(name, mcpIdentity)
+  const mcp = mcpToolIdentity(name, mcpIdentity)
+  const identity = mcp && (researchToolSource(mcp) ?? mcp)
   return identity ? (
     <span title={name} className="inline-flex min-w-0 items-center gap-1.5">
       <span className="truncate">{identity.server}</span>
