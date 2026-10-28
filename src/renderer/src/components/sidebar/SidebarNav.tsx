@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import { BookOpen, CalendarClock, Files, Search } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useAppStore } from '@/store'
@@ -40,6 +41,7 @@ export function shouldShowAgentDashboardButton(
 const AgentDashboardSidebarEntry = lazyWithRetry(() => import('./AgentDashboardSidebarEntry'))
 
 const SidebarNav = React.memo(function SidebarNav() {
+  const advancedMode = useAdvancedMode()
   // Subscribe across this memo boundary; translate still handles pseudo-localization.
   useTranslation()
   const worktreePaletteShortcutCombos = useShortcutKeyComboDetails('worktree.palette')
@@ -101,7 +103,7 @@ const SidebarNav = React.memo(function SidebarNav() {
         </span>
       </button>
       <SetupGuideSidebarEntry />
-      <SidebarTaskNavButton />
+      {advancedMode ? <SidebarTaskNavButton /> : null}
       {showArtifactsButton ? (
         <ContextMenu>
           <ContextMenuTrigger asChild>

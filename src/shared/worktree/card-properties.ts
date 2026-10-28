@@ -56,6 +56,31 @@ export const WORKTREE_CARD_PROPERTIES = [
   'host'
 ] as const satisfies readonly WorktreeCardProperty[]
 
+// Git hosting and issue-tracker rows stay out of the research-first default.
+const ADVANCED_ONLY_WORKTREE_CARD_PROPERTIES: ReadonlySet<WorktreeCardProperty> = new Set([
+  'ci',
+  'branch',
+  'issue',
+  'linear-issue',
+  'jira-issue',
+  'pr',
+  'ports'
+])
+
+export function isAdvancedOnlyWorktreeCardProperty(property: WorktreeCardProperty): boolean {
+  return ADVANCED_ONLY_WORKTREE_CARD_PROPERTIES.has(property)
+}
+
+/** The card rows to render: developer rows only when Advanced mode is on. */
+export function visibleWorktreeCardProperties(
+  properties: readonly WorktreeCardProperty[],
+  advancedMode: boolean
+): WorktreeCardProperty[] {
+  return advancedMode
+    ? [...properties]
+    : properties.filter((property) => !isAdvancedOnlyWorktreeCardProperty(property))
+}
+
 export function normalizeWorktreeCardProperties(
   properties: readonly unknown[] | null | undefined
 ): WorktreeCardProperty[] {

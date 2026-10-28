@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { isAdvancedMode } from '../../../shared/advanced-mode'
 import { useTranslation } from 'react-i18next'
 
 // Share Settings/Cmd+J visibility without Settings pane UI imports; an architecture test enforces this boundary.
@@ -37,6 +38,17 @@ import { useWindowsTerminalCapabilityOwnerKey } from './useWindowsTerminalCapabi
 
 export { isWebClientLocation } from '@/lib/web-client-location'
 
+// Developer tooling the research-first default hides until Advanced mode is on.
+const ADVANCED_ONLY_SETTINGS_SECTION_IDS = new Set([
+  'integrations',
+  'git',
+  'tasks',
+  'terminal',
+  'quick-commands',
+  'developer-permissions',
+  'dev'
+])
+
 export function buildSettingsNavigationMetadata({
   isMac,
   isWindows,
@@ -49,6 +61,7 @@ export function buildSettingsNavigationMetadata({
   managedBrowserCreationEnabled = !isWebClient,
   isDev = import.meta.env.DEV,
   isLinearConnected = false,
+  advancedMode = true,
   repos,
   projectGrouping
 }: {
@@ -63,6 +76,8 @@ export function buildSettingsNavigationMetadata({
   managedBrowserCreationEnabled?: boolean
   isDev?: boolean
   isLinearConnected?: boolean
+  /** Absent keeps every section, as before advanced mode existed. */
+  advancedMode?: boolean
   repos: readonly Repo[]
   projectGrouping?: ProjectGroupingModel
 }): SettingsNavSection[] {
@@ -97,13 +112,16 @@ export function buildSettingsNavigationMetadata({
   }
 
   // Match SETTINGS_NAV_GROUPS order so Settings and Cmd+J keep siblings together.
-  return [
+  const sections = [
     ...buildCapabilitySettingsSections(options),
     ...buildSetupSettingsSections(options),
     ...buildWorkflowSettingsSections(options, terminalPaneSearchEntries),
     ...buildInterfaceSettingsSections(options),
     ...buildRemoteSettingsSections(options, runtimeEnvironmentsSearchEntry, reposById)
   ]
+  return advancedMode
+    ? sections
+    : sections.filter((section) => !ADVANCED_ONLY_SETTINGS_SECTION_IDS.has(section.id))
 }
 
 export function useSettingsNavigationMetadata(): SettingsNavSection[] {
@@ -119,6 +137,7 @@ export function useSettingsNavigationMetadata(): SettingsNavSection[] {
       'enabled'
   )
   const nativeChatEnabled = settings?.experimentalNativeChat === true
+  const advancedMode = isAdvancedMode(settings)
   const typedChatPermissions = useChatSettingsOwnPermissions()
   const hostQueuesMessages = useStructuredAgentSessionHostQueuesMessages({ kind: 'local' })
   const isMac = isMacUserAgent()
@@ -167,6 +186,7 @@ export function useSettingsNavigationMetadata(): SettingsNavSection[] {
         managedBrowserCreationEnabled,
         isDev: import.meta.env.DEV,
         isLinearConnected,
+        advancedMode,
         repos,
         projectGrouping: {
           projects: projectHostSetupProjection.projects,
@@ -185,6 +205,7 @@ export function useSettingsNavigationMetadata(): SettingsNavSection[] {
       typedChatPermissions,
       managedBrowserCreationEnabled,
       isLinearConnected,
+      advancedMode,
       repos,
       projectHostSetupProjection,
       activeLocale

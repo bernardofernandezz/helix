@@ -18,6 +18,7 @@ import {
   type PluginPanelsFetchStatus
 } from '@/store/plugin-panels'
 import { useShortcutLabel } from '@/hooks/useShortcutLabel'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import { translate } from '@/i18n/i18n'
 import { AgentSessionHistoryIcon } from './agent-session-history-icon'
 import type { ActivityBarItem } from './activity-bar-buttons'
@@ -55,6 +56,7 @@ export function useRightSidebarActivityItems({
       s.runtimeEnvironments
     )
   )
+  const advancedMode = useAdvancedMode()
   const pluginSystemEnabled = useAppStore((s) => s.settings?.pluginSystemEnabled === true)
   const pluginPanels = usePluginPanels()
   const visiblePluginPanels = useMemo(
@@ -91,35 +93,40 @@ export function useRightSidebarActivityItems({
           'Attached worktrees'
         ),
         shortcut: '',
-        folderOnly: true
+        folderOnly: true,
+        advancedOnly: true
       },
       {
         id: 'pr-checks',
         icon: ListChecks,
         title: translate('auto.components.right.sidebar.index.parentPrChecks', 'PR Checks'),
         shortcut: '',
-        folderOnly: true
+        folderOnly: true,
+        advancedOnly: true
       },
       {
         id: 'source-control',
         icon: GitBranch,
         title: translate('auto.components.right.sidebar.index.0314901467', 'Source Control'),
         shortcut: sourceControlShortcut === 'Unassigned' ? '' : sourceControlShortcut,
-        gitOnly: true
+        gitOnly: true,
+        advancedOnly: true
       },
       {
         id: 'checks',
         icon: ListChecks,
         title: translate('auto.components.right.sidebar.index.83a10e3c44', 'Checks'),
         shortcut: checksShortcut === 'Unassigned' ? '' : checksShortcut,
-        gitOnly: true
+        gitOnly: true,
+        advancedOnly: true
       },
       {
         id: 'ports',
         icon: Plug,
         title: translate('auto.components.right.sidebar.index.441733b630', 'Ports'),
         shortcut: portsShortcut === 'Unassigned' ? '' : portsShortcut,
-        sshOnly: true
+        sshOnly: true,
+        advancedOnly: true
       },
       // Append plugin tabs to preserve built-in navigation positions.
       ...getPluginPanelActivityItems(visiblePluginPanels, pluginPanelErrors)
@@ -139,9 +146,10 @@ export function useRightSidebarActivityItems({
       getVisibleRightSidebarActivityItems(activityItems, {
         isFolder,
         isFolderWorkspace,
-        hasSshHost
+        hasSshHost,
+        advancedMode
       }),
-    [activityItems, isFolder, isFolderWorkspace, hasSshHost]
+    [activityItems, isFolder, isFolderWorkspace, hasSshHost, advancedMode]
   )
 
   const activeFolderWorkspaceKey = isFolderWorkspace ? (activeWorktreeId ?? null) : null

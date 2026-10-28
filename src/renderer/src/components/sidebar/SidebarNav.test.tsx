@@ -108,7 +108,7 @@ function setSidebarState({
   repos?: Repo[]
 } = {}): void {
   mocks.state = {
-    settings,
+    settings: { ...settings, advancedMode: true },
     repos,
     activeView: 'worktrees',
     openTaskPage: mocks.openTaskPage,

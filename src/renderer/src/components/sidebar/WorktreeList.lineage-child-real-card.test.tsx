@@ -318,7 +318,7 @@ function setLineageState(
     setShowSleepingWorkspaces: vi.fn(),
     setSortBy: vi.fn(),
     setWorktreesPinnedAndReveal: vi.fn(),
-    settings: null,
+    settings: { advancedMode: true },
     showSleepingWorkspaces: true,
     sortBy: 'manual',
     sortEpoch: 0,
@@ -411,7 +411,7 @@ describe('WorktreeList real child WorktreeCard integration', () => {
   })
 
   it('keeps expanded child cards in the parent title column', async () => {
-    mockStore.state.settings = { experimentalNewWorktreeCardStyle: true }
+    mockStore.state.settings = { advancedMode: true, experimentalNewWorktreeCardStyle: true }
     const container = await renderWorktreeList()
     const childList = container.querySelector<HTMLElement>('[data-worktree-lineage-children]')
 
@@ -427,7 +427,10 @@ describe('WorktreeList real child WorktreeCard integration', () => {
     { newCardStyle: true, showStatus: true }
   ])('keeps lineage outside the status lane (%j)', async ({ newCardStyle, showStatus }) => {
     setLineageState({ includeGrandchild: true })
-    mockStore.state.settings = { experimentalNewWorktreeCardStyle: newCardStyle }
+    mockStore.state.settings = {
+      advancedMode: true,
+      experimentalNewWorktreeCardStyle: newCardStyle
+    }
     mockStore.state.worktreeCardProperties = showStatus ? ['status'] : []
     const container = await renderWorktreeList()
     const wrappers = [
