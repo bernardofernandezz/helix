@@ -969,6 +969,9 @@ jobs:
       needs.preflight.result == 'success'
     # Why ARM: source-only: tagged checkout plus in-process vitest, no docker or browser.
     runs-on: ubuntu-24.04-arm
+    env:
+      # No tagged Helix release yet; pair against the initial release commit until v-tags exist.
+      HELIX_CROSS_VERSION_BASELINE_REF: ff0a91aefe4f4dfdb1ce881242c633e2263b761c
 
     steps:
       # Fetch tags/full history for newest-release skew; shallow unit shards cannot supply it.
@@ -999,8 +1002,15 @@ jobs:
           pnpm run check:runtime-launcher-protocol-ratchet -- --base "$DIFF_BASE"
 
       # Run the entire directory; zero matches fail so new contracts cannot be omitted silently.
+      # Why the tag guard: the journeys pin upstream release commits absent from this history; the first
+      # Helix release must repoint them, and until then there is nothing to pair with.
       - name: Old/new client and server compatibility journeys
-        run: pnpm exec vitest run --config config/vitest.config.ts tests/e2e/cross-version-wire/
+        run: |
+          if ! git tag --list 'v[0-9]*' | grep -q .; then
+            echo "::notice::No Helix release tag yet; skipping the old/new wire journeys."
+            exit 0
+          fi
+          pnpm exec vitest run --config config/vitest.config.ts tests/e2e/cross-version-wire/
 
   managed_hook_node18:
     name: managed hooks on Node 18

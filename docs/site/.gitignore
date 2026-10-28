@@ -7,3 +7,6 @@ next-env.d.ts
 *.tsbuildinfo
 .env
 .env.*
+
+# Written by `next dev` on every start.
+AGENTS.md

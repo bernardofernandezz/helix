@@ -8,7 +8,7 @@ index 6c8a9e0cc1c1c26719d8466c8a304a8cf4472c73..b6ec429ddb99d2f61923359846c49d65
  //# sourceMappingURL=xterm.js.map
 \ No newline at end of file
 diff --git a/lib/xterm.js.map b/lib/xterm.js.map
-index e523569126147055fa1c6b3de9bf123670d12da4..9179e6825da5a9caef9760cd7109fbb40a9e46f5 100644
+index e523569126147055fa1c6b3de9bf123670d12da4..eeba596e433340347d3ef905c1fb2b36ccda29a4 100644
 --- a/lib/xterm.js.map
 +++ b/lib/xterm.js.map
 @@ -1 +1 @@
@@ -44,7 +44,7 @@ index ba7fc036a04411da9b69e3d9b3268c3b98f9ee21..dd6a7d9d27b053887471f8b1fe6be054
 +`,e)}paste(t){this._core.paste(t)}refresh(t,e){this._verifyIntegers(t,e),this._core.refresh(t,e)}reset(){this._core.reset()}clearTextureAtlas(){this._core.clearTextureAtlas()}loadAddon(t){this._addonManager.loadAddon(this,t)}static get strings(){return{get promptLabel(){return Kt.get()},set promptLabel(t){Kt.set(t)},get tooMuchOutput(){return Ze.get()},set tooMuchOutput(t){Ze.set(t)}}}_verifyIntegers(...t){for(ye of t)if(ye===1/0||isNaN(ye)||ye%1!==0)throw new Error("This API only accepts integers")}_verifyPositiveIntegers(...t){for(ye of t)if(ye&&(ye===1/0||isNaN(ye)||ye%1!==0||ye<0))throw new Error("This API only accepts positive integers")}};export{Ln as Terminal};
  //# sourceMappingURL=xterm.mjs.map
 diff --git a/lib/xterm.mjs.map b/lib/xterm.mjs.map
-index 42aa6aff97e90412a736ae4dde3ef884e0fedf1a..bbb43ab3dfeeb5a0394e4444b6c8c255ebf9835e 100644
+index 42aa6aff97e90412a736ae4dde3ef884e0fedf1a..91a7c2d099c8ba5781f929c536af9bec0af12fda 100644
 --- a/lib/xterm.mjs.map
 +++ b/lib/xterm.mjs.map
 @@ -1,7 +1,7 @@
@@ -149,7 +149,7 @@ index 497afcf535f3eaca00889525a77e15eb633ccd96..96d499b34605f860608382114c3fbdc0
  
  export interface IBrowser {
 diff --git a/src/browser/input/CompositionHelper.ts b/src/browser/input/CompositionHelper.ts
-index c9ec396ab66cb966d49aa63bed09cdf9cd6c4246..8ce5bad71b26515ecbbb82b76d218d0b16e280a8 100644
+index c9ec396ab66cb966d49aa63bed09cdf9cd6c4246..f47304661209193eeaa3af7c0944cb58252ccf06 100644
 --- a/src/browser/input/CompositionHelper.ts
 +++ b/src/browser/input/CompositionHelper.ts
 @@ -1,10 +1,15 @@

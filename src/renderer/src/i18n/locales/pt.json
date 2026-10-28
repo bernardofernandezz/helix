@@ -10761,8 +10761,6 @@
           "5b120b9634": "Enviar anonimamente",
           "c9e5ea0791": "GitHub:",
           "d46ddd66fc": "O que poderíamos melhorar?",
-          "3460258a54": "Siga no X",
-          "26108d3699": "Entre no Discord",
           "d245c4ef6c": "Issues do GitHub",
           "9b33530b3d": "Outras formas de nos contatar",
           "a828fa4aee": "Compartilhe o que está funcionando, o que está quebrado, ou o que o Helix deveria fazer a seguir.",
@@ -10957,7 +10955,6 @@
         "SidebarSettingsHelpMenu": {
           "ad3d3ed7f1": "Reiniciar o Helix",
           "29c56f30ee": "Verificar Atualizações",
-          "eb9884e55b": "Discord",
           "5687ab246a": "GitHub",
           "5f83d86d92": "Changelog",
           "cdc87f897e": "Documentação",
@@ -10969,8 +10966,7 @@
           "5161eef55d": "Reiniciando o Helix…",
           "d396773ef0": "verificando",
           "f8a2c91d4e": "Marcos",
-          "b7e4d2a19c": "Integração",
-          "c4f8e1b72a": "X"
+          "b7e4d2a19c": "Integração"
         },
         "AddRepoRemoteStep": {
           "6680289908": "/home/user/project",

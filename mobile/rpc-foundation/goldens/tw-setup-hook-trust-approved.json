@@ -4,7 +4,7 @@
   "family": "worktree.setup-hook-trust",
   "namedDeltas": [],
   "values": {
-    "86d0d8f71257": {
+    "1f09c2cdbaf4": {
       "name": "ui.set#1",
       "ordinal": 2,
       "json": "{\"id\":\"frame-1\",\"deviceToken\":\"recording-device\",\"method\":\"ui.set\",\"params\":{\"trustedHelixHooks\":{\"repo-1\":{\"setup\":{\"contentHash\":\"hash-1\",\"approvedAt\":1767225600000}}}}}"
@@ -32,7 +32,7 @@
         }
       }
     },
-    "e2089203d4dd": {
+    "b355991167e0": {
       "name": "ui.set#1",
       "ordinal": 1,
       "args": [
@@ -80,8 +80,8 @@
       {
         "id": "approved",
         "observation": {
-          "sender": ["e2089203d4dd"],
-          "payloads": ["86d0d8f71257"],
+          "sender": ["b355991167e0"],
+          "payloads": ["1f09c2cdbaf4"],
           "settlements": {
             "approve": "a406b068aeca"
           },

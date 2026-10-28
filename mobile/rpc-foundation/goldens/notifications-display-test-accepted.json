@@ -31,25 +31,6 @@
         "startedAt": 0
       }
     },
-    "1813829924d9": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "Pressable": 2,
-        "Text": 6,
-        "View": 3
-      },
-      "labels": ["Send test notification"],
-      "text": [
-        "Having trouble receiving alerts?",
-        "Send a test through Helix’s push service.",
-        "Send test notification",
-        "Send test notification",
-        "Troubleshooting",
-        "Accepted by Helix’s push service. Check for the notification."
-      ]
-    },
     "649d12c8eb9b": {
       "name": "notifications.testPush#1",
       "ordinal": 1,
@@ -85,7 +66,7 @@
         }
       }
     },
-    "6967f95147f9": {
+    "9ddc6977ffc6": {
       "crash": {
         "$rpc": "null"
       },
@@ -103,7 +84,26 @@
         "Troubleshooting"
       ]
     },
-    "d86c08a509c4": {
+    "ce25096d2df0": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "Pressable": 2,
+        "Text": 6,
+        "View": 3
+      },
+      "labels": ["Send test notification"],
+      "text": [
+        "Having trouble receiving alerts?",
+        "Send a test through Helix’s push service.",
+        "Send test notification",
+        "Send test notification",
+        "Troubleshooting",
+        "Accepted by Helix’s push service. Check for the notification."
+      ]
+    },
+    "df11105cf143": {
       "crash": {
         "$rpc": "null"
       },
@@ -146,7 +146,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d86c08a509c4",
+          "state": "df11105cf143",
           "effects": []
         }
       },
@@ -159,7 +159,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "6967f95147f9",
+          "state": "9ddc6977ffc6",
           "effects": []
         }
       },
@@ -172,7 +172,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "1813829924d9",
+          "state": "ce25096d2df0",
           "effects": []
         }
       }

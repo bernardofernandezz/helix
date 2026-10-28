@@ -88,7 +88,7 @@ index 497afcf535f3eaca00889525a77e15eb633ccd96..96d499b34605f860608382114c3fbdc0
  
  export interface IBrowser {
 diff --git a/src/browser/input/CompositionHelper.ts b/src/browser/input/CompositionHelper.ts
-index c9ec396ab66cb966d49aa63bed09cdf9cd6c4246..8ce5bad71b26515ecbbb82b76d218d0b16e280a8 100644
+index c9ec396ab66cb966d49aa63bed09cdf9cd6c4246..f47304661209193eeaa3af7c0944cb58252ccf06 100644
 --- a/src/browser/input/CompositionHelper.ts
 +++ b/src/browser/input/CompositionHelper.ts
 @@ -1,10 +1,15 @@
