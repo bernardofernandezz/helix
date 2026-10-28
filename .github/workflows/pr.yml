@@ -1001,7 +1001,16 @@ jobs:
           DIFF_BASE="$(node config/scripts/git-pull-request-diff-base.mjs "$BASE_SHA")"
           pnpm run check:runtime-launcher-protocol-ratchet -- --base "$DIFF_BASE"
 
-      # The old/new wire journeys pin upstream release commits absent from this history; they stay excluded.
+      # Run the entire directory; zero matches fail so new contracts cannot be omitted silently.
+      # Why the tag guard: the journeys pin upstream release commits absent from this history; the first
+      # Helix release must repoint them, and until then there is nothing to pair with.
+      - name: Old/new client and server compatibility journeys
+        run: |
+          if ! git tag --list 'v[0-9]*' | grep -q .; then
+            echo "::notice::No Helix release tag yet; skipping the old/new wire journeys."
+            exit 0
+          fi
+          pnpm exec vitest run --config config/vitest.config.ts tests/e2e/cross-version-wire/
 
   managed_hook_node18:
     name: managed hooks on Node 18
