@@ -1996,7 +1996,7 @@
         "5beaef5f9e": "GitHub CLI is not installed",
         "b673e7cf1b": "Git is required for Git projects, source control, and workspace management.",
         "e5b7296d9d": "Git is not installed",
-        "cd21242762": "Add a project to get started.",
+        "cd21242762": "Start a research project, or add an existing folder.",
         "9c00bd4adf": "Select a workspace from the sidebar to begin.",
         "16e9e3df89": "starred",
         "0d0ace8861": "Star on GitHub",
@@ -20846,7 +20846,8 @@
       "ready": "Research project ready",
       "alreadySetUp": "Research project already set up",
       "created": "Created {{value}}",
-      "setUp": "Set up research project"
+      "setUp": "Set up research project",
+      "new": "New research project"
     },
     "notebook": {
       "condaProjectEnvironments": "Conda environments (project first)",
