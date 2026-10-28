@@ -969,6 +969,9 @@ jobs:
       needs.preflight.result == 'success'
     # Why ARM: source-only: tagged checkout plus in-process vitest, no docker or browser.
     runs-on: ubuntu-24.04-arm
+    env:
+      # No tagged Helix release yet; pair against the initial release commit until v-tags exist.
+      HELIX_CROSS_VERSION_BASELINE_REF: ff0a91aefe4f4dfdb1ce881242c633e2263b761c
 
     steps:
       # Fetch tags/full history for newest-release skew; shallow unit shards cannot supply it.
