@@ -3192,7 +3192,7 @@
       },
       "state": {
         "empty": {
-          "subtitle": "Ask {{value0}} to inspect code, explain output, or make a change.",
+          "subtitle": "Ask {{value0}} to search the literature, explore a dataset, or run an analysis.",
           "title": "Start a chat with {{value0}}"
         },
         "error": {
@@ -3204,7 +3204,7 @@
           "title": "Loading conversation…"
         },
         "notAgent": {
-          "subtitle": "This terminal is not running a recognized coding agent.",
+          "subtitle": "This terminal is not running a recognized agent.",
           "title": "No conversation here"
         }
       },

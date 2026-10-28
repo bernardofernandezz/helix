@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import {
-  FEATURE_WALL_SETUP_STEPS,
+  getFeatureWallSetupSteps,
   getFirstIncompleteFeatureWallSetupStepId,
   type FeatureWallSetupStepId
 } from '../../../../shared/feature-wall-setup-steps'
@@ -14,20 +15,24 @@ export type SettingsSetupGuideProgress = {
   firstIncompleteStepId: FeatureWallSetupStepId | null
 }
 
-export function getSettingsSetupGuideProgress(progress: {
-  ready: boolean
-  stepDone: Partial<Record<FeatureWallSetupStepId, boolean>>
-}): SettingsSetupGuideProgress {
-  const doneCount = FEATURE_WALL_SETUP_STEPS.filter((step) => progress.stepDone[step.id]).length
+export function getSettingsSetupGuideProgress(
+  progress: {
+    ready: boolean
+    stepDone: Partial<Record<FeatureWallSetupStepId, boolean>>
+  },
+  advancedMode: boolean
+): SettingsSetupGuideProgress {
+  const steps = getFeatureWallSetupSteps(advancedMode)
+  const doneCount = steps.filter((step) => progress.stepDone[step.id]).length
   const firstIncompleteStepId =
-    doneCount === FEATURE_WALL_SETUP_STEPS.length
+    doneCount === steps.length
       ? null
-      : getFirstIncompleteFeatureWallSetupStepId(progress.stepDone)
+      : getFirstIncompleteFeatureWallSetupStepId(progress.stepDone, advancedMode)
 
   return {
     ready: progress.ready,
     doneCount,
-    total: FEATURE_WALL_SETUP_STEPS.length,
+    total: steps.length,
     firstIncompleteStepId
   }
 }
@@ -36,8 +41,12 @@ export function useSettingsSetupGuideProgress(
   shouldRefreshCoreState: boolean
 ): SettingsSetupGuideProgress {
   const fullProgress = useSettingsSetupGuideFullProgress(shouldRefreshCoreState, false, false)
+  const advancedMode = useAdvancedMode()
 
-  return useMemo(() => getSettingsSetupGuideProgress(fullProgress), [fullProgress])
+  return useMemo(
+    () => getSettingsSetupGuideProgress(fullProgress, advancedMode),
+    [fullProgress, advancedMode]
+  )
 }
 
 export function useSettingsSetupGuideFullProgress(

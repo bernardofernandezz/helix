@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import { EyeOff } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAppStore } from '@/store'
@@ -44,6 +45,7 @@ export function SetupGuideSidebarEntry(): React.JSX.Element | null {
   const persistedUIReady = useAppStore((s) => s.persistedUIReady)
   const setupGuideSidebarDismissed = useAppStore((s) => s.setupGuideSidebarDismissed)
   const setSetupGuideSidebarDismissed = useAppStore((s) => s.setSetupGuideSidebarDismissed)
+  const advancedMode = useAdvancedMode()
   // Warm progress before click so lazy modal mounting cannot change the displayed count.
   const setupProgress = useSetupGuideProgress(true, false, false)
   const setupComplete = isSetupGuideSidebarComplete(setupProgress)
@@ -71,7 +73,7 @@ export function SetupGuideSidebarEntry(): React.JSX.Element | null {
     return null
   }
   const firstUnfinishedSetupStepId: FeatureWallSetupStepId =
-    getFirstIncompleteFeatureWallSetupStepId(renderedProgress.stepDone)
+    getFirstIncompleteFeatureWallSetupStepId(renderedProgress.stepDone, advancedMode)
 
   return (
     <ContextMenu>

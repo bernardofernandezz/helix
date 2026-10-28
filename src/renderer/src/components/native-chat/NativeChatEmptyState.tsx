@@ -1,15 +1,19 @@
 import { MessageSquare, TriangleAlert } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { translate } from '@/i18n/i18n'
 import { formatAgentTypeLabel } from '@/lib/agent-status'
 import { NATIVE_CHAT_EMPTY_STATE_COPY } from '../../../../shared/native-chat-empty-state'
 import type { NativeChatSession } from '../../../../shared/native-chat-types'
+import type { NativeChatSuggestion } from './native-chat-research-suggestions'
 
 export function NativeChatEmptyState({
   kind,
   message,
   headline,
   agent,
-  retrying = false
+  retrying = false,
+  suggestions,
+  onSuggestion
 }: {
   kind: 'loading' | 'empty' | 'error' | 'not-agent'
   message?: string
@@ -18,6 +22,8 @@ export function NativeChatEmptyState({
   agent?: NativeChatSession['agent']
   /** Structured reads retry automatically; show a loading failure without directing users back to a terminal. */
   retrying?: boolean
+  suggestions?: NativeChatSuggestion[]
+  onSuggestion?: (prompt: string) => void
 }): React.JSX.Element {
   const copy = emptyStateCopy(kind, { message, headline }, agent, retrying)
   return (
@@ -38,6 +44,20 @@ export function NativeChatEmptyState({
       <p className="text-sm font-medium text-chat-foreground-strong">{copy.title}</p>
       {copy.subtitle ? (
         <p className="max-w-sm text-balance text-xs text-chat-foreground-faint">{copy.subtitle}</p>
+      ) : null}
+      {suggestions && onSuggestion ? (
+        <div className="mt-2 flex max-w-md flex-wrap justify-center gap-2">
+          {suggestions.map((suggestion) => (
+            <Button
+              key={suggestion.label}
+              variant="outline"
+              size="sm"
+              onClick={() => onSuggestion(suggestion.prompt)}
+            >
+              {suggestion.label}
+            </Button>
+          ))}
+        </div>
       ) : null}
     </div>
   )

@@ -47,11 +47,16 @@ describe('getFeatureWallSetupProgress', () => {
     const progress = getFeatureWallSetupProgress(makeInput({ gitRepoCount: 2 }))
 
     expect(progress.stepDone['add-two-repos']).toBe(true)
-    expect(progress.coreTotal).toBe(8)
+    expect(progress.coreTotal).toBe(4)
+    expect(
+      getFeatureWallSetupProgress(
+        makeInput({ settings: { advancedMode: true, notifications: {} } as never })
+      ).coreTotal
+    ).toBe(8)
   })
 
   it('preserves the durable setup step definition order', () => {
-    expect(getFeatureWallSetupSteps().map((step) => step.id)).toEqual([
+    expect(getFeatureWallSetupSteps(true).map((step) => step.id)).toEqual([
       'two-worktrees',
       'browser',
       'notifications',
@@ -64,11 +69,10 @@ describe('getFeatureWallSetupProgress', () => {
   })
 
   it('groups setup guide steps into Parallel work and Setup sections', () => {
-    expect(getFeatureWallSetupStepsForSection('parallel-work').map((step) => step.id)).toEqual([
-      'two-worktrees',
-      'browser'
-    ])
-    expect(getFeatureWallSetupStepsForSection('setup').map((step) => step.id)).toEqual([
+    expect(
+      getFeatureWallSetupStepsForSection('parallel-work', true).map((step) => step.id)
+    ).toEqual(['two-worktrees', 'browser'])
+    expect(getFeatureWallSetupStepsForSection('setup', true).map((step) => step.id)).toEqual([
       'notifications',
       'default-agent',
       'agent-capabilities',
@@ -82,6 +86,7 @@ describe('getFeatureWallSetupProgress', () => {
     const progress = getFeatureWallSetupProgress(
       makeInput({
         settings: {
+          advancedMode: true,
           defaultTuiAgent: 'claude',
           notifications: { enabled: true, agentTaskComplete: true }
         } as never,
@@ -95,7 +100,7 @@ describe('getFeatureWallSetupProgress', () => {
       })
     )
 
-    expect(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone)).toBe('two-worktrees')
+    expect(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone, true)).toBe('two-worktrees')
   })
 
   it('does not include the removed split-terminal step in active progress', () => {
@@ -108,13 +113,14 @@ describe('getFeatureWallSetupProgress', () => {
     )
 
     expect(Object.hasOwn(progress.stepDone, 'split-terminal')).toBe(false)
-    expect(progress.coreTotal).toBe(8)
+    expect(progress.coreTotal).toBe(4)
   })
 
   it('marks all active steps complete without historical terminal split interaction', () => {
     const progress = getFeatureWallSetupProgress(
       makeInput({
         settings: {
+          advancedMode: true,
           defaultTuiAgent: 'claude',
           notifications: { enabled: true, agentTaskComplete: true }
         } as never,
@@ -285,7 +291,7 @@ describe('getFeatureWallSetupProgress', () => {
     expect(progress.stepDone).toMatchObject({
       'agent-capabilities': true
     })
-    expect(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone)).not.toBe(
+    expect(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone, true)).not.toBe(
       'agent-capabilities'
     )
   })

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type JSX } from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import {
   FEATURE_WALL_SETUP_STEP_IDS,
   getFirstIncompleteFeatureWallSetupStepId,
@@ -49,7 +50,8 @@ function SetupGuideModalContent({
   const modalData = useAppStore((s) => s.modalData)
   const closeModal = useAppStore((s) => s.closeModal)
   const setSetupGuideSidebarDismissed = useAppStore((s) => s.setSetupGuideSidebarDismissed)
-  const setupSteps = useMemo(() => getFeatureWallSetupSteps(), [])
+  const advancedMode = useAdvancedMode()
+  const setupSteps = useMemo(() => getFeatureWallSetupSteps(advancedMode), [advancedMode])
   const [userSelectedStep, setUserSelectedStep] = useState(false)
   const [orchestrationSkillInstalled, setOrchestrationSkillInstalled] = useState(false)
   const [browserUseSkillInstalled, setBrowserUseSkillInstalled] = useState(false)
@@ -61,7 +63,7 @@ function SetupGuideModalContent({
     browserUseSkillInstalled
   )
   const [activeStepId, setActiveStepId] = useState<FeatureWallSetupStepId>(() =>
-    getFirstIncompleteFeatureWallSetupStepId(progress.stepDone)
+    getFirstIncompleteFeatureWallSetupStepId(progress.stepDone, advancedMode)
   )
   const requestedStepId = isFeatureWallSetupStepId(modalData.setupStepId)
     ? modalData.setupStepId
@@ -97,8 +99,8 @@ function SetupGuideModalContent({
     if (!open || userSelectedStep || requestedStepId !== null) {
       return
     }
-    setActiveStepId(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone))
-  }, [open, progress.stepDone, requestedStepId, userSelectedStep])
+    setActiveStepId(getFirstIncompleteFeatureWallSetupStepId(progress.stepDone, advancedMode))
+  }, [advancedMode, open, progress.stepDone, requestedStepId, userSelectedStep])
 
   useEffect(() => {
     if (
@@ -110,11 +112,14 @@ function SetupGuideModalContent({
     ) {
       return
     }
-    const nextUnfinishedCoreStepId = getFirstIncompleteFeatureWallSetupStepId(progress.stepDone)
+    const nextUnfinishedCoreStepId = getFirstIncompleteFeatureWallSetupStepId(
+      progress.stepDone,
+      advancedMode
+    )
     if (nextUnfinishedCoreStepId !== activeStep.id) {
       setActiveStepId(nextUnfinishedCoreStepId)
     }
-  }, [activeStep, open, progress.stepDone, requestedStepId, userSelectedStep])
+  }, [activeStep, advancedMode, open, progress.stepDone, requestedStepId, userSelectedStep])
 
   const handleSelectStep = (id: FeatureWallSetupStepId): void => {
     setUserSelectedStep(true)
