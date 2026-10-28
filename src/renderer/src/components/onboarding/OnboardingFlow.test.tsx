@@ -26,7 +26,7 @@ describe('OnboardingFlow', () => {
     useAppStore.setState(useAppStore.getInitialState(), true)
     useAppStore.setState({
       repos: [],
-      settings: getDefaultSettings('/tmp')
+      settings: { ...getDefaultSettings('/tmp'), advancedMode: true }
     })
     vi.stubGlobal('navigator', { userAgent: 'Macintosh' })
   })

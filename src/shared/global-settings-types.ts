@@ -434,6 +434,8 @@ export type GlobalSettings = GlobalSettingsBase & {
   mobilePairingCustomAddresses?: string[]
   /** Name this runtime reports to paired clients; empty uses the host's detected name. */
   machineName: string
+  /** Shows developer tooling (git, pull requests, source control, checks, ports, issue trackers); absent means off. */
+  advancedMode?: boolean
   /** Opt-in animated pet overlay; off unmounts it and renderer toggles apply immediately. */
   experimentalPet: boolean
   /** Legacy persisted key from before the sidekick -> pet rename; read only during migration, new writes use experimentalPet. */

@@ -27,6 +27,14 @@ const items: ActivityBarItem[] = [
     gitOnly: true
   },
   { id: 'ports', icon: Files, title: 'Ports', shortcut: '', sshOnly: true },
+  {
+    id: 'checks',
+    icon: Files,
+    title: 'Checks',
+    shortcut: '',
+    gitOnly: true,
+    advancedOnly: true
+  },
   // Plugin panels carry no visibility flags, so they show in every context.
   {
     id: 'plugin:helix-samples.my-plugin/dashboard',
@@ -42,17 +50,25 @@ describe('getVisibleRightSidebarActivityItems', () => {
       getVisibleRightSidebarActivityItems(items, {
         isFolder: false,
         isFolderWorkspace: false,
-        hasSshHost: false
+        hasSshHost: false,
+        advancedMode: true
       }).map((item) => item.id)
-    ).toEqual(['explorer', 'source-control', 'plugin:helix-samples.my-plugin/dashboard'])
+    ).toEqual(['explorer', 'source-control', 'checks', 'plugin:helix-samples.my-plugin/dashboard'])
 
     expect(
       getVisibleRightSidebarActivityItems(items, {
         isFolder: false,
         isFolderWorkspace: false,
-        hasSshHost: true
+        hasSshHost: true,
+        advancedMode: true
       }).map((item) => item.id)
-    ).toEqual(['explorer', 'source-control', 'ports', 'plugin:helix-samples.my-plugin/dashboard'])
+    ).toEqual([
+      'explorer',
+      'source-control',
+      'ports',
+      'checks',
+      'plugin:helix-samples.my-plugin/dashboard'
+    ])
   })
 
   it('shows Workspaces only for folder workspaces and hides git tabs for all folder scopes', () => {
@@ -60,7 +76,8 @@ describe('getVisibleRightSidebarActivityItems', () => {
       getVisibleRightSidebarActivityItems(items, {
         isFolder: true,
         isFolderWorkspace: true,
-        hasSshHost: true
+        hasSshHost: true,
+        advancedMode: true
       }).map((item) => item.id)
     ).toEqual([
       'explorer',
@@ -74,8 +91,20 @@ describe('getVisibleRightSidebarActivityItems', () => {
       getVisibleRightSidebarActivityItems(items, {
         isFolder: true,
         isFolderWorkspace: false,
-        hasSshHost: true
+        hasSshHost: true,
+        advancedMode: true
       }).map((item) => item.id)
     ).toEqual(['explorer', 'ports', 'plugin:helix-samples.my-plugin/dashboard'])
+  })
+
+  it('hides developer tabs until Advanced mode is on', () => {
+    expect(
+      getVisibleRightSidebarActivityItems(items, {
+        isFolder: false,
+        isFolderWorkspace: false,
+        hasSshHost: true,
+        advancedMode: false
+      }).map((item) => item.id)
+    ).toEqual(['explorer', 'source-control', 'ports', 'plugin:helix-samples.my-plugin/dashboard'])
   })
 })

@@ -44,7 +44,7 @@ vi.mock('@/store', () => {
     setRemoteBrowserPageHandle: vi.fn(),
     replaceWorkspacePortScans,
     setWorkspacePortScanRefreshing,
-    settings,
+    settings: { advancedMode: true, ...settings },
     sshConnectionStates: new Map(),
     sshTargetLabels: new Map(),
     tabsByWorktree: {},

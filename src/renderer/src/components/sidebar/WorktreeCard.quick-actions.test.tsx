@@ -35,7 +35,7 @@ vi.mock('@/store', () => {
     openModal,
     projectGroups,
     remoteBranchConflictByWorktreeId: {},
-    settings,
+    settings: { advancedMode: true, ...settings },
     sshConnectionStates: new Map(),
     sshTargetLabels: new Map(),
     browserTabsByWorktree,

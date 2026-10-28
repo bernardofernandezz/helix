@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useVisibleWorktreeCardProperties } from '@/hooks/use-advanced-mode'
 import type React from 'react'
 import type { VirtualItem } from '@tanstack/react-virtual'
 import { useAppStore } from '@/store'
@@ -75,7 +76,7 @@ export function useVisiblePrRefreshReporting(args: {
   scrollRef: React.RefObject<HTMLDivElement | null>
 }): void {
   const publish = useAppStore((s) => s.setVisibleReviewCardWorktreeIds)
-  const cardProps = useAppStore((s) => s.worktreeCardProperties)
+  const cardProps = useVisibleWorktreeCardProperties()
   const enabled =
     args.groupBy === 'pr-status' ||
     (args.newCardStyle

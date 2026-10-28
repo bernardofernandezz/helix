@@ -20883,6 +20883,25 @@
       "truncated": "Showing the first {{value}} records. Switch to Source to see the whole file.",
       "headerLines": "Header lines ({{value}})",
       "noMatches": "No records match the filter."
+    },
+    "settings": {
+      "advancedMode": {
+        "title": "Advanced mode",
+        "description": "Show developer tools: git branches, pull requests, source control, checks, ports and issue trackers. Off keeps Helix focused on research.",
+        "keyword": {
+          "advanced": "advanced",
+          "developer": "developer",
+          "git": "git",
+          "branch": "branch",
+          "pull_request": "pull request",
+          "source_control": "source control",
+          "checks": "checks",
+          "ports": "ports",
+          "jira": "jira",
+          "linear": "linear",
+          "github": "github"
+        }
+      }
     }
   }
 }

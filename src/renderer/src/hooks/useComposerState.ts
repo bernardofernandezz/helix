@@ -1,4 +1,5 @@
 import type { RefObject } from 'react'
+import { useAdvancedMode } from './use-advanced-mode'
 import '@/lib/new-workspace'
 import type { LinkedWorkItemSummary } from '@/lib/new-workspace'
 import type { GitHubWorkItem } from '../../../shared/github/work-item-types'
@@ -95,7 +96,16 @@ export function useComposerState(options: UseComposerStateOptions): UseComposerS
   const submit = useComposerSubmitOrchestration(target, external, source)
   const model = assembleComposerModel(target, external, source, submit)
   const builtCard = buildComposerCardProps(model)
-  const cardProps: ComposerCardProps = builtCard.cardProps
+  const advancedMode = useAdvancedMode()
+  // Branch and sparse-checkout fields are git tooling, shown only in Advanced mode.
+  const cardProps: ComposerCardProps = advancedMode
+    ? builtCard.cardProps
+    : {
+        ...builtCard.cardProps,
+        branchesEnabled: false,
+        sparseControlsEnabled: false,
+        canUseSparseCheckout: false
+      }
   const { createDisabled } = builtCard
   return {
     cardProps,

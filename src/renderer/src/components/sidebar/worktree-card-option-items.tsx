@@ -1,4 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
+import { isAdvancedOnlyWorktreeCardProperty } from '../../../../shared/worktree/card-properties'
 import { useAppStore } from '@/store'
 import {
   DropdownMenuCheckboxItem,
@@ -127,6 +129,7 @@ export function WorktreeCardPropertiesMenuItem({
   preserveWorkspaceBoardOpen
 }: CardMenuItemProps): React.JSX.Element {
   const worktreeCardProperties = useAppStore((s) => s.worktreeCardProperties)
+  const advancedMode = useAdvancedMode()
   const compact = useAppStore((s) => s.settings?.compactWorktreeCards === true)
   const agentActivityDisplayMode = useAppStore((s) => s.agentActivityDisplayMode)
   const setAgentActivityDisplayMode = useAppStore((s) => s.setAgentActivityDisplayMode)
@@ -158,7 +161,9 @@ export function WorktreeCardPropertiesMenuItem({
         className="w-48"
         data-workspace-board-preserve-open={boardAttr(preserveWorkspaceBoardOpen)}
       >
-        {PROPERTY_OPTIONS.map((opt) => (
+        {PROPERTY_OPTIONS.filter(
+          (opt) => advancedMode || !isAdvancedOnlyWorktreeCardProperty(opt.id)
+        ).map((opt) => (
           <DropdownMenuCheckboxItem
             key={opt.id}
             checked={worktreeCardProperties.includes(opt.id)}

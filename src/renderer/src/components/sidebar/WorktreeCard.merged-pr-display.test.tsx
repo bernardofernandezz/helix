@@ -33,7 +33,7 @@ vi.mock('@/store', () => {
     prCache,
     projectGroups: [],
     remoteBranchConflictByWorktreeId: {},
-    settings,
+    settings: { advancedMode: true, ...settings },
     sshConnectionStates: new Map(),
     sshTargetLabels: new Map(),
     updateWorktreeMeta,

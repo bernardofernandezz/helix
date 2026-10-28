@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
+import { useVisibleWorktreeCardProperties } from '@/hooks/use-advanced-mode'
 import { useAppStore } from '@/store'
 import { useShallow } from 'zustand/react/shallow'
 import {
@@ -97,7 +98,7 @@ const WorktreeList = React.memo(function WorktreeList({
   const projectGroups = useAppStore((s) => s.projectGroups ?? EMPTY_PROJECT_GROUPS)
   const folderWorkspaces = useAppStore((s) => selectFolderWorkspaces(s))
   const settings = useAppStore((s) => s.settings)
-  const cardProps = useAppStore((s) => s.worktreeCardProperties)
+  const cardProps = useVisibleWorktreeCardProperties()
   const { prCache, hostedReviewCache } = useAppStore(
     useShallow((s) => selectWorktreeListReviewCacheInputs(s, groupBy, cardProps))
   )

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { getAgentCatalog } from '@/lib/agent-catalog'
 import { useAppStore } from '@/store'
+import { isAdvancedMode } from '../../../../shared/advanced-mode'
 import { applyDocumentTheme } from '@/lib/document-theme'
 import { track } from '@/lib/telemetry'
 import { buildAgentPickedPayload } from './agent-picked-payload'
@@ -48,7 +49,9 @@ export function useOnboardingFlow(
   // Why: renderToStaticMarkup uses Zustand's initial snapshot; the sync read keeps tests and the first client render aligned.
   const effectivePreflightStatus = preflightStatus ?? useAppStore.getState().preflightStatus
 
-  const skipIntegrations = shouldSkipIntegrationsStep(effectivePreflightStatus)
+  const advancedMode = isAdvancedMode(settings ?? useAppStore.getState().settings)
+  // GitHub task setup is developer tooling; research users never see it unless Advanced mode is on.
+  const skipIntegrations = !advancedMode || shouldSkipIntegrationsStep(effectivePreflightStatus)
   const skipWindowsTerminal = shouldSkipWindowsTerminalStep(isWindowsUserAgent())
   const skipOptions = useMemo(
     () => ({ skipIntegrations, skipWindowsTerminal }),

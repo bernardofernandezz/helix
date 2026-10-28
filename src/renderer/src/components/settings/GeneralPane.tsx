@@ -2,6 +2,8 @@ import type React from 'react'
 import type { GlobalSettings } from '../../../../shared/global-settings-types'
 import { useAppStore } from '../../store'
 import { CliSection } from './CliSection'
+import { AdvancedModeSetting } from './AdvancedModeSetting'
+import { getAdvancedModeSearchEntry } from './advanced-mode-search'
 import { GeneralEditorSettingsSection } from './GeneralEditorSettingsSection'
 import { GeneralSupportSection } from './GeneralSupportSection'
 import { GeneralUpdateSettingsSection } from './GeneralUpdateSettingsSection'
@@ -118,6 +120,11 @@ export function GeneralPane({
     : []
 
   const visibleSections = [
+    matchesSettingsSearch(searchQuery, getAdvancedModeSearchEntry()) ? (
+      <section key="advanced-mode" className="space-y-4">
+        <AdvancedModeSetting settings={settings} updateSettings={updateSettings} />
+      </section>
+    ) : null,
     matchesSettingsSearch(searchQuery, generalNavigationSearchEntries) ? (
       <section key="navigation" className="space-y-4">
         <SettingsSubsectionHeader

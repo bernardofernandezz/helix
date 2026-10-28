@@ -5,16 +5,18 @@ type RightSidebarActivityVisibilityState = {
   isFolderWorkspace: boolean
   /** The workspace runs on an SSH host, reached directly or through its managed server. */
   hasSshHost: boolean
+  advancedMode: boolean
 }
 
 export function getVisibleRightSidebarActivityItems(
   items: ActivityBarItem[],
-  { isFolder, isFolderWorkspace, hasSshHost }: RightSidebarActivityVisibilityState
+  { isFolder, isFolderWorkspace, hasSshHost, advancedMode }: RightSidebarActivityVisibilityState
 ): ActivityBarItem[] {
   return items.filter(
     (item) =>
       (!item.gitOnly || !isFolder) &&
       (!item.folderOnly || isFolderWorkspace) &&
-      (!item.sshOnly || hasSshHost)
+      (!item.sshOnly || hasSshHost) &&
+      (!item.advancedOnly || advancedMode)
   )
 }

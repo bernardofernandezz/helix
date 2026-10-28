@@ -112,7 +112,7 @@ function setSidebarState(settings: GlobalSettings, statusBarVisible = true): voi
     repos: [],
     detectedWorktreesByRepo: {},
     setSidebarWidth: vi.fn(),
-    settings,
+    settings: { ...settings, advancedMode: true },
     sidebarOpen: true,
     sidebarWidth: 320,
     statusBarVisible

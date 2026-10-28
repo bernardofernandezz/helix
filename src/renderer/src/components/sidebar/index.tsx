@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
+import { useAdvancedMode } from '@/hooks/use-advanced-mode'
 import { useAppStore } from '@/store'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { useSidebarResize } from '@/hooks/useSidebarResize'
@@ -90,6 +91,7 @@ function Sidebar({
   const fetchAllWorktrees = useAppStore((s) => s.fetchAllWorktrees)
   const activeModal = useAppStore((s) => s.activeModal)
   const statusBarVisible = useAppStore((s) => s.statusBarVisible)
+  const advancedMode = useAdvancedMode()
   const systemPrefersDark = useSystemPrefersDark()
   const leftSidebarStyle = useMemo(
     () => resolveLeftSidebarStyleVariables(settings, systemPrefersDark),
@@ -191,7 +193,7 @@ function Sidebar({
               </React.Suspense>
             ) : (
               <>
-                <LocalGitToolchainScanBanner />
+                {advancedMode ? <LocalGitToolchainScanBanner /> : null}
                 <WorktreeList
                   scrollOffsetRef={worktreeScrollOffsetRef}
                   scrollAnchorRef={worktreeScrollAnchorRef}
@@ -205,13 +207,15 @@ function Sidebar({
             )}
 
             <div className="relative shrink-0">
-              <SetupScriptPromptCard />
+              {advancedMode ? <SetupScriptPromptCard /> : null}
 
-              <SidebarToolbar
-                workspaceBoardOpen={workspaceBoardOpen}
-                workspaceBoardDragPreviewOpen={workspaceBoardDragPreviewOpen}
-                onWorkspaceBoardToggle={toggleWorkspaceBoard}
-              />
+              {advancedMode ? (
+                <SidebarToolbar
+                  workspaceBoardOpen={workspaceBoardOpen}
+                  workspaceBoardDragPreviewOpen={workspaceBoardDragPreviewOpen}
+                  onWorkspaceBoardToggle={toggleWorkspaceBoard}
+                />
+              ) : null}
             </div>
           </>
         )}

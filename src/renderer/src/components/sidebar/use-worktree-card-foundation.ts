@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useVisibleWorktreeCardProperties } from '@/hooks/use-advanced-mode'
 
 import { DEFAULT_AGENT_ACTIVITY_DISPLAY_MODE } from '../../../../shared/constants'
 import { getWorktreeCardDetails } from '../../../../shared/worktree/card-properties'
@@ -39,7 +40,7 @@ export function useWorktreeCardFoundation({
   const settings = useAppStore((s) => s.settings)
   const fetchIssue = useAppStore((s) => s.fetchIssue)
   const fetchLinearIssue = useAppStore((s) => s.fetchLinearIssue)
-  const cardProps = useAppStore((s) => s.worktreeCardProperties)
+  const cardProps = useVisibleWorktreeCardProperties()
   const agentActivityDisplayMode =
     useAppStore((s) => s.agentActivityDisplayMode) ?? DEFAULT_AGENT_ACTIVITY_DISPLAY_MODE
   const projectGroups = useAppStore((s) => s.projectGroups)
