@@ -10,17 +10,33 @@ stays on your machine or on servers you control.
 
 ## Summary
 
-- **No telemetry in source builds.** Builds you make from source do not send usage data.
+- **Usage analytics are opt-in.** Released builds ask before sending anonymous usage events, and
+  send nothing until you accept. Builds you make from source never send usage data.
 - **Your data stays local.** Helix never uploads files, prompts, agent output, terminal output,
   paths or project names to a Helix service.
 - **Agents talk to their own providers.** When you use a cloud agent such as Claude Code or Codex,
   that agent sends your prompts and the files it reads to its provider, under that provider's terms.
   Choose a local model when that is not acceptable.
 
+## Usage analytics in released builds
+
+Builds downloaded from GitHub Releases show a banner on first launch asking whether to share
+anonymous usage analytics. Nothing is sent until you accept, and you can change your choice at any
+time in **Settings → Privacy**.
+
+When enabled, Helix sends product events (for example "agent started" or "setting changed") to
+PostHog. Every event carries only:
+
+- the Helix version, OS, OS release and CPU architecture;
+- a random install ID and session ID generated on your machine;
+- event-specific fields from a fixed allow-list (counts, enum values, error classes).
+
+Helix never sends file contents, prompts, agent or terminal output, paths, project names or account
+identities. GeoIP lookup is disabled.
+
 ## Turning usage data off
 
-If a packaged build ever ships with optional usage analytics, it will stay off when either of these
-is set:
+Usage analytics also stay off, regardless of your choice in the app, when either of these is set:
 
 - `DO_NOT_TRACK=1`
 - `HELIX_TELEMETRY_DISABLED=1`

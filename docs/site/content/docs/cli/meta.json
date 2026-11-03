@@ -1,6 +1,6 @@
 {
   "title": "Helix CLI & Skills",
-  "defaultOpen": true,
+  "defaultOpen": false,
   "pages": [
     "overview",
     "reference",

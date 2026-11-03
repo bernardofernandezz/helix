@@ -1,5 +1,5 @@
 {
-  "title": "Editing in Helix",
+  "title": "Files and viewers",
   "defaultOpen": true,
-  "pages": ["monaco", "markdown", "viewers", "file-explorer"]
+  "pages": ["viewers", "markdown", "file-explorer", "monaco"]
 }

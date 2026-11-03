@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
-import { DocsHeader } from '@/components/layout/DocsHeader'
-import { DocsFooter } from '@/components/layout/DocsFooter'
+import { SiteHeader } from '@/components/layout/SiteHeader'
+import { SiteFooter } from '@/components/layout/SiteFooter'
 import SearchTrigger from '@/components/docs/SearchTrigger'
 import DocsMobileNav from '@/components/docs/DocsMobileNav'
 import EmptyDocsNavTitle from '@/components/docs/EmptyDocsNavTitle'
@@ -10,12 +10,11 @@ import { source } from '@/lib/source'
 export default function DocsSegmentLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
-      <DocsHeader />
+      <SiteHeader />
       <DocsLayout
         tree={source.pageTree}
         nav={{ enabled: false }}
         searchToggle={{ enabled: false }}
-        themeSwitch={{ enabled: false }}
         slots={{ navTitle: EmptyDocsNavTitle }}
         sidebar={{
           collapsible: false,
@@ -31,7 +30,7 @@ export default function DocsSegmentLayout({ children }: { children: ReactNode })
           {children}
         </main>
       </DocsLayout>
-      <DocsFooter />
+      <SiteFooter />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { source } from '@/lib/source'
 
-const siteUrl = 'https://www.helix.invalid'
+const siteUrl = 'https://docshelix.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return source.getPages().map((page) => ({

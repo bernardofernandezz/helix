@@ -204,7 +204,7 @@ jobs:
     timeout-minutes: 15
     environment:
       name: docs-production
-      url: https://www.helix.invalid/docs
+      url: https://docshelix.vercel.app/docs
     env:
       VERCEL_TELEMETRY_DISABLED: '1'
     steps:

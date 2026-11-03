@@ -54,9 +54,6 @@ export function ImagePlaceholder({ caption, src }: { caption: string; src?: stri
       </figure>
     )
   }
-  return (
-    <div className="my-6 rounded-xl border border-dashed border-border bg-muted px-4 py-6 text-center font-mono text-xs text-muted-foreground">
-      [ image placeholder — {caption} ]
-    </div>
-  )
+  // Unshot screenshots stay out of the page instead of showing a placeholder box.
+  return null
 }

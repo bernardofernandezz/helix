@@ -6,7 +6,7 @@ import { findNeighbour } from 'fumadocs-core/page-tree'
 import { Prose } from '@/components/docs/prose'
 import { source } from '@/lib/source'
 
-const siteUrl = 'https://www.helix.invalid'
+const siteUrl = 'https://docshelix.vercel.app'
 
 export function generateStaticParams() {
   return source.generateParams()
@@ -66,7 +66,7 @@ export default async function DocsPage({ params }: { params: Promise<{ slug?: st
   return (
     <article>
       <header className="mb-8">
-        <h1 className="mb-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+        <h1 className="mb-4 text-4xl font-semibold tracking-[-0.03em] text-foreground sm:text-5xl">
           {page.data.title}
         </h1>
         {page.data.description && (

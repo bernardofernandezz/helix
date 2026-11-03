@@ -1,6 +1,6 @@
 {
   "title": "Reviewing & Shipping Code",
-  "defaultOpen": true,
+  "defaultOpen": false,
   "pages": [
     "diff-viewer",
     "annotate-ai-diff",
