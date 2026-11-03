@@ -3,16 +3,13 @@ import { describe, expect, it, vi } from 'vitest'
 import { Dialog } from '@/components/ui/dialog'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { CreateStep } from './AddRepoCreateStep'
-import type { GitAvailability } from './create-project-defaults'
 
 function renderCreateStep({
   createName = '',
-  gitAvailability = 'available',
   createParent = '/Users/alice/helix/projects',
   parentDefaultPending = false
 }: {
   createName?: string
-  gitAvailability?: GitAvailability
   createParent?: string
   parentDefaultPending?: boolean
 } = {}): string {
@@ -25,7 +22,6 @@ function renderCreateStep({
           createError={null}
           isCreating={false}
           defaultParent="/Users/alice/helix/projects"
-          gitAvailability={gitAvailability}
           runtimeParentStatus="idle"
           parentDefaultPending={parentDefaultPending}
           onNameChange={vi.fn()}
@@ -44,22 +40,11 @@ describe('CreateStep', () => {
 
     expect(html).toContain('Create a new project')
     expect(html).toContain('Name')
-    expect(html).toContain('Git repository in ~/helix/projects')
+    expect(html).toContain('Research project in ~/helix/projects')
     expect(html).toContain('aria-expanded="false"')
     expect(html).not.toContain('Project kind')
     expect(html).not.toContain('Location</span>')
     expect(html).not.toContain('aria-label="Browse host filesystem"')
-  })
-
-  it('shows the Git-required explanation in the collapsed summary', () => {
-    const html = renderCreateStep({
-      createName: 'demo-project',
-      gitAvailability: 'unavailable'
-    })
-
-    expect(html).toContain('Git repository in ~/helix/projects')
-    expect(html).toContain('Git is required to create a project.')
-    expect(html).toContain('disabled=""')
   })
 
   it('disables create while an auto-filled parent belongs to a previous target', () => {

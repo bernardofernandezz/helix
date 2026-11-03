@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { useAppStore } from '../store'
+import { isGitRepoKind } from '../../../shared/repo-kind'
 import { installWindowVisibilityInterval } from '@/lib/window-visibility-interval'
 import {
   isConnectedRuntimeHostState,
@@ -32,14 +33,16 @@ export function useLandingPreflightRuntime(): { preflightIssues: PreflightIssue[
   })
 
   const hasGitHubProject = useMemo(() => hasGitHubBackedProject(repos), [repos])
+  const hasGitProject = useMemo(() => repos.some(isGitRepoKind), [repos])
   const preflightIssues = useMemo(
     () =>
       preflightStatus
         ? getLandingPreflightIssues(preflightStatus, {
-            hasGitHubBackedProject: hasGitHubProject
+            hasGitHubBackedProject: hasGitHubProject,
+            hasGitProject
           })
         : [],
-    [preflightStatus, hasGitHubProject]
+    [preflightStatus, hasGitHubProject, hasGitProject]
   )
 
   useEffect(() => {

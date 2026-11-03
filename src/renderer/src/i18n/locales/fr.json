@@ -1846,7 +1846,6 @@
         "commentTooLarge": "Le commentaire est trop volumineux pour être envoyé sans risque."
       },
       "Landing": {
-        "76a95f7f47": "Créer",
         "f05d237049": "Ajoutez d'abord un projet",
         "f9eaa9e12d": "Ajouter un projet",
         "6ca6ff404e": "HELIX",
@@ -1859,8 +1858,6 @@
         "5beaef5f9e": "GitHub CLI n'est pas installée",
         "b673e7cf1b": "Git est requis pour les projets Git, le contrôle de version et la gestion des espaces de travail.",
         "e5b7296d9d": "Git n'est pas installé",
-        "cd21242762": "Ajoutez un projet pour commencer.",
-        "9c00bd4adf": "Sélectionnez un espace de travail dans la barre latérale pour commencer.",
         "16e9e3df89": "favori",
         "0d0ace8861": "Mettre une étoile sur GitHub",
         "ec43b38ba7": "Étoile ajoutée sur GitHub",
@@ -5490,12 +5487,9 @@
         "AddRepoCreateStep": {
           "0ae45b8238": "my-project",
           "a8149a3a5a": "Nom",
-          "11fd2a7db8": "Dépôt Git",
           "c7b9f94456": "Créer un nouveau projet",
           "b100311784": "Nommez-le et Helix créera un vrai projet avec des valeurs par défaut sensées.",
           "685b5eefe1": "{{kind}} dans {{parent}}",
-          "2a762f3b19": "Vérification de Git sur cet hôte...",
-          "fe1e616c5b": "Git est requis pour créer un projet.",
           "c234df77f7": "Choisissez ou saisissez un dossier parent sur l'hôte avant de créer.",
           "3a13f6e88b": "emplacement non sélectionné",
           "6ed14c0281": "dossier hôte non sélectionné",
@@ -6286,14 +6280,12 @@
             "local": {
               "start": {
                 "actions": {
-                  "d72789705e": "Démarrer depuis un dossier vide",
                   "c709860596": "Créer un nouveau projet",
                   "5f9ffac036": "Cloner un dépôt Git distant",
                   "7edb8ebe24": "Cloner depuis une URL",
                   "a6c20dca96": "Ouvrir un projet depuis une cible SSH",
                   "serverSshTitle": "Projet sur un hôte SSH de ce serveur",
                   "serverSshAddOnThisComputer": "Indisponible depuis un serveur. Ajoutez l’hôte SSH sur cet ordinateur pour ouvrir ses projets.",
-                  "fb4fc5380e": "Projet local, dépôt Git ou dossier contenant plusieurs dépôts",
                   "2281fdc8c7": "Parcourir le dossier",
                   "runtimeBrowseDescription": "Dépôt Git existant ou dossier sur cette machine"
                 }
@@ -14649,7 +14641,6 @@
           "d7b3ef168b": "Détectés sur votre système",
           "9c163bb0e0": "Instructions d'installation",
           "69af7e9c1c": "n'est pas encore dans votre PATH. Helix le définira comme valeur par défaut et vous pourrez l'installer à tout moment.",
-          "1eee1c7bd8": "Aucun agent détecté dans votre PATH. Choisissez-en un à installer plus tard, ou continuez avec un terminal vide.",
           "hideAgents": "Masquer les agents",
           "showMoreAgents": "Afficher {{value0}} autres agents →",
           "yoloModeLabel": "Mode Yolo",

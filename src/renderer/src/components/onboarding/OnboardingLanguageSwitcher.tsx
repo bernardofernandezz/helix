@@ -9,7 +9,6 @@ import { i18n, translate, loadRendererUiLanguage } from '@/i18n/i18n'
 import { getUiLanguageNativeLabel } from '@/i18n/supported-languages'
 import { useLanguageReadiness } from '@/i18n/language-readiness'
 import { track } from '@/lib/telemetry'
-import { isWebClientLocation } from '@/lib/web-client-location'
 import { useAppStore } from '@/store'
 import {
   SUPPORTED_UI_LOCALES,
@@ -46,7 +45,8 @@ export function OnboardingLanguageSwitcher({
   const successfulRequests = useRef(new Set<string>())
   const contentRef = useRef<HTMLDivElement>(null)
   const busy = selectionPhase !== null || catalogLoading
-  const canRequestLanguage = !isWebClientLocation()
+  // ponytail: requests post to the feedback backend, which doesn't exist yet; restore `!isWebClientLocation()` with it.
+  const canRequestLanguage = false
   const metadata = {
     system_language: detection.detectedTag,
     system_language_supported: detection.status === 'supported',

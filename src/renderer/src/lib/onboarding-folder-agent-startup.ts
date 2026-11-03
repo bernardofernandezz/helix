@@ -9,7 +9,6 @@ import type { AgentStartedTelemetry } from '@/lib/worktree-startup-payload'
 import type { StartupCommandDelivery } from '../../../shared/codex-startup-delivery'
 import type { SleepingAgentLaunchConfig } from '../../../shared/agent-session-resume'
 import type { GlobalSettings } from '../../../shared/global-settings-types'
-import type { OnboardingState } from '../../../shared/onboarding-state-types'
 import type { AgentStartupShell } from '../../../shared/tui-agent-startup-shell'
 import type { TuiAgent } from '../../../shared/tui-agent'
 
@@ -71,16 +70,4 @@ export function buildOnboardingFolderAgentStartup(
       request_kind: 'new'
     }
   }
-}
-
-export function shouldSeedFolderAgentAfterDismissedOnboarding(
-  onboarding: OnboardingState | null,
-  hasExistingProject: boolean
-): boolean {
-  return (
-    onboarding?.outcome === 'dismissed' &&
-    !hasExistingProject &&
-    !onboarding.checklist.addedRepo &&
-    !onboarding.checklist.addedFolder
-  )
 }

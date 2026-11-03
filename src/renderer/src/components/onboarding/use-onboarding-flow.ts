@@ -18,7 +18,6 @@ import {
   isSkippedStepIndex,
   remapOpenOnboardingLastCompletedStep,
   resolveStepIndex,
-  shouldSkipIntegrationsStep,
   shouldSkipWindowsTerminalStep
 } from './onboarding-flow-state'
 
@@ -45,10 +44,8 @@ export function useOnboardingFlow(
   const refreshPreflightStatus = useAppStore((s) => s.refreshPreflightStatus)
   const linearStatus = useAppStore((s) => s.linearStatus)
   const linearStatusChecked = useAppStore((s) => s.linearStatusChecked)
-  // Why: renderToStaticMarkup uses Zustand's initial snapshot; the sync read keeps tests and the first client render aligned.
-  const effectivePreflightStatus = preflightStatus ?? useAppStore.getState().preflightStatus
-
-  const skipIntegrations = shouldSkipIntegrationsStep(effectivePreflightStatus)
+  // Research-first: GitHub/Linear task sources stay in Settings instead of onboarding.
+  const skipIntegrations = true
   const skipWindowsTerminal = shouldSkipWindowsTerminalStep(isWindowsUserAgent())
   const skipOptions = useMemo(
     () => ({ skipIntegrations, skipWindowsTerminal }),
