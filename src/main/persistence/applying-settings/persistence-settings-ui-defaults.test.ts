@@ -88,8 +88,8 @@ describe('Store', () => {
     expect(settings.terminalTuiScrollSensitivityDefaultedToOne).toBe(true)
     expect(settings.terminalUseSeparateLightTheme).toBe(true)
     expect(settings.rightSidebarOpenByDefault).toBe(true)
-    expect(settings.showTasksButton).toBe(true)
-    expect(settings.showAutomationsButton).toBe(true)
+    expect(settings.showTasksButton).toBe(false)
+    expect(settings.showAutomationsButton).toBe(false)
     expect(settings.visibleTaskProviders).toEqual(['github', 'gitlab', 'linear', 'jira'])
     expect(settings.openInApplications).toEqual([
       { id: 'vscode', label: 'VS Code', command: 'code' }

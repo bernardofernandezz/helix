@@ -1,3 +1,5 @@
+import { HELIX_DOCS_URL } from './helix-site-url'
+
 export type FeatureWallTileId =
   | 'tile-01'
   | 'tile-02'
@@ -65,7 +67,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-01.poster.jpg',
     recordedAtPath: 'tile-01.recorded-at.json',
     owner: 'worktree-orchestration',
-    docsUrl: 'https://www.helix.invalid/docs/model/worktrees'
+    docsUrl: `${HELIX_DOCS_URL}/model/worktrees`
   },
   {
     id: 'tile-02',
@@ -77,7 +79,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-02.poster.jpg',
     recordedAtPath: 'tile-02.recorded-at.json',
     owner: 'terminal',
-    docsUrl: 'https://www.helix.invalid/docs/terminal'
+    docsUrl: `${HELIX_DOCS_URL}/terminal`
   },
   {
     id: 'tile-03',
@@ -89,7 +91,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-03.poster.jpg',
     recordedAtPath: 'tile-03.recorded-at.json',
     owner: 'task-integrations',
-    docsUrl: 'https://www.helix.invalid/docs/review/linear'
+    docsUrl: `${HELIX_DOCS_URL}/review/linear`
   },
   {
     id: 'tile-04',
@@ -100,7 +102,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-04.poster.jpg',
     recordedAtPath: 'tile-04.recorded-at.json',
     owner: 'agent-integrations',
-    docsUrl: 'https://www.helix.invalid/docs/agents/supported'
+    docsUrl: `${HELIX_DOCS_URL}/agents/supported`
   },
   {
     id: 'tile-05',
@@ -112,7 +114,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-05.poster.jpg',
     recordedAtPath: 'tile-05.recorded-at.json',
     owner: 'browser-experience',
-    docsUrl: 'https://www.helix.invalid/docs/browser/design-mode'
+    docsUrl: `${HELIX_DOCS_URL}/browser/design-mode`
   },
   {
     id: 'tile-06',
@@ -124,7 +126,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-06.poster.jpg',
     recordedAtPath: 'tile-06.recorded-at.json',
     owner: 'ssh-workspaces',
-    docsUrl: 'https://www.helix.invalid/docs/ssh'
+    docsUrl: `${HELIX_DOCS_URL}/ssh`
   },
   {
     id: 'tile-07',
@@ -137,7 +139,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-07.poster.jpg',
     recordedAtPath: 'tile-07.recorded-at.json',
     owner: 'editor',
-    docsUrl: 'https://www.helix.invalid/docs/editing/file-explorer'
+    docsUrl: `${HELIX_DOCS_URL}/editing/file-explorer`
   },
   {
     id: 'tile-08',
@@ -149,7 +151,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-08.poster.jpg',
     recordedAtPath: 'tile-08.recorded-at.json',
     owner: 'diff-review',
-    docsUrl: 'https://www.helix.invalid/docs/review/annotate-ai-diff'
+    docsUrl: `${HELIX_DOCS_URL}/review/annotate-ai-diff`
   },
   {
     id: 'tile-09',
@@ -160,7 +162,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-09.poster.jpg',
     recordedAtPath: 'tile-09.recorded-at.json',
     owner: 'helix-cli',
-    docsUrl: 'https://www.helix.invalid/docs/cli/overview'
+    docsUrl: `${HELIX_DOCS_URL}/cli/overview`
   },
   {
     id: 'tile-10',
@@ -172,7 +174,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-10.poster.jpg',
     recordedAtPath: 'tile-10.recorded-at.json',
     owner: 'keyboard-ux',
-    docsUrl: 'https://www.helix.invalid/docs/model/quick-open'
+    docsUrl: `${HELIX_DOCS_URL}/model/quick-open`
   },
   {
     id: 'tile-11',
@@ -184,7 +186,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-11.poster.jpg',
     recordedAtPath: 'tile-11.recorded-at.json',
     owner: 'usage-rate-limits',
-    docsUrl: 'https://www.helix.invalid/docs/agents/usage-tracking'
+    docsUrl: `${HELIX_DOCS_URL}/agents/usage-tracking`
   },
   {
     id: 'tile-12',
@@ -196,6 +198,6 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-12.poster.jpg',
     recordedAtPath: 'tile-12.recorded-at.json',
     owner: 'file-preview',
-    docsUrl: 'https://www.helix.invalid/docs/editing/viewers'
+    docsUrl: `${HELIX_DOCS_URL}/editing/viewers`
   }
 ] as const
