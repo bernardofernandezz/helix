@@ -26,6 +26,7 @@ export async function removeFolderWorkspace(
     throw new Error('Cannot delete the project root workspace. Remove the folder project instead.')
   }
   const ownerHost = parseExecutionHostId(removalHostId)
+  // Folder removal drops metadata only; analysis dirs hold research data and stay on disk.
   // Shared-root folder removal has no Git step to close shells; stop them before dropping metadata.
   await withWorktreeRemoveStageSpan('pty_sweep', 'folder', async () => {
     // Fence by resolved repo ownership; same-ID metadata can describe another host's workspace.

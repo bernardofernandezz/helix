@@ -7,6 +7,7 @@ import {
 } from '../../../shared/worktree/id'
 import type { WorktreeMeta } from '../../../shared/worktree/meta-types'
 import type { Worktree } from '../../../shared/worktree/types'
+import { folderWorkspacePath } from '../../../shared/folder-workspace-analysis-dir'
 
 export function getFolderWorkspaceRootId(repo: Repo): string {
   return getRepoMainWorktreeId(repo)
@@ -39,7 +40,7 @@ export function mergeFolderWorkspace(repo: Repo, worktreeId: string, meta: Workt
     ...(meta.projectHostSetupId !== undefined
       ? { projectHostSetupId: meta.projectHostSetupId }
       : {}),
-    path: repo.path,
+    path: folderWorkspacePath(repo.path, meta.analysisDir),
     head: '',
     branch: '',
     isBare: false,

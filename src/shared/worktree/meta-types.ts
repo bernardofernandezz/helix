@@ -86,6 +86,8 @@ export type WorktreeMeta = {
   /** Explicit marker stamped when Helix creates the worktree. */
   helixCreatedAt?: number
   helixCreationSource?: 'desktop' | 'runtime' | 'cli' | 'ssh'
+  /** Folder workspaces only: project-relative POSIX dir (e.g. `analyses/rnaseq`) isolating this analysis. */
+  analysisDir?: string
   /** Workspace layout active when Helix created the worktree. */
   helixCreationWorkspaceLayout?: HelixWorkspaceLayout
   /** User-assigned workspace board status for manual sidebar organization. */

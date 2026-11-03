@@ -26,6 +26,10 @@ import {
   type HostWorktreeTarget
 } from '../../shared/worktree/host-qualified-identity'
 
+// Fixture paths are not writable; analysis dirs are covered in their own test.
+vi.mock('../folder-workspace-analysis-dir-create', () => ({
+  createAnalysisDir: async () => undefined
+}))
 vi.mock('electron', async () =>
   (await import('./worktrees-test-module-mocks')).electronModuleMock()
 )
