@@ -20656,5 +20656,22 @@
   },
   "browserTab": {
     "agentDriving": "Um agente está usando esta página"
+  },
+  "helix": {
+    "structureViewer": {
+      "atoms": "{{value}} átomos",
+      "chains": "cadeias {{value}}",
+      "ligands": "ligantes {{value}}",
+      "molecules": "{{value}} moléculas",
+      "representation": "Representação",
+      "cartoon": "Cartoon",
+      "sticks": "Bastões",
+      "surface": "Superfície",
+      "coloring": "Coloração",
+      "spectrum": "Espectro",
+      "chain": "Cadeia",
+      "confidence": "pLDDT",
+      "error": "Não foi possível exibir esta estrutura ({{value}}). Mude para Fonte para inspecionar o arquivo."
+    }
   }
 }

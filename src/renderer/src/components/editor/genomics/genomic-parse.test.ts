@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { detectAlphabet, parseFasta, wrapSequence } from './fasta-parse'
 import { parseGenomicTable } from './genomic-table-parse'
+import { summarizeStructure } from './structure-format'
 
 const VCF = [
   '##fileformat=VCFv4.2',
@@ -119,5 +120,27 @@ describe('parseFasta', () => {
       { start: 5, text: 'ACGT' },
       { start: 9, text: 'A' }
     ])
+  })
+})
+
+describe('summarizeStructure', () => {
+  it('counts atoms, chains and non-water ligands in PDB text', () => {
+    const pdb = [
+      'ATOM      1  CA  ALA A   1       0.000   0.000   0.000  1.00 90.00           C',
+      'ATOM      2  CA  GLY B   1       1.000   0.000   0.000  1.00 90.00           C',
+      'HETATM    3  C1  ATP A 201       2.000   0.000   0.000  1.00 90.00           C',
+      'HETATM    4  O   HOH A 301       3.000   0.000   0.000  1.00 90.00           O',
+      'END'
+    ].join('\n')
+    expect(summarizeStructure(pdb, 'pdb')).toEqual({
+      atoms: 4,
+      chains: ['A', 'B'],
+      ligands: ['ATP'],
+      molecules: 1
+    })
+  })
+
+  it('counts SDF records', () => {
+    expect(summarizeStructure('a\n$$$$\nb\n$$$$\n', 'sdf').molecules).toBe(2)
   })
 })

@@ -127,7 +127,15 @@ const EXT_TO_LANGUAGE: Record<string, string> = {
   '.fna': 'fasta',
   '.faa': 'fasta',
   '.ffn': 'fasta',
-  '.fas': 'fasta'
+  '.fas': 'fasta',
+  '.pdb': 'pdb',
+  '.ent': 'pdb',
+  '.cif': 'mmcif',
+  '.mmcif': 'mmcif',
+  '.sdf': 'sdf',
+  '.mol': 'sdf',
+  '.mol2': 'mol2',
+  '.xyz': 'xyz'
 }
 
 const FILENAME_TO_LANGUAGE: Record<string, string> = {

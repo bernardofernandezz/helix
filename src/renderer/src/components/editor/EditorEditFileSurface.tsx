@@ -1,5 +1,7 @@
 import { translate } from '@/i18n/i18n'
 import type { BioViewerFormat } from './genomics/bio-viewer-format'
+import { structureFormatForLanguage } from './genomics/structure-format'
+import { detectLanguage } from '../../../../shared/editor-language/editor-language-detect'
 import { getConnectionIdForFile } from '@/lib/connection-context'
 import type { MarkdownViewMode, OpenFile, PendingEditorReveal } from '@/store/slices/editor'
 import type { GitDiffResult } from '../../../../shared/git-diff-compare-types'
@@ -11,6 +13,7 @@ import {
   CsvPagedViewer,
   FastaViewer,
   GenomicTableViewer,
+  StructureViewer,
   ImageViewer,
   IpynbViewer,
   MermaidViewer,
@@ -291,7 +294,16 @@ export function EditorEditFileSurface({
     />
   ) : bioViewerFormat === 'fasta' && mdViewMode === 'rich' ? (
     <FastaViewer key={activeFile.id} content={currentContent} />
-  ) : bioViewerFormat !== null && bioViewerFormat !== 'fasta' && mdViewMode === 'rich' ? (
+  ) : bioViewerFormat === 'structure' && mdViewMode === 'rich' ? (
+    <StructureViewer
+      key={activeFile.id}
+      content={currentContent}
+      format={structureFormatForLanguage(detectLanguage(activeFile.filePath)) ?? 'pdb'}
+    />
+  ) : bioViewerFormat !== null &&
+    bioViewerFormat !== 'fasta' &&
+    bioViewerFormat !== 'structure' &&
+    mdViewMode === 'rich' ? (
     <GenomicTableViewer key={activeFile.id} content={currentContent} format={bioViewerFormat} />
   ) : isNotebook && mdViewMode === 'rich' ? (
     <IpynbViewer
