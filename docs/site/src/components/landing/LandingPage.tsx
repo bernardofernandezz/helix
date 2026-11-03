@@ -20,9 +20,19 @@ function Readout({ items }: { items: string[] }) {
   )
 }
 
-function GridField() {
+function GridField({ centered }: { centered?: boolean }) {
   return (
-    <div aria-hidden="true" className="landing-grid-field pointer-events-none absolute inset-0" />
+    <div
+      aria-hidden="true"
+      className="landing-grid-field pointer-events-none absolute inset-0"
+      style={
+        centered
+          ? {
+              maskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 100%)'
+            }
+          : undefined
+      }
+    />
   )
 }
 
@@ -442,24 +452,26 @@ export function LandingPage() {
             body="General coding tools treat a genome like any other folder. Helix starts from the science."
           />
           <div className="mt-12 overflow-x-auto rounded-xl border border-border">
-            <table className="w-full min-w-[560px] text-sm">
+            <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-card text-left text-muted-foreground">
-                  <th className="px-5 py-3.5 font-medium">Capability</th>
-                  <th className="w-28 px-5 py-3.5 text-center font-semibold text-foreground">
+                  <th className="px-4 py-3.5 font-medium sm:px-5">Capability</th>
+                  <th className="w-16 px-2 py-3.5 text-center font-semibold text-foreground sm:w-28 sm:px-5">
                     Helix
                   </th>
-                  <th className="w-40 px-5 py-3.5 text-center font-medium">Coding IDEs</th>
+                  <th className="w-24 px-2 py-3.5 text-center font-medium sm:w-40 sm:px-5">
+                    Coding IDEs
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {COMPARISON.map(({ row, other }) => (
                   <tr key={row} className="border-b border-border last:border-0">
-                    <td className="px-5 py-3.5">{row}</td>
-                    <td className="px-5 py-3.5 text-center">
+                    <td className="px-4 py-3.5 sm:px-5">{row}</td>
+                    <td className="px-2 py-3.5 text-center sm:px-5">
                       <Check className="inline size-4 text-brand" aria-label="Yes" />
                     </td>
-                    <td className="px-5 py-3.5 text-center text-muted-foreground">
+                    <td className="px-2 py-3.5 text-center text-xs text-muted-foreground sm:px-5 sm:text-sm">
                       {other ?? <Minus className="inline size-4 opacity-50" aria-label="No" />}
                     </td>
                   </tr>
@@ -500,7 +512,7 @@ export function LandingPage() {
         </section>
 
         <section className="relative overflow-hidden border-t border-border">
-          <GridField />
+          <GridField centered />
           <div className="relative mx-auto flex max-w-[1200px] flex-col items-center gap-6 px-4 py-24 text-center md:py-32">
             <HelixMark className="size-14 text-foreground" />
             <h2 className="text-4xl font-semibold tracking-[-0.04em] md:text-6xl">Get Helix</h2>

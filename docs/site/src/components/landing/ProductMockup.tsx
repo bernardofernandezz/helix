@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpenText, Box, Dna, FileText, Workflow } from 'lucide-react'
+import { ArrowUp, BookOpenText, Box, Dna, FileText, Workflow } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { cn } from '@/lib/class-names'
 
@@ -325,7 +325,7 @@ const SCENES: Scene[] = [
 
 function ChatPane({ scene }: { scene: Scene }) {
   return (
-    <div className="flex min-w-0 flex-col gap-4 p-4 text-[13px] sm:p-5">
+    <div className="flex h-full min-w-0 flex-col gap-4 p-4 text-[13px] sm:p-5">
       <div className="ml-auto max-w-[85%] rounded-xl rounded-br-sm bg-accent px-3.5 py-2.5 leading-relaxed">
         {scene.prompt}
       </div>
@@ -349,6 +349,15 @@ function ChatPane({ scene }: { scene: Scene }) {
         ))}
       </ol>
       <p className="leading-relaxed text-foreground/90">{scene.answer}</p>
+      <div className="mt-auto flex items-center gap-2 rounded-xl border border-border bg-background/60 px-3.5 py-2.5 text-muted-foreground">
+        <span className="flex-1 truncate">Ask a follow-up…</span>
+        <span className="hidden font-mono text-3xs tracking-wider uppercase sm:inline">
+          Opus · helix-research
+        </span>
+        <span className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+          <ArrowUp className="size-3.5" aria-hidden="true" />
+        </span>
+      </div>
     </div>
   )
 }
