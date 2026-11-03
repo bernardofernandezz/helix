@@ -3,12 +3,13 @@
 
 import type { EventName, EventProps } from '../../../shared/telemetry-events'
 import type { TelemetryConsentState } from '../../../shared/telemetry-consent-types'
+import { HELIX_DOCS_URL } from '../../../shared/helix-site-url'
 
 // Re-exported so renderer call sites can import the mapper alongside `track` (impl is shared because main needs the same mapping).
 export { tuiAgentToAgentKind } from '../../../shared/agent-kind'
 
 // Single source-of-truth for the privacy doc URL so FirstLaunchBanner and PrivacyPane can't drift.
-export const PRIVACY_URL = 'https://www.helix.invalid/docs/telemetry'
+export const PRIVACY_URL = `${HELIX_DOCS_URL}/telemetry`
 
 // Why: the IPC boundary is untyped at runtime, so validate before the Privacy pane trusts a payload from main.
 function isTelemetryConsentState(x: unknown): x is TelemetryConsentState {
