@@ -98,14 +98,17 @@ const BASE_COLOR: Record<string, string> = {
   C: 'text-muted-foreground'
 }
 
+const TP53_BASES = [
+  ...'ATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAGCCCCCTCTGAGTCAGGAAACATTTTCAGACCTATGGAAA'
+].map((base, position) => ({ base, position }))
+
 function SequenceVisual() {
-  const seq = 'ATGGAGGAGCCGCAGTCAGATCCTAGCGTCGAGCCCCCTCTGAGTCAGGAAACATTTTCAGACCTATGGAAA'
   return (
     <div className="w-full">
       <p className="mb-2 font-mono text-2xs text-muted-foreground">&gt;NM_000546.6 TP53</p>
       <p className="font-mono text-xs leading-relaxed tracking-[0.12em] break-all">
-        {seq.split('').map((base, i) => (
-          <span key={i} className={BASE_COLOR[base]}>
+        {TP53_BASES.map(({ base, position }) => (
+          <span key={position} className={BASE_COLOR[base]}>
             {base}
           </span>
         ))}
