@@ -30,14 +30,15 @@
 
 ## What works today
 
-| Area               | What you get                                                                                                    |
-| ------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Research projects  | Each project is a folder (or a git worktree when you use git) with its own agents, terminals and files.         |
-| Agents             | Claude Code, Codex, Gemini CLI, OpenCode, Goose, Aider and any other CLI agent, side by side, with live status. |
-| Chat surface       | A structured chat view with tool calls, approvals, tables, math and inline charts.                              |
-| Data and notebooks | Grid viewer for CSV/TSV, Jupyter notebooks with real kernels, PDF, Markdown and images.                         |
-| Remote compute     | SSH hosts for servers and clusters, with remote terminals and file browsing.                                    |
-| Automation         | Scheduled agent runs, a scriptable `helix` CLI and installable agent skills.                                    |
+| Area               | What you get                                                                                                                                          |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Research projects  | New projects are plain folders with `data/`, `notebooks/`, `results/`, a bioconda `environment.yml` and the research tools wired in; git is optional. |
+| Agents             | Claude Code, Codex, Gemini CLI, OpenCode, Goose, Aider and any other CLI agent, side by side, with live status.                                       |
+| Chat surface       | Chat is the default: a new project opens straight into a chat with your agent, with approvals, math and inline plots and 3D structures.               |
+| Data and notebooks | Viewers for FASTA, VCF/BED/GFF, PDB/mmCIF/SDF in 3D, CSV/TSV, Jupyter notebooks with real kernels, PDF and images.                                    |
+| Remote compute     | SSH hosts for servers and clusters, with remote terminals and file browsing.                                                                          |
+| Science skills     | Built-in agent skills for NGS QC, RNA-seq, variants, single-cell, sequence design (BLAST, primers, CRISPR), cheminformatics and reproducible methods. |
+| Automation         | Scheduled agent runs, a scriptable `helix` CLI and installable agent skills.                                                                          |
 
 ## Roadmap
 
@@ -56,7 +57,17 @@ The mobile companion is not part of the first release. See
 
 ## Install
 
-There are no published builds yet. Build from source:
+Helix is in closed beta for **Windows and Linux** (macOS is coming once builds are notarized).
+Download the installer from [GitHub Releases](https://github.com/bernardofernandezz/helix/releases):
+
+- **Windows:** `helix-windows-setup.exe`. The beta is not code-signed yet, so SmartScreen warns on
+  first launch: choose **More info → Run anyway**.
+- **Linux:** the `.AppImage`, `.deb` or `.rpm` for x64.
+
+Installed builds update themselves. Report problems in
+[GitHub Issues](https://github.com/bernardofernandezz/helix/issues).
+
+To build from source instead:
 
 ```bash
 git clone https://github.com/bernardofernandezz/helix.git
@@ -77,5 +88,3 @@ tools on macOS, `build-essential` on Linux, Visual Studio Build Tools on Windows
 ## License
 
 Helix is open source under the [MIT License](LICENSE).
-
-# helix

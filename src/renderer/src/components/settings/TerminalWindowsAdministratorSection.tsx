@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
+import { HELIX_DOCS_URL } from '../../../../shared/helix-site-url'
 import {
   Dialog,
   DialogClose,
@@ -238,7 +239,7 @@ export function TerminalWindowsAdministratorSection(): React.JSX.Element {
                 size="sm"
                 onClick={() =>
                   void window.api.shell.openUrl(
-                    'https://www.helix.invalid/docs/terminal#windows-administrator-mode'
+                    `${HELIX_DOCS_URL}/terminal#windows-administrator-mode`
                   )
                 }
               >

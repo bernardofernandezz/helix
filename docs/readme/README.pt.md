@@ -51,7 +51,17 @@ O app mobile não faz parte da primeira versão. Veja
 
 ## Instalação
 
-Ainda não há builds publicados. Compile a partir do código:
+O Helix está em beta fechado para **Windows e Linux**. O macOS chega quando os builds forem notarizados.
+Baixe o instalador em [GitHub Releases](https://github.com/bernardofernandezz/helix/releases):
+
+- **Windows:** `helix-windows-setup.exe`. O beta ainda não tem assinatura de código, então o SmartScreen
+  avisa na primeira execução: escolha **Mais informações → Executar assim mesmo**.
+- **Linux:** o `.AppImage`, `.deb` ou `.rpm` para x64.
+
+As versões instaladas se atualizam sozinhas. Relate problemas em
+[GitHub Issues](https://github.com/bernardofernandezz/helix/issues).
+
+Para compilar a partir do código:
 
 ```bash
 git clone https://github.com/bernardofernandezz/helix.git

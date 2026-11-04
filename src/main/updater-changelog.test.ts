@@ -7,6 +7,7 @@ vi.mock('electron', () => ({
 }))
 
 import { fetchChangelog } from './updater-changelog'
+import { HELIX_RELEASES_URL } from '../shared/helix-site-url'
 
 function jsonResponse(body: unknown): Response {
   return { ok: true, json: () => Promise.resolve(body) } as unknown as Response
@@ -73,7 +74,7 @@ describe('fetchChangelog', () => {
     expect(result).not.toBeNull()
     expect(result!.release.title).toBe('Release 1.1.17')
     expect(result!.release.description).toBe('Cool feature')
-    expect(result!.release.releaseNotesUrl).toBe('https://helix.invalid/changelog')
+    expect(result!.release.releaseNotesUrl).toBe(HELIX_RELEASES_URL)
     expect(result!.releasesBehind).toBe(2)
   })
 
@@ -93,7 +94,7 @@ describe('fetchChangelog', () => {
 
     expect(result).not.toBeNull()
     expect(result!.release.title).toBe('Release 1.1.17')
-    expect(result!.release.releaseNotesUrl).toBe('https://helix.invalid/changelog')
+    expect(result!.release.releaseNotesUrl).toBe(HELIX_RELEASES_URL)
     expect(result!.releasesBehind).toBe(2)
   })
 
@@ -156,7 +157,7 @@ describe('fetchChangelog', () => {
 
     expect(result).not.toBeNull()
     expect(result!.release.title).toBe('Release 1.1.18')
-    expect(result!.release.releaseNotesUrl).toBe('https://helix.invalid/changelog')
+    expect(result!.release.releaseNotesUrl).toBe(HELIX_RELEASES_URL)
   })
 
   it('shows rich entry when local version is not in JSON (very old user)', async () => {
@@ -174,7 +175,7 @@ describe('fetchChangelog', () => {
 
     expect(result).not.toBeNull()
     expect(result!.release.title).toBe('Release 1.1.17')
-    expect(result!.release.releaseNotesUrl).toBe('https://helix.invalid/changelog')
+    expect(result!.release.releaseNotesUrl).toBe(HELIX_RELEASES_URL)
     expect(result!.releasesBehind).toBeNull()
   })
 

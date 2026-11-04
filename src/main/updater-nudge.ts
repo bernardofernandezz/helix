@@ -1,4 +1,5 @@
 import { net } from 'electron'
+import { HELIX_SITE_ORIGIN } from '../shared/helix-site-url'
 import { compareVersions, isValidVersion } from './updater-fallback'
 
 export type NudgeConfig = {
@@ -9,7 +10,7 @@ export type NudgeConfig = {
 
 export async function fetchNudge(): Promise<NudgeConfig | null> {
   try {
-    const res = await net.fetch('https://helix.invalid/whats-new/nudge.json', {
+    const res = await net.fetch(`${HELIX_SITE_ORIGIN}/whats-new/nudge.json`, {
       signal: AbortSignal.timeout(5000)
     })
     if (!res.ok) {

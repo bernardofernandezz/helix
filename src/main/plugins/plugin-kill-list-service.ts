@@ -6,8 +6,9 @@ import {
   type PluginKillListEntry
 } from '../../shared/plugins/plugin-kill-list'
 import { PluginKillListStore } from './plugin-kill-list-store'
+import { HELIX_SITE_ORIGIN } from '../../shared/helix-site-url'
 
-export const PLUGIN_KILL_LIST_URL = 'https://helix.invalid/plugins/kill-list.json'
+export const PLUGIN_KILL_LIST_URL = `${HELIX_SITE_ORIGIN}/plugins/kill-list.json`
 const PLUGIN_KILL_LIST_DOWNLOAD_LIMIT = 4 * 1024 * 1024
 
 type PluginKillListFetcher = () => Promise<PluginKillList>

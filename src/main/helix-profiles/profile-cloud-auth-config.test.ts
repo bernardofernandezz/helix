@@ -45,24 +45,10 @@ describe('Helix cloud auth config', () => {
     })
   })
 
-  it('uses first-party production endpoints without runtime env in packaged builds', () => {
+  it('stays unconfigured in packaged builds until Helix Cloud is deployed', () => {
     expect(getHelixCloudAuthConfig({}, true)).toEqual({
-      configured: true,
-      config: {
-        apiBaseUrl: 'https://login.helix.invalid',
-        authorizeEndpoint: 'https://login.helix.invalid/v1/desktop/auth/authorize',
-        sessionEndpoint: 'https://login.helix.invalid/v1/desktop/auth/session',
-        refreshEndpoint: 'https://login.helix.invalid/v1/desktop/auth/refresh',
-        capabilitiesEndpoint: 'https://login.helix.invalid/v1/desktop/auth/capabilities',
-        profileEndpoint: 'https://login.helix.invalid/v1/desktop/auth/profile',
-        orgEndpoint: 'https://login.helix.invalid/v1/desktop/auth/org',
-        logoutEndpoint: 'https://login.helix.invalid/v1/desktop/auth/logout',
-        relayTokenEndpoint: 'https://login.helix.invalid/v1/desktop/auth/relay-token',
-        connectorTokenEndpoint: 'https://login.helix.invalid/v1/desktop/auth/connector-token',
-        relayDirectorUrl: 'https://relay.helix.invalid',
-        clientId: 'helix-desktop',
-        scope: 'openid profile email offline_access'
-      }
+      configured: false,
+      setupMessage: 'Helix Cloud sign-in is not configured for this build.'
     })
   })
 
