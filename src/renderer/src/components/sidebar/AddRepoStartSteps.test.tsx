@@ -151,7 +151,7 @@ describe('AddRepoLocalStartStep', () => {
     })
     const remote = secondaryActions.find((action) => action.kind === 'remote')
 
-    expect(secondaryActions.map((action) => action.kind)).toEqual(['clone', 'remote', 'create'])
+    expect(secondaryActions.map((action) => action.kind)).toEqual(['create', 'clone', 'remote'])
     // Servers refuse repo.addRemote; this action must use their own SSH-host flow.
     expect(remote).toMatchObject({
       title: "Project on this server's SSH host",
@@ -288,7 +288,7 @@ describe('AddRepoLocalStartStep', () => {
       )
     })
 
-    const firstSecondary = findButton(container, 'Clone from URL')
+    const firstSecondary = findButton(container, 'Create new project')
     expect(document.activeElement).toBe(firstSecondary)
     expect(firstSecondary.textContent).toContain('⏎')
 
