@@ -4,9 +4,22 @@ import { act, type ReactNode } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { AppState } from '@/store'
+import type { Repo } from '../../../../shared/repo-types'
 import { i18n } from '@/i18n/i18n'
 import ko from '@/i18n/locales/ko.json'
 import SidebarToolbar from './SidebarToolbar'
+
+// The board button only shows once a Git project exists.
+const GIT_PROJECTS: Repo[] = [
+  {
+    id: 'repo-1',
+    path: '/tmp/repo-1',
+    displayName: 'repo-1',
+    badgeColor: 'gray',
+    addedAt: 1,
+    kind: 'git'
+  }
+]
 
 const mocks = vi.hoisted(() => ({
   activeTooltipOpen: false,
@@ -72,6 +85,7 @@ describe('SidebarToolbar moved workspace board hint', () => {
     mocks.activeTooltipOpen = false
     mocks.state = {
       persistedUIReady: true,
+      repos: GIT_PROJECTS,
       featureInteractions: {}
     }
   })
@@ -116,6 +130,7 @@ describe('SidebarToolbar moved workspace board hint', () => {
   it('shows the moved hint once to users who had already used the workspace board', async () => {
     mocks.state = {
       persistedUIReady: true,
+      repos: GIT_PROJECTS,
       featureInteractions: {
         'workspace-board': { firstInteractedAt: 100, interactionCount: 2 }
       }

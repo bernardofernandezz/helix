@@ -98,7 +98,7 @@ describe('Store', () => {
     expect(settings.experimentalActivityDefaultedOffForAllUsers).toBe(true)
     expect(settings.experimentalTerminalAttention).toBe(false)
     expect(settings.experimentalNewWorktreeCardStyle).toBe(false)
-    expect(settings.floatingTerminalEnabled).toBe(true)
+    expect(settings.floatingTerminalEnabled).toBe(false)
     expect(settings.floatingTerminalDefaultedForAllUsers).toBe(true)
     expect(settings.notifications.customSoundPath).toBeNull()
     expect(settings.notifications.customSoundVolume).toBe(100)
@@ -129,7 +129,7 @@ describe('Store', () => {
     expect(ui.lastActiveRepoId).toBeNull()
     expect(ui.dismissedUpdateVersion).toBeNull()
     expect(ui.lastUpdateCheckAt).toBeNull()
-    expect(ui.setupGuideSidebarDismissed).toBe(false)
+    expect(ui.setupGuideSidebarDismissed).toBe(true)
     expect(ui.setupGuideBrowserMilestoneMigrated).toBe(true)
     expect(ui.setupGuideBrowserMilestoneLegacyComplete).toBe(false)
     // New profiles never saw the former remaining-percentage default.

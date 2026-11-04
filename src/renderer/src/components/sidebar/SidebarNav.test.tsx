@@ -100,8 +100,13 @@ function folderRepo(): Repo {
   }
 }
 
+// Tasks and Automations are opt-in by default; these tests cover the rows themselves.
+function navSettings(): GlobalSettings {
+  return { ...getDefaultSettings('/tmp'), showTasksButton: true, showAutomationsButton: true }
+}
+
 function setSidebarState({
-  settings = getDefaultSettings('/tmp'),
+  settings = navSettings(),
   repos = [gitRepo()]
 }: {
   settings?: GlobalSettings
@@ -209,7 +214,7 @@ describe('SidebarNav', () => {
   it('mounts the Agent Dashboard row only when its experiment is enabled', async () => {
     setSidebarState({
       settings: {
-        ...getDefaultSettings('/tmp'),
+        ...navSettings(),
         experimentalAgentDashboardPopout: true
       }
     })
@@ -223,7 +228,7 @@ describe('SidebarNav', () => {
     mocks.agentBucketCounts = { attention: 2, working: 3, done: 1, idle: 4 }
     setSidebarState({
       settings: {
-        ...getDefaultSettings('/tmp'),
+        ...navSettings(),
         experimentalAgentDashboardPopout: true,
         experimentalAgentDashboardShowIdle: true
       }
@@ -255,7 +260,7 @@ describe('SidebarNav', () => {
 
   it('opens Artifacts from the sidebar', async () => {
     setSidebarState({
-      settings: { ...getDefaultSettings('/tmp'), showArtifactsButton: true }
+      settings: { ...navSettings(), showArtifactsButton: true }
     })
     const container = await renderSidebarNav()
 
@@ -266,7 +271,7 @@ describe('SidebarNav', () => {
 
   it('hides Artifacts from its context menu', async () => {
     setSidebarState({
-      settings: { ...getDefaultSettings('/tmp'), showArtifactsButton: true }
+      settings: { ...navSettings(), showArtifactsButton: true }
     })
     const container = await renderSidebarNav()
     const row = getButtonByText(container, 'Artifacts')
@@ -307,7 +312,7 @@ describe('SidebarNav', () => {
   it('omits the Automations row when the sidebar setting is off', async () => {
     setSidebarState({
       settings: {
-        ...getDefaultSettings('/tmp'),
+        ...navSettings(),
         showAutomationsButton: false
       }
     })
