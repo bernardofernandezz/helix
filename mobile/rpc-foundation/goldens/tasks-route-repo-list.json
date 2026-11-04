@@ -35,7 +35,7 @@
         "startedAt": 0
       }
     },
-    "7d0fa424be7c": {
+    "40325ccf9a8e": {
       "name": "repo.list#1",
       "ordinal": 1,
       "args": [
@@ -114,7 +114,7 @@
       "repoListStatus": "loaded",
       "repos": ["repo-1", "repo-2"]
     },
-    "fcd8faa86ca8": {
+    "fd08823f74a2": {
       "status": "fulfilled",
       "startedAt": 0,
       "settledAt": 0,
@@ -161,11 +161,11 @@
       {
         "id": "repos-loaded",
         "observation": {
-          "sender": ["7d0fa424be7c"],
+          "sender": ["40325ccf9a8e"],
           "payloads": ["19b2979d7fc2"],
           "settlements": {
             "mount": "eb79a9b3682a",
-            "ensure": "fcd8faa86ca8"
+            "ensure": "fd08823f74a2"
           },
           "state": "f5484d90b3f7",
           "effects": []

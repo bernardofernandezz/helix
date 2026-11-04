@@ -5628,8 +5628,6 @@
           "5b120b9634": "Enviar de forma anónima",
           "c9e5ea0791": "GitHub:",
           "d46ddd66fc": "¿Qué podríamos mejorar?",
-          "3460258a54": "Sigue en X",
-          "26108d3699": "Únete a Discord",
           "d245c4ef6c": "Issues de GitHub",
           "9b33530b3d": "Otras formas de contactarnos",
           "a828fa4aee": "Comparte qué funciona, qué está roto o qué debería hacer Helix después.",
@@ -5704,7 +5702,6 @@
         "SidebarSettingsHelpMenu": {
           "ad3d3ed7f1": "Reiniciar Helix",
           "29c56f30ee": "Buscar actualizaciones",
-          "eb9884e55b": "Discord",
           "5687ab246a": "GitHub",
           "5f83d86d92": "Changelog",
           "cdc87f897e": "Documentación",
@@ -5716,8 +5713,7 @@
           "5161eef55d": "Reiniciando Helix...",
           "d396773ef0": "comprobando",
           "f8a2c91d4e": "Milestones",
-          "b7e4d2a19c": "Onboarding",
-          "c4f8e1b72a": "X"
+          "b7e4d2a19c": "Onboarding"
         },
         "SidebarToolbar": {
           "19e32d0e5f": "Abrir el selector de carpetas para agregar un proyecto",

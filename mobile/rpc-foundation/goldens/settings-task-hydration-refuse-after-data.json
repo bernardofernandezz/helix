@@ -213,11 +213,6 @@
         "$rpc": "null"
       }
     },
-    "2db932a72b8a": {
-      "name": "trustedHelixHooks",
-      "ordinal": 54,
-      "value": {}
-    },
     "2e5101281965": {
       "name": "githubKind",
       "ordinal": 141,
@@ -377,6 +372,13 @@
       "name": "showLinearViewPicker",
       "ordinal": 79,
       "value": false
+    },
+    "4b2473c0d380": {
+      "name": "projectRepoNotInHelix",
+      "ordinal": 101,
+      "value": {
+        "$rpc": "null"
+      }
     },
     "4b4cd5b61d31": {
       "name": "githubMode",
@@ -553,13 +555,6 @@
       "ordinal": 62,
       "value": ["github", "linear"]
     },
-    "64bf72888fbb": {
-      "name": "projectRepoNotInHelix",
-      "ordinal": 101,
-      "value": {
-        "$rpc": "null"
-      }
-    },
     "64cc23a40e67": {
       "name": "ui.get#2",
       "ordinal": 124,
@@ -730,13 +725,6 @@
       "ordinal": 125,
       "json": "{\"id\":\"frame-11\",\"deviceToken\":\"recording-device\",\"method\":\"preflight.check\"}"
     },
-    "7d8029e889cf": {
-      "name": "projectRepoNotInHelix",
-      "ordinal": 27,
-      "value": {
-        "$rpc": "null"
-      }
-    },
     "8603614dae69": {
       "name": "showGitHubProjectSortPicker",
       "ordinal": 96,
@@ -801,15 +789,17 @@
       "ordinal": 56,
       "value": false
     },
+    "8b902811f764": {
+      "name": "projectRepoNotInHelix",
+      "ordinal": 27,
+      "value": {
+        "$rpc": "null"
+      }
+    },
     "8d124d8922c8": {
       "name": "showGitHubProjectViewPicker",
       "ordinal": 21,
       "value": false
-    },
-    "8d73e3205bf5": {
-      "name": "trustedHelixHooks",
-      "ordinal": 128,
-      "value": {}
     },
     "8ef027c71140": {
       "name": "githubKind",
@@ -1270,6 +1260,11 @@
       "ordinal": 126,
       "json": "{\"id\":\"frame-12\",\"deviceToken\":\"recording-device\",\"method\":\"linear.status\"}"
     },
+    "e02218854e8f": {
+      "name": "trustedHelixHooks",
+      "ordinal": 128,
+      "value": {}
+    },
     "e1d9e6a3a12a": {
       "name": "runtimeTaskSettings",
       "ordinal": 127,
@@ -1294,6 +1289,11 @@
       "name": "showLinearConnect",
       "ordinal": 83,
       "value": false
+    },
+    "eb065c269fc0": {
+      "name": "trustedHelixHooks",
+      "ordinal": 54,
+      "value": {}
     },
     "eb79a9b3682a": {
       "status": "fulfilled",
@@ -1461,7 +1461,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -1528,7 +1528,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -1543,7 +1543,7 @@
             "3d60f87d082e",
             "294741680522",
             "b789d794a9ca",
-            "2db932a72b8a",
+            "eb065c269fc0",
             "f54965c37b48",
             "8b6f54f81646",
             "c82c2272344f",
@@ -1617,7 +1617,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -1632,7 +1632,7 @@
             "3d60f87d082e",
             "294741680522",
             "b789d794a9ca",
-            "2db932a72b8a",
+            "eb065c269fc0",
             "f54965c37b48",
             "8b6f54f81646",
             "c82c2272344f",
@@ -1709,7 +1709,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -1724,7 +1724,7 @@
             "3d60f87d082e",
             "294741680522",
             "b789d794a9ca",
-            "2db932a72b8a",
+            "eb065c269fc0",
             "f54965c37b48",
             "8b6f54f81646",
             "c82c2272344f",
@@ -1771,7 +1771,7 @@
             "f76a15db8eb4",
             "f585c3371e8f",
             "9842bc6a099d",
-            "64bf72888fbb",
+            "4b2473c0d380",
             "9e245accc9ea",
             "f4c8257ac3bc",
             "a8c1273c757d",
@@ -1849,7 +1849,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -1864,7 +1864,7 @@
             "3d60f87d082e",
             "294741680522",
             "b789d794a9ca",
-            "2db932a72b8a",
+            "eb065c269fc0",
             "f54965c37b48",
             "8b6f54f81646",
             "c82c2272344f",
@@ -1911,7 +1911,7 @@
             "f76a15db8eb4",
             "f585c3371e8f",
             "9842bc6a099d",
-            "64bf72888fbb",
+            "4b2473c0d380",
             "9e245accc9ea",
             "f4c8257ac3bc",
             "a8c1273c757d",
@@ -1926,7 +1926,7 @@
             "01a6b0ebee33",
             "4ff45f7e9f6f",
             "e1d9e6a3a12a",
-            "8d73e3205bf5",
+            "e02218854e8f",
             "9071330b2f64",
             "afc0d629170b",
             "93ef57f390e9",

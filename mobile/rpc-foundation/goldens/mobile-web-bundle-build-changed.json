@@ -4,17 +4,52 @@
   "family": "mobileWeb.bundle-fetch",
   "namedDeltas": [],
   "values": {
-    "0fed70367a30": {
+    "3684f8fb5546": {
+      "name": "mobileWeb.bundle.chunk#2",
+      "ordinal": 7,
+      "json": "{\"id\":\"frame-3\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686\",\"path\":\"index.html\",\"offset\":16}}"
+    },
+    "775bfa42070b": {
+      "name": "mobileWeb.bundle.manifest#1",
+      "ordinal": 2,
+      "json": "{\"id\":\"frame-1\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.manifest\",\"params\":null}"
+    },
+    "779feb8c91bc": {
       "name": "mobileWeb.bundle.chunk#3",
       "ordinal": 8,
-      "json": "{\"id\":\"frame-4\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177\",\"path\":\"assets/app.js\",\"offset\":0}}"
+      "json": "{\"id\":\"frame-4\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686\",\"path\":\"assets/app.js\",\"offset\":0}}"
     },
-    "1432380f161f": {
+    "79725d734e7d": {
+      "assets": {
+        "$rpc": "null"
+      },
+      "outcome": "refused: mobile_web_bundle_build_changed"
+    },
+    "82b2a7971876": {
+      "status": "rejected",
+      "startedAt": 0,
+      "settledAt": 0,
+      "error": {
+        "category": "Error",
+        "message": "invalid_argument: mobile_web_bundle_build_changed",
+        "isRpcDeliveryUnknown": false
+      }
+    },
+    "946a3f01bdf0": {
       "name": "mobileWeb.bundle.chunk#1",
       "ordinal": 6,
-      "json": "{\"id\":\"frame-2\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177\",\"path\":\"index.html\",\"offset\":0}}"
+      "json": "{\"id\":\"frame-2\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686\",\"path\":\"index.html\",\"offset\":0}}"
     },
-    "23871e324a00": {
+    "abc7c706d9a9": {
+      "name": "bundle-progress",
+      "ordinal": 9,
+      "value": {
+        "completedAssets": 1,
+        "receivedBytes": 11,
+        "totalAssets": 2
+      }
+    },
+    "e959beef5a97": {
       "name": "mobileWeb.bundle.manifest#1",
       "ordinal": 1,
       "args": [
@@ -50,7 +85,7 @@
                   "byteLength": 11,
                   "contentType": "text/javascript; charset=utf-8",
                   "path": "assets/app.js",
-                  "sha256": "e99170780c392398db81fbb3dcaebc1a2c8264d4d8a9cd5932887e9c7206dc3d"
+                  "sha256": "ee604d5fa308a6054a88ed8aac9914f0bd057b16df3ef44a0df941bb4a4a3ebd"
                 },
                 {
                   "byteLength": 26,
@@ -59,7 +94,7 @@
                   "sha256": "483f915496f213c851665840f49b69e05b7a6bf70ec9d6939a831b15d298f31e"
                 }
               ],
-              "buildId": "973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177",
+              "buildId": "fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686",
               "desktopVersion": "1.4.201",
               "entrypoint": "index.html",
               "minCompatibleRuntimeProtocolVersion": 2,
@@ -71,37 +106,7 @@
         }
       }
     },
-    "775bfa42070b": {
-      "name": "mobileWeb.bundle.manifest#1",
-      "ordinal": 2,
-      "json": "{\"id\":\"frame-1\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.manifest\",\"params\":null}"
-    },
-    "79725d734e7d": {
-      "assets": {
-        "$rpc": "null"
-      },
-      "outcome": "refused: mobile_web_bundle_build_changed"
-    },
-    "82b2a7971876": {
-      "status": "rejected",
-      "startedAt": 0,
-      "settledAt": 0,
-      "error": {
-        "category": "Error",
-        "message": "invalid_argument: mobile_web_bundle_build_changed",
-        "isRpcDeliveryUnknown": false
-      }
-    },
-    "abc7c706d9a9": {
-      "name": "bundle-progress",
-      "ordinal": 9,
-      "value": {
-        "completedAssets": 1,
-        "receivedBytes": 11,
-        "totalAssets": 2
-      }
-    },
-    "b319547b8486": {
+    "f5145e7e3b8f": {
       "name": "mobileWeb.bundle.chunk#3",
       "ordinal": 5,
       "args": [
@@ -112,7 +117,7 @@
         {
           "name": "params",
           "value": {
-            "buildId": "973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177",
+            "buildId": "fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686",
             "offset": 0,
             "path": "assets/app.js"
           }
@@ -133,17 +138,45 @@
           "ok": true,
           "result": {
             "assetByteLength": 11,
-            "buildId": "973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177",
-            "dataBase64": "b3JjYS5ib290KCk=",
+            "buildId": "fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686",
+            "dataBase64": "bGFicy5ib290KCk=",
             "eof": true,
             "offset": 0,
             "path": "assets/app.js",
-            "sha256": "e99170780c392398db81fbb3dcaebc1a2c8264d4d8a9cd5932887e9c7206dc3d"
+            "sha256": "ee604d5fa308a6054a88ed8aac9914f0bd057b16df3ef44a0df941bb4a4a3ebd"
           }
         }
       }
     },
-    "ca2c71d90ebb": {
+    "f8e58ef9e644": {
+      "name": "mobileWeb.bundle.chunk#2",
+      "ordinal": 4,
+      "args": [
+        {
+          "name": "method",
+          "value": "mobileWeb.bundle.chunk"
+        },
+        {
+          "name": "params",
+          "value": {
+            "buildId": "fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686",
+            "offset": 16,
+            "path": "index.html"
+          }
+        },
+        {
+          "name": "options",
+          "value": {
+            "timeoutMs": 150000
+          }
+        }
+      ],
+      "settlement": {
+        "status": "pending",
+        "startedAt": 0
+      }
+    },
+    "fb71a4cb6090": {
       "name": "mobileWeb.bundle.chunk#1",
       "ordinal": 3,
       "args": [
@@ -154,7 +187,7 @@
         {
           "name": "params",
           "value": {
-            "buildId": "973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177",
+            "buildId": "fc060b7409e145becea834c8681c8518a2c8ad46966d03d461e194ce0f4ca686",
             "offset": 0,
             "path": "index.html"
           }
@@ -179,39 +212,6 @@
           "ok": false
         }
       }
-    },
-    "edc327fad90e": {
-      "name": "mobileWeb.bundle.chunk#2",
-      "ordinal": 4,
-      "args": [
-        {
-          "name": "method",
-          "value": "mobileWeb.bundle.chunk"
-        },
-        {
-          "name": "params",
-          "value": {
-            "buildId": "973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177",
-            "offset": 16,
-            "path": "index.html"
-          }
-        },
-        {
-          "name": "options",
-          "value": {
-            "timeoutMs": 150000
-          }
-        }
-      ],
-      "settlement": {
-        "status": "pending",
-        "startedAt": 0
-      }
-    },
-    "f09d3e39d35e": {
-      "name": "mobileWeb.bundle.chunk#2",
-      "ordinal": 7,
-      "json": "{\"id\":\"frame-3\",\"deviceToken\":\"recording-device\",\"method\":\"mobileWeb.bundle.chunk\",\"params\":{\"buildId\":\"973c008f6baf56072d8d3d41f451e005257b59026401473543ce96e81c5aa177\",\"path\":\"index.html\",\"offset\":16}}"
     }
   },
   "recording": {
@@ -220,8 +220,8 @@
       {
         "id": "bundle-build-changed",
         "observation": {
-          "sender": ["23871e324a00", "ca2c71d90ebb", "edc327fad90e", "b319547b8486"],
-          "payloads": ["775bfa42070b", "1432380f161f", "f09d3e39d35e", "0fed70367a30"],
+          "sender": ["e959beef5a97", "fb71a4cb6090", "f8e58ef9e644", "f5145e7e3b8f"],
+          "payloads": ["775bfa42070b", "946a3f01bdf0", "3684f8fb5546", "779feb8c91bc"],
           "settlements": {
             "fetch": "82b2a7971876"
           },

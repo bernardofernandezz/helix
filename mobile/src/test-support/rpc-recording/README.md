@@ -370,7 +370,7 @@ It is not a substitute for reading the diff. Five facts bound it, all learned th
   measured by applying the reorder to the real source: 1 failure in 84 tests, and the one failure
   is a probe. Every pre-probe "refused" scenario refuses on the _first_ request, and every
   correlated-failure schedule rejects at the transport, where neither check is reached. A human
- reviewer caught that class by reading.
+  reviewer caught that class by reading.
 - **It did not observe data loss on refresh.** No pre-probe golden records state after a refused
   _refresh_, so "does this screen keep its data or blank it?" was undocumented. This one is an
   observational gap, not a proven detection gap: publishing an unaccepted read in

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { MessageCircle, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 import { ThemeSwitch } from 'fumadocs-ui/layouts/shared/slots/theme-switch'
 
 async function getGithubStars(): Promise<number | undefined> {
@@ -68,26 +68,6 @@ export async function DocsHeader() {
 
         <div className="flex shrink-0 items-center gap-3 sm:gap-5">
           <ThemeSwitch className="border-border bg-card" />
-          <a
-            href="https://discord.gg/fzjDKHxv8Q"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:flex"
-            aria-label="Join Helix on Discord"
-          >
-            <MessageCircle className="size-4" aria-hidden="true" />
-          </a>
-          <a
-            href="https://x.com/helix_build"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden size-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:flex"
-            aria-label="Follow Helix on X"
-          >
-            <span aria-hidden="true" className="text-[15px] font-semibold leading-none">
-              𝕏
-            </span>
-          </a>
           <a
             href="https://github.com/bernardofernandezz/helix"
             target="_blank"

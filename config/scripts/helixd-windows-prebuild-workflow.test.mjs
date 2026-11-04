@@ -152,7 +152,7 @@ describe('Windows server prebuild cache workflow', () => {
     expect(build['continue-on-error']).toBeUndefined()
     for (const command of [
       'pnpm build:helixd',
-      'pnpm test:node-server --artifact ${{ runner.os',
+      'pnpm test:node-server --artifact',
       'node out/helixd/helixd.js --helixd-smoke-load-check'
     ]) {
       const gate = steps.find((step) => {

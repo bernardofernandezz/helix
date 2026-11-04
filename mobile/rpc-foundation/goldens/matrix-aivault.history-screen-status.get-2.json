@@ -35,25 +35,51 @@
         "startedAt": 0
       }
     },
-    "0be231dddda1": {
+    "0bf404c26491": {
       "crash": {
         "$rpc": "null"
       },
       "elements": {
         "ChevronLeft": 1,
-        "Pressable": 2,
+        "Pressable": 3,
         "RefreshCw": 1,
         "SafeAreaView": 1,
-        "Text": 4,
+        "Text": 5,
         "View": 4
       },
       "labels": ["Back", "Refresh agent sessions"],
-      "text": [
-        "Agent Session History",
-        "helix-history",
-        "Agent Session History Unavailable",
-        "Update Helix on this host to browse agent session history."
-      ]
+      "text": ["Agent Session History", "helix-history", "Unable to Load", "Retry"]
+    },
+    "0f5207c0c7fd": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ChevronLeft": 1,
+        "Pressable": 3,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 5,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": ["Agent Session History", "helix-history", "Unable to Load", "outer refused", "Retry"]
+    },
+    "114740590eac": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ActivityIndicator": 1,
+        "ChevronLeft": 1,
+        "Pressable": 2,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 2,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": ["Agent Session History", "helix-history"]
     },
     "14d0e2ecb181": {
       "name": "status.get#2",
@@ -85,42 +111,6 @@
           "ok": true
         }
       }
-    },
-    "18ef6596b779": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ChevronLeft": 1,
-        "Pressable": 3,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 5,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": ["Agent Session History", "helix-history", "Unable to Load", "Retry"]
-    },
-    "22141179786a": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ChevronLeft": 1,
-        "Pressable": 3,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 5,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": [
-        "Agent Session History",
-        "helix-history",
-        "Unable to Load",
-        "Unknown method",
-        "Retry"
-      ]
     },
     "222a3ba1d974": {
       "name": "worktree.ps#1",
@@ -213,21 +203,6 @@
         }
       ]
     },
-    "4af220e500d6": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ChevronLeft": 1,
-        "Pressable": 3,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 5,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": ["Agent Session History", "helix-history", "Unable to Load", "outer refused", "Retry"]
-    },
     "4d68bff46cff": {
       "name": "status.get#1",
       "ordinal": 4,
@@ -274,6 +249,27 @@
       "name": "aiVault.listSessions#1",
       "ordinal": 9,
       "json": "{\"id\":\"frame-5\",\"deviceToken\":\"recording-device\",\"method\":\"aiVault.listSessions\",\"params\":{\"limit\":500,\"force\":false,\"scopePaths\":[\"/repo/feature\"]}}"
+    },
+    "677b2ccfe7af": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ChevronLeft": 1,
+        "Pressable": 3,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 5,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": [
+        "Agent Session History",
+        "helix-history",
+        "Unable to Load",
+        "The host sent a reply this app could not read (status.get)",
+        "Retry"
+      ]
     },
     "6d4cf84c26db": {
       "name": "status.get#2",
@@ -446,27 +442,6 @@
         }
       ]
     },
-    "7f2073d8dcc1": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ChevronLeft": 1,
-        "Pressable": 3,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 5,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": [
-        "Agent Session History",
-        "helix-history",
-        "Unable to Load",
-        "transport failure",
-        "Retry"
-      ]
-    },
     "81b771b56e59": {
       "name": "status.get#2",
       "ordinal": 6,
@@ -502,25 +477,24 @@
         }
       }
     },
-    "8cc4f2d607a6": {
+    "8883b6d09c6f": {
       "crash": {
         "$rpc": "null"
       },
       "elements": {
         "ChevronLeft": 1,
-        "Pressable": 3,
+        "Pressable": 2,
         "RefreshCw": 1,
         "SafeAreaView": 1,
-        "Text": 5,
+        "Text": 4,
         "View": 4
       },
       "labels": ["Back", "Refresh agent sessions"],
       "text": [
         "Agent Session History",
         "helix-history",
-        "Unable to Load",
-        "The host sent a reply this app could not read (status.get)",
-        "Retry"
+        "Agent Session History Unavailable",
+        "Update Helix on this host to browse agent session history."
       ]
     },
     "98d7022b1300": {
@@ -550,6 +524,27 @@
         "status": "pending",
         "startedAt": 0
       }
+    },
+    "9d665f1f6890": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ChevronLeft": 1,
+        "Pressable": 3,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 5,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": [
+        "Agent Session History",
+        "helix-history",
+        "Unable to Load",
+        "Unknown method",
+        "Retry"
+      ]
     },
     "9fb09ddc7fe6": {
       "name": "status.get#2",
@@ -591,6 +586,27 @@
       "ordinal": 7,
       "json": "{\"id\":\"frame-4\",\"deviceToken\":\"recording-device\",\"method\":\"status.get\"}"
     },
+    "a8f9325ee85c": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ChevronLeft": 1,
+        "Pressable": 3,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 5,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": [
+        "Agent Session History",
+        "helix-history",
+        "Unable to Load",
+        "transport failure",
+        "Retry"
+      ]
+    },
     "acf501fa9958": {
       "name": "status.get#1",
       "ordinal": 2,
@@ -624,27 +640,6 @@
           }
         }
       }
-    },
-    "af9574769167": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ChevronLeft": 1,
-        "Pressable": 3,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 5,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": [
-        "Agent Session History",
-        "helix-history",
-        "Unable to Load",
-        "Unable to reach host",
-        "Retry"
-      ]
     },
     "b51021287bd8": {
       "name": "status.get#2",
@@ -779,22 +774,6 @@
         }
       }
     },
-    "d22bb2f62cea": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "ActivityIndicator": 1,
-        "ChevronLeft": 1,
-        "Pressable": 2,
-        "RefreshCw": 1,
-        "SafeAreaView": 1,
-        "Text": 2,
-        "View": 4
-      },
-      "labels": ["Back", "Refresh agent sessions"],
-      "text": ["Agent Session History", "helix-history"]
-    },
     "e28c488ce6b2": {
       "name": "agentSession.subscribeStatus#1",
       "ordinal": 1,
@@ -807,6 +786,27 @@
       "value": {
         "$rpc": "undefined"
       }
+    },
+    "fe1f48012657": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "ChevronLeft": 1,
+        "Pressable": 3,
+        "RefreshCw": 1,
+        "SafeAreaView": 1,
+        "Text": 5,
+        "View": 4
+      },
+      "labels": ["Back", "Refresh agent sessions"],
+      "text": [
+        "Agent Session History",
+        "helix-history",
+        "Unable to Load",
+        "Unable to reach host",
+        "Retry"
+      ]
     }
   },
   "recording": {
@@ -820,7 +820,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d22bb2f62cea",
+          "state": "114740590eac",
           "effects": []
         }
       },
@@ -832,7 +832,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d22bb2f62cea",
+          "state": "114740590eac",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -850,7 +850,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d22bb2f62cea",
+          "state": "114740590eac",
           "effects": []
         }
       },
@@ -868,7 +868,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d22bb2f62cea",
+          "state": "114740590eac",
           "effects": ["40fa6811eb00"]
         }
       },
@@ -880,7 +880,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "8cc4f2d607a6",
+          "state": "677b2ccfe7af",
           "effects": []
         }
       },
@@ -892,7 +892,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "8cc4f2d607a6",
+          "state": "677b2ccfe7af",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -904,7 +904,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "8cc4f2d607a6",
+          "state": "677b2ccfe7af",
           "effects": []
         }
       },
@@ -916,7 +916,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "8cc4f2d607a6",
+          "state": "677b2ccfe7af",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -928,7 +928,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": []
         }
       },
@@ -940,7 +940,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -952,7 +952,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": []
         }
       },
@@ -964,7 +964,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -976,7 +976,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": []
         }
       },
@@ -988,7 +988,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "0be231dddda1",
+          "state": "8883b6d09c6f",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -1000,7 +1000,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "4af220e500d6",
+          "state": "0f5207c0c7fd",
           "effects": []
         }
       },
@@ -1012,7 +1012,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "4af220e500d6",
+          "state": "0f5207c0c7fd",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -1024,7 +1024,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "af9574769167",
+          "state": "fe1f48012657",
           "effects": []
         }
       },
@@ -1036,7 +1036,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "af9574769167",
+          "state": "fe1f48012657",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -1048,7 +1048,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "22141179786a",
+          "state": "9d665f1f6890",
           "effects": []
         }
       },
@@ -1060,7 +1060,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "22141179786a",
+          "state": "9d665f1f6890",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -1072,7 +1072,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "7f2073d8dcc1",
+          "state": "a8f9325ee85c",
           "effects": []
         }
       },
@@ -1084,7 +1084,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "7f2073d8dcc1",
+          "state": "a8f9325ee85c",
           "effects": ["7e8b2964ad63"]
         }
       },
@@ -1096,7 +1096,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "18ef6596b779",
+          "state": "0bf404c26491",
           "effects": []
         }
       },
@@ -1108,7 +1108,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "18ef6596b779",
+          "state": "0bf404c26491",
           "effects": ["7e8b2964ad63"]
         }
       }

@@ -107,11 +107,6 @@
         "$rpc": "null"
       }
     },
-    "2db932a72b8a": {
-      "name": "trustedHelixHooks",
-      "ordinal": 54,
-      "value": {}
-    },
     "2f9b87c56373": {
       "name": "selectedLinearWorkspaceId",
       "ordinal": 60,
@@ -327,13 +322,6 @@
         "kind": "unknown"
       }
     },
-    "7d8029e889cf": {
-      "name": "projectRepoNotInHelix",
-      "ordinal": 27,
-      "value": {
-        "$rpc": "null"
-      }
-    },
     "80faddbc5268": {
       "name": "settings.get#1",
       "ordinal": 44,
@@ -427,6 +415,13 @@
       "name": "linearConnected",
       "ordinal": 56,
       "value": false
+    },
+    "8b902811f764": {
+      "name": "projectRepoNotInHelix",
+      "ordinal": 27,
+      "value": {
+        "$rpc": "null"
+      }
     },
     "8d124d8922c8": {
       "name": "showGitHubProjectViewPicker",
@@ -715,6 +710,11 @@
       "ordinal": 20,
       "value": false
     },
+    "eb065c269fc0": {
+      "name": "trustedHelixHooks",
+      "ordinal": 54,
+      "value": {}
+    },
     "eb79a9b3682a": {
       "status": "fulfilled",
       "startedAt": 0,
@@ -804,7 +804,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -871,7 +871,7 @@
             "b7c96dd7bb6a",
             "f3dafd073b87",
             "1f75fb0d92bd",
-            "7d8029e889cf",
+            "8b902811f764",
             "52b5f68c6d97",
             "16e4f4209bcf",
             "917e8342c71e",
@@ -886,7 +886,7 @@
             "3d60f87d082e",
             "294741680522",
             "7256d0e13440",
-            "2db932a72b8a",
+            "eb065c269fc0",
             "f54965c37b48",
             "8b6f54f81646",
             "c82c2272344f",

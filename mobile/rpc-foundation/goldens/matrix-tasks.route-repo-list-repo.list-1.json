@@ -162,6 +162,49 @@
       "repoListStatus": "error",
       "repos": []
     },
+    "40325ccf9a8e": {
+      "name": "repo.list#1",
+      "ordinal": 1,
+      "args": [
+        {
+          "name": "method",
+          "value": "repo.list"
+        },
+        {
+          "name": "params",
+          "value": {
+            "$rpc": "absent"
+          }
+        },
+        {
+          "name": "options",
+          "value": {
+            "$rpc": "absent"
+          }
+        }
+      ],
+      "settlement": {
+        "status": "fulfilled",
+        "startedAt": 0,
+        "settledAt": 0,
+        "value": {
+          "id": "frame-1",
+          "ok": true,
+          "result": {
+            "repos": [
+              {
+                "id": "repo-1",
+                "name": "helix"
+              },
+              {
+                "id": "repo-2",
+                "name": "relay"
+              }
+            ]
+          }
+        }
+      }
+    },
     "43e0e76c3901": {
       "crash": {
         "$rpc": "null"
@@ -275,49 +318,6 @@
         "value": {
           "id": "frame-1",
           "ok": true
-        }
-      }
-    },
-    "7d0fa424be7c": {
-      "name": "repo.list#1",
-      "ordinal": 1,
-      "args": [
-        {
-          "name": "method",
-          "value": "repo.list"
-        },
-        {
-          "name": "params",
-          "value": {
-            "$rpc": "absent"
-          }
-        },
-        {
-          "name": "options",
-          "value": {
-            "$rpc": "absent"
-          }
-        }
-      ],
-      "settlement": {
-        "status": "fulfilled",
-        "startedAt": 0,
-        "settledAt": 0,
-        "value": {
-          "id": "frame-1",
-          "ok": true,
-          "result": {
-            "repos": [
-              {
-                "id": "repo-1",
-                "name": "helix"
-              },
-              {
-                "id": "repo-2",
-                "name": "relay"
-              }
-            ]
-          }
         }
       }
     },
@@ -555,7 +555,7 @@
       "repoListStatus": "loaded",
       "repos": ["repo-1", "repo-2"]
     },
-    "fcd8faa86ca8": {
+    "fd08823f74a2": {
       "status": "fulfilled",
       "startedAt": 0,
       "settledAt": 0,
@@ -602,11 +602,11 @@
       {
         "id": "tasks-route-repo-list.normal:repos-loaded",
         "observation": {
-          "sender": ["7d0fa424be7c"],
+          "sender": ["40325ccf9a8e"],
           "payloads": ["19b2979d7fc2"],
           "settlements": {
             "mount": "eb79a9b3682a",
-            "ensure": "fcd8faa86ca8"
+            "ensure": "fd08823f74a2"
           },
           "state": "f5484d90b3f7",
           "effects": []

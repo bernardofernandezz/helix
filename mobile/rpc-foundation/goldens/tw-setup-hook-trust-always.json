@@ -7,7 +7,7 @@
     "229c35d1a4ba": {
       "trust": "unapproved"
     },
-    "b6a1b1ed0a08": {
+    "d9f215a1de4a": {
       "name": "ui.set#1",
       "ordinal": 1,
       "args": [
@@ -48,7 +48,7 @@
         }
       }
     },
-    "f35a1e7f7cdb": {
+    "e9359a2a85e1": {
       "name": "ui.set#1",
       "ordinal": 2,
       "json": "{\"id\":\"frame-1\",\"deviceToken\":\"recording-device\",\"method\":\"ui.set\",\"params\":{\"trustedHelixHooks\":{\"repo-1\":{\"all\":{\"approvedAt\":1767225600000}}}}}"
@@ -70,8 +70,8 @@
       {
         "id": "refused-empty-message",
         "observation": {
-          "sender": ["b6a1b1ed0a08"],
-          "payloads": ["f35a1e7f7cdb"],
+          "sender": ["d9f215a1de4a"],
+          "payloads": ["e9359a2a85e1"],
           "settlements": {
             "approve": "f3b516f62081"
           },

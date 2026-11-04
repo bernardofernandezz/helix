@@ -99,25 +99,6 @@
         "startedAt": 0
       }
     },
-    "1813829924d9": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "Pressable": 2,
-        "Text": 6,
-        "View": 3
-      },
-      "labels": ["Send test notification"],
-      "text": [
-        "Having trouble receiving alerts?",
-        "Send a test through Helix’s push service.",
-        "Send test notification",
-        "Send test notification",
-        "Troubleshooting",
-        "Accepted by Helix’s push service. Check for the notification."
-      ]
-    },
     "1d12f3e78a48": {
       "name": "notifications.testPush#1",
       "ordinal": 1,
@@ -156,7 +137,7 @@
         }
       }
     },
-    "2632a7be552e": {
+    "3755ef3574ce": {
       "crash": {
         "$rpc": "null"
       },
@@ -240,25 +221,6 @@
         }
       }
     },
-    "4f67ed2e2c74": {
-      "crash": {
-        "$rpc": "null"
-      },
-      "elements": {
-        "Pressable": 2,
-        "Text": 6,
-        "View": 3
-      },
-      "labels": ["Send test notification"],
-      "text": [
-        "Having trouble receiving alerts?",
-        "Send a test through Helix’s push service.",
-        "Send test notification",
-        "Send test notification",
-        "Troubleshooting",
-        "Could not reach the desktop. Try again."
-      ]
-    },
     "649d12c8eb9b": {
       "name": "notifications.testPush#1",
       "ordinal": 1,
@@ -294,22 +256,23 @@
         }
       }
     },
-    "6967f95147f9": {
+    "88a82b07ea5b": {
       "crash": {
         "$rpc": "null"
       },
       "elements": {
         "Pressable": 2,
-        "Text": 5,
+        "Text": 6,
         "View": 3
       },
-      "labels": ["Sending…"],
+      "labels": ["Send test notification"],
       "text": [
         "Having trouble receiving alerts?",
         "Send a test through Helix’s push service.",
         "Send test notification",
-        "Sending…",
-        "Troubleshooting"
+        "Send test notification",
+        "Troubleshooting",
+        "Could not reach the desktop. Try again."
       ]
     },
     "95172d96bab4": {
@@ -383,23 +346,22 @@
         }
       }
     },
-    "b7f125cb7db0": {
+    "9ddc6977ffc6": {
       "crash": {
         "$rpc": "null"
       },
       "elements": {
         "Pressable": 2,
-        "Text": 6,
+        "Text": 5,
         "View": 3
       },
-      "labels": ["Send test notification"],
+      "labels": ["Sending…"],
       "text": [
         "Having trouble receiving alerts?",
         "Send a test through Helix’s push service.",
         "Send test notification",
-        "Send test notification",
-        "Troubleshooting",
-        "transport failure"
+        "Sending…",
+        "Troubleshooting"
       ]
     },
     "c37bd4097e53": {
@@ -474,7 +436,45 @@
         }
       }
     },
-    "d86c08a509c4": {
+    "ce25096d2df0": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "Pressable": 2,
+        "Text": 6,
+        "View": 3
+      },
+      "labels": ["Send test notification"],
+      "text": [
+        "Having trouble receiving alerts?",
+        "Send a test through Helix’s push service.",
+        "Send test notification",
+        "Send test notification",
+        "Troubleshooting",
+        "Accepted by Helix’s push service. Check for the notification."
+      ]
+    },
+    "d395bff1d022": {
+      "crash": {
+        "$rpc": "null"
+      },
+      "elements": {
+        "Pressable": 2,
+        "Text": 6,
+        "View": 3
+      },
+      "labels": ["Send test notification"],
+      "text": [
+        "Having trouble receiving alerts?",
+        "Send a test through Helix’s push service.",
+        "Send test notification",
+        "Send test notification",
+        "Troubleshooting",
+        "Could not send through Helix’s push service. Try again."
+      ]
+    },
+    "df11105cf143": {
       "crash": {
         "$rpc": "null"
       },
@@ -536,7 +536,7 @@
         }
       }
     },
-    "f3e2e816b496": {
+    "f43891595277": {
       "crash": {
         "$rpc": "null"
       },
@@ -552,7 +552,7 @@
         "Send test notification",
         "Send test notification",
         "Troubleshooting",
-        "Could not send through Helix’s push service. Try again."
+        "transport failure"
       ]
     },
     "f68b017d64bd": {
@@ -572,7 +572,7 @@
           "settlements": {
             "mount": "eb79a9b3682a"
           },
-          "state": "d86c08a509c4",
+          "state": "df11105cf143",
           "effects": []
         }
       },
@@ -585,7 +585,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "6967f95147f9",
+          "state": "9ddc6977ffc6",
           "effects": []
         }
       },
@@ -598,7 +598,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "1813829924d9",
+          "state": "ce25096d2df0",
           "effects": []
         }
       },
@@ -611,7 +611,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "f3e2e816b496",
+          "state": "d395bff1d022",
           "effects": []
         }
       },
@@ -624,7 +624,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "f3e2e816b496",
+          "state": "d395bff1d022",
           "effects": []
         }
       },
@@ -637,7 +637,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "f3e2e816b496",
+          "state": "d395bff1d022",
           "effects": []
         }
       },
@@ -650,7 +650,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "f3e2e816b496",
+          "state": "d395bff1d022",
           "effects": []
         }
       },
@@ -663,7 +663,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "f3e2e816b496",
+          "state": "d395bff1d022",
           "effects": []
         }
       },
@@ -676,7 +676,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "4f67ed2e2c74",
+          "state": "88a82b07ea5b",
           "effects": []
         }
       },
@@ -689,7 +689,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "4f67ed2e2c74",
+          "state": "88a82b07ea5b",
           "effects": []
         }
       },
@@ -702,7 +702,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "2632a7be552e",
+          "state": "3755ef3574ce",
           "effects": []
         }
       },
@@ -715,7 +715,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "b7f125cb7db0",
+          "state": "f43891595277",
           "effects": []
         }
       },
@@ -728,7 +728,7 @@
             "mount": "eb79a9b3682a",
             "press": "eb79a9b3682a"
           },
-          "state": "d86c08a509c4",
+          "state": "df11105cf143",
           "effects": []
         }
       }

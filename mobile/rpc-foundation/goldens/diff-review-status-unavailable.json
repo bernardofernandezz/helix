@@ -4,15 +4,6 @@
   "family": "session.diff-review",
   "namedDeltas": [],
   "values": {
-    "14804a5e414f": {
-      "status": "fulfilled",
-      "startedAt": 0,
-      "settledAt": 0,
-      "value": {
-        "kind": "unavailable",
-        "message": "Update Helix desktop to review changes on mobile."
-      }
-    },
     "168d1f64ca9b": {
       "name": "git.status#1",
       "ordinal": 2,
@@ -53,10 +44,19 @@
         }
       }
     },
-    "55c07df45014": {
+    "9e9019554cba": {
       "branchCompare": "unloaded",
       "diff": "unloaded",
       "snapshot": {
+        "kind": "unavailable",
+        "message": "Update Helix desktop to review changes on mobile."
+      }
+    },
+    "ea202bed262f": {
+      "status": "fulfilled",
+      "startedAt": 0,
+      "settledAt": 0,
+      "value": {
         "kind": "unavailable",
         "message": "Update Helix desktop to review changes on mobile."
       }
@@ -71,9 +71,9 @@
           "sender": ["45d1ea7c0b42"],
           "payloads": ["168d1f64ca9b"],
           "settlements": {
-            "unavailable": "14804a5e414f"
+            "unavailable": "ea202bed262f"
           },
-          "state": "55c07df45014",
+          "state": "9e9019554cba",
           "effects": []
         }
       }

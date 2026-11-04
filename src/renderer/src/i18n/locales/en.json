@@ -5992,8 +5992,6 @@
           "5b120b9634": "Submit anonymously",
           "c9e5ea0791": "GitHub:",
           "d46ddd66fc": "What could we improve?",
-          "3460258a54": "Follow on X",
-          "26108d3699": "Join Discord",
           "d245c4ef6c": "GitHub issues",
           "9b33530b3d": "Other ways to reach us",
           "a828fa4aee": "Share what's working, what's broken, or what Helix should do next.",
@@ -6068,7 +6066,6 @@
         "SidebarSettingsHelpMenu": {
           "ad3d3ed7f1": "Restart Helix",
           "29c56f30ee": "Check for Updates",
-          "eb9884e55b": "Discord",
           "5687ab246a": "GitHub",
           "5f83d86d92": "Changelog",
           "cdc87f897e": "Docs",
@@ -6080,8 +6077,7 @@
           "5161eef55d": "Restarting Helix…",
           "d396773ef0": "checking",
           "f8a2c91d4e": "Milestones",
-          "b7e4d2a19c": "Onboarding",
-          "c4f8e1b72a": "X"
+          "b7e4d2a19c": "Onboarding"
         },
         "SidebarToolbar": {
           "87d0064026": "Workspace board moved to the bottom bar",

@@ -16,7 +16,50 @@
         "$rpc": "null"
       }
     },
-    "2142af96648c": {
+    "33e3b949d4c5": {
+      "creating": {
+        "$rpc": "null"
+      },
+      "error": "",
+      "settings": {
+        "defaultTuiAgent": "codex",
+        "disabledTuiAgents": []
+      }
+    },
+    "41a2214deb19": {
+      "name": "settings.get#1",
+      "ordinal": 3,
+      "args": [
+        {
+          "name": "method",
+          "value": "settings.get"
+        },
+        {
+          "name": "params",
+          "value": {
+            "$rpc": "absent"
+          }
+        },
+        {
+          "name": "options",
+          "value": {
+            "$rpc": "absent"
+          }
+        }
+      ],
+      "settlement": {
+        "status": "pending",
+        "startedAt": 0
+      }
+    },
+    "7abdfe20af50": {
+      "creating": "linear:1",
+      "error": "",
+      "settings": {
+        "disabledTuiAgents": ["claude"]
+      }
+    },
+    "7fef4067fd38": {
       "name": "worktree.create#1",
       "ordinal": 6,
       "args": [
@@ -59,49 +102,6 @@
             }
           }
         }
-      }
-    },
-    "33e3b949d4c5": {
-      "creating": {
-        "$rpc": "null"
-      },
-      "error": "",
-      "settings": {
-        "defaultTuiAgent": "codex",
-        "disabledTuiAgents": []
-      }
-    },
-    "41a2214deb19": {
-      "name": "settings.get#1",
-      "ordinal": 3,
-      "args": [
-        {
-          "name": "method",
-          "value": "settings.get"
-        },
-        {
-          "name": "params",
-          "value": {
-            "$rpc": "absent"
-          }
-        },
-        {
-          "name": "options",
-          "value": {
-            "$rpc": "absent"
-          }
-        }
-      ],
-      "settlement": {
-        "status": "pending",
-        "startedAt": 0
-      }
-    },
-    "7abdfe20af50": {
-      "creating": "linear:1",
-      "error": "",
-      "settings": {
-        "disabledTuiAgents": ["claude"]
       }
     },
     "85b99a2ca439": {
@@ -157,17 +157,17 @@
       "ordinal": 4,
       "json": "{\"id\":\"frame-1\",\"deviceToken\":\"recording-device\",\"method\":\"settings.get\"}"
     },
+    "b146ecac704d": {
+      "name": "worktree.create#1",
+      "ordinal": 7,
+      "json": "{\"id\":\"frame-2\",\"deviceToken\":\"recording-device\",\"method\":\"worktree.create\",\"params\":{\"repo\":\"id:repo-1\",\"name\":\"orc-1\",\"displayName\":\"ORC-1 Recorded issue\",\"displayNameKind\":\"generated\",\"linkedLinearIssue\":\"ORC-1\",\"setupDecision\":\"inherit\",\"activate\":true,\"startupDraft\":\"https://linear.app/helix/issue/ORC-1\",\"createdWithAgent\":\"claude\"}}"
+    },
     "ce455f0c9a54": {
       "name": "actionItem",
       "ordinal": 8,
       "value": {
         "$rpc": "null"
       }
-    },
-    "e0423a9e6995": {
-      "name": "worktree.create#1",
-      "ordinal": 7,
-      "json": "{\"id\":\"frame-2\",\"deviceToken\":\"recording-device\",\"method\":\"worktree.create\",\"params\":{\"repo\":\"id:repo-1\",\"name\":\"orc-1\",\"displayName\":\"ORC-1 Recorded issue\",\"displayNameKind\":\"generated\",\"linkedLinearIssue\":\"ORC-1\",\"setupDecision\":\"inherit\",\"activate\":true,\"startupDraft\":\"https://linear.app/helix/issue/ORC-1\",\"createdWithAgent\":\"claude\"}}"
     },
     "e0a8ee1f3c00": {
       "name": "creatingKey",
@@ -222,8 +222,8 @@
       {
         "id": "created",
         "observation": {
-          "sender": ["8ac371cf7234", "2142af96648c"],
-          "payloads": ["975f2ff9a730", "e0423a9e6995"],
+          "sender": ["8ac371cf7234", "7fef4067fd38"],
+          "payloads": ["975f2ff9a730", "b146ecac704d"],
           "settlements": {
             "mount": "eb79a9b3682a",
             "submit": "eb79a9b3682a"

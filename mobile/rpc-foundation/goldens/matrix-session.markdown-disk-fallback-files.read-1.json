@@ -219,6 +219,21 @@
         }
       }
     },
+    "606a4621e062": {
+      "file": {},
+      "markdown": {
+        "tab-md": {
+          "baseVersion": "",
+          "content": "# disk",
+          "editable": false,
+          "isDirty": false,
+          "localContent": "# disk",
+          "readOnlyReason": "Editing needs Helix desktop running.",
+          "stale": false,
+          "status": "ready"
+        }
+      }
+    },
     "767ef7fdc9b3": {
       "name": "files.read#1",
       "ordinal": 3,
@@ -296,21 +311,6 @@
           "result": {
             "error": "refused"
           }
-        }
-      }
-    },
-    "c6cea5310098": {
-      "file": {},
-      "markdown": {
-        "tab-md": {
-          "baseVersion": "",
-          "content": "# disk",
-          "editable": false,
-          "isDirty": false,
-          "localContent": "# disk",
-          "readOnlyReason": "Editing needs Helix desktop running.",
-          "stale": false,
-          "status": "ready"
         }
       }
     },
@@ -481,7 +481,7 @@
           "settlements": {
             "markdown": "eb79a9b3682a"
           },
-          "state": "c6cea5310098",
+          "state": "606a4621e062",
           "effects": []
         }
       },
