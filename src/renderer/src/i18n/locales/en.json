@@ -5985,28 +5985,6 @@
           "822ff300ad": "Dismiss",
           "5bfd5c8779": "Dismiss setup scripts"
         },
-        "SidebarFeedbackDialog": {
-          "8bf619e4cf": "Cancel",
-          "8de03e23c5": "Submit with your typed feedback only, or connect `gh` to include GitHub identity.",
-          "d20439c560": "Checking GitHub identity…",
-          "5b120b9634": "Submit anonymously",
-          "c9e5ea0791": "GitHub:",
-          "d46ddd66fc": "What could we improve?",
-          "d245c4ef6c": "GitHub issues",
-          "9b33530b3d": "Other ways to reach us",
-          "a828fa4aee": "Share what's working, what's broken, or what Helix should do next.",
-          "0eb643f07f": "Send Feedback",
-          "60b721e857": "Failed to submit feedback. Please try again.",
-          "7a46c228b8": "Thanks for the feedback.",
-          "a2fd890d9e": "Please enter feedback before submitting.",
-          "f2e42e1307": "Send",
-          "69969ba364": "Sending…",
-          "imageReadFailed": "Could not read the attached images. Try attaching them again.",
-          "attachWhileSending": "Wait for the current feedback to finish sending before attaching more images.",
-          "imagesNotDelivered": "Feedback sent, but image delivery could not be confirmed.",
-          "imagesRejected": "Feedback sent. Your screenshots were too large to upload and were not included.",
-          "imagesNotIncluded": "Feedback sent. Your screenshots could not be uploaded and were not included."
-        },
         "SidebarFilter": {
           "e3b3898218": "Add project",
           "92a23e6d07": "Reset filters",

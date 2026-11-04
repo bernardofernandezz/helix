@@ -5621,28 +5621,6 @@
           "822ff300ad": "Descartar",
           "5bfd5c8779": "Descartar scripts de configuración"
         },
-        "SidebarFeedbackDialog": {
-          "8bf619e4cf": "Cancelar",
-          "8de03e23c5": "Envíalo solo con tu feedback escrito o conecta `gh` para incluir tu identidad de GitHub.",
-          "d20439c560": "Comprobando identidad de GitHub...",
-          "5b120b9634": "Enviar de forma anónima",
-          "c9e5ea0791": "GitHub:",
-          "d46ddd66fc": "¿Qué podríamos mejorar?",
-          "d245c4ef6c": "Issues de GitHub",
-          "9b33530b3d": "Otras formas de contactarnos",
-          "a828fa4aee": "Comparte qué funciona, qué está roto o qué debería hacer Helix después.",
-          "0eb643f07f": "Enviar feedback",
-          "60b721e857": "No se pudo enviar el feedback. Inténtalo de nuevo.",
-          "7a46c228b8": "Gracias por el feedback.",
-          "a2fd890d9e": "Introduce feedback antes de enviarlo.",
-          "f2e42e1307": "Enviar",
-          "69969ba364": "Envío…",
-          "imageReadFailed": "No se pudieron leer las imágenes adjuntas. Intente adjuntarlos nuevamente.",
-          "attachWhileSending": "Espere a que terminen de enviarse los comentarios actuales antes de adjuntar más imágenes.",
-          "imagesNotDelivered": "Comentarios enviados, pero no se pudo confirmar la entrega de la imagen.",
-          "imagesNotIncluded": "Comentarios enviados. No se pudieron subir tus capturas de pantalla y no se incluyeron.",
-          "imagesRejected": "Comentarios enviados. Tus capturas de pantalla eran demasiado grandes para subirlas y no se incluyeron."
-        },
         "SidebarFilter": {
           "e3b3898218": "Agregar proyecto",
           "92a23e6d07": "Restablecer filtros",
