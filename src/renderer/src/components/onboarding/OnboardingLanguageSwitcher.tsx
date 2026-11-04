@@ -17,6 +17,9 @@ import {
   shouldShowLanguageSwitcher
 } from '../../../../shared/ui-locale'
 
+// Requests post to the feedback backend, which doesn't exist yet; restore `!isWebClientLocation()` with it.
+export const LANGUAGE_REQUESTS_ENABLED = false
+
 export function OnboardingLanguageSwitcher({
   open,
   onOpenChange
@@ -45,8 +48,7 @@ export function OnboardingLanguageSwitcher({
   const successfulRequests = useRef(new Set<string>())
   const contentRef = useRef<HTMLDivElement>(null)
   const busy = selectionPhase !== null || catalogLoading
-  // ponytail: requests post to the feedback backend, which doesn't exist yet; restore `!isWebClientLocation()` with it.
-  const canRequestLanguage = false
+  const canRequestLanguage = LANGUAGE_REQUESTS_ENABLED
   const metadata = {
     system_language: detection.detectedTag,
     system_language_supported: detection.status === 'supported',

@@ -13,7 +13,7 @@ import { useLanguageReadiness } from '@/i18n/language-readiness'
 import { I18nProvider } from '@/i18n/I18nProvider'
 import * as languageReadiness from '@/i18n/language-readiness'
 import { usePluginLanguagePackStore } from '@/store/plugin-language-packs'
-import { OnboardingLanguageSwitcher } from './OnboardingLanguageSwitcher'
+import { LANGUAGE_REQUESTS_ENABLED, OnboardingLanguageSwitcher } from './OnboardingLanguageSwitcher'
 
 const { submit, telemetryTrack } = vi.hoisted(() => ({ submit: vi.fn(), telemetryTrack: vi.fn() }))
 
@@ -66,119 +66,129 @@ describe('onboarding language request', () => {
     )
   })
 
-  // Off until the feedback backend exists (canRequestLanguage).
-  it.skip('acknowledges only delivered feedback, disables duplicate sends and preserves language', async () => {
-    let finish: (value: { ok: true }) => void = () => {}
-    submit.mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          finish = resolve
-        })
-    )
-    await openRequest()
-    fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
-    expect(screen.queryByRole('status')).toBeNull()
-    expect(screen.getByRole('button', { name: 'Request language' }).hasAttribute('disabled')).toBe(
-      true
-    )
-    expect(submit).toHaveBeenCalledWith({
-      feedback: 'Language request: Deutsch',
-      submitAnonymously: true,
-      githubLogin: null,
-      githubEmail: null
-    })
-    await act(async () => finish({ ok: true }))
-    expect(screen.getByRole('status').textContent).toContain('recorded')
-    expect(useAppStore.getState().settings?.uiLanguage).toBe('system')
-    expect(telemetryTrack).toHaveBeenCalledWith(
-      'onboarding_language_requested',
-      expect.not.objectContaining({ requested_language: expect.anything() })
-    )
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'deutsch' } })
-    fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
-    expect(submit).toHaveBeenCalledTimes(1)
-    expect(screen.getByRole('status').textContent).toContain('recorded')
-  })
-
-  // Off until the feedback backend exists (canRequestLanguage).
-  it.skip('retains a failed draft and retries without claiming success', async () => {
-    submit
-      .mockResolvedValueOnce({ ok: false, status: null, error: 'Offline' })
-      .mockResolvedValueOnce({ ok: true })
-    await openRequest()
-    fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
-    await waitFor(() => expect(screen.getByRole('alert').textContent).toContain('Could not record'))
-    expect(screen.queryByRole('status')).toBeNull()
-    expect(telemetryTrack).not.toHaveBeenCalledWith(
-      'onboarding_language_requested',
-      expect.anything()
-    )
-    fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
-    await waitFor(() => expect(screen.getByRole('status').textContent).toContain('recorded'))
-    expect(submit).toHaveBeenCalledTimes(2)
-  })
-
-  // Off until the feedback backend exists (canRequestLanguage).
-  it.skip('allows language selection after leaving a pending request and still prevents duplicate requests', async () => {
-    let finishRequest: (value: { ok: true }) => void = () => {}
-    submit.mockImplementation(
-      () =>
-        new Promise((resolve) => {
-          finishRequest = resolve
-        })
-    )
-    let settings = getDefaultSettings('/tmp')
-    const save = vi.fn(async (updates: Partial<GlobalSettings>) => {
-      settings = { ...settings, ...updates }
-      return settings
-    })
-    Object.defineProperty(window, 'api', {
-      configurable: true,
-      value: { feedback: { submit }, telemetryTrack, settings: { set: save } }
-    })
-    await openRequest()
-    fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
-    fireEvent.click(screen.getByRole('button', { name: 'Languages' }))
-
-    expect(screen.getByRole('radiogroup').getAttribute('aria-disabled')).toBe('false')
-    fireEvent.click(screen.getByRole('radio', { name: 'Français' }))
-
-    await waitFor(() =>
-      expect(screen.getByRole('radio', { name: 'Français' }).getAttribute('data-state')).toBe(
-        'checked'
+  it.skipIf(!LANGUAGE_REQUESTS_ENABLED)(
+    'acknowledges only delivered feedback, disables duplicate sends and preserves language',
+    async () => {
+      let finish: (value: { ok: true }) => void = () => {}
+      submit.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            finish = resolve
+          })
       )
-    )
-    expect(useAppStore.getState().settings?.uiLanguage).toBe('fr')
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'Other language…' }).hasAttribute('disabled')).toBe(
-        false
+      await openRequest()
+      fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
+      expect(screen.queryByRole('status')).toBeNull()
+      expect(
+        screen.getByRole('button', { name: 'Request language' }).hasAttribute('disabled')
+      ).toBe(true)
+      expect(submit).toHaveBeenCalledWith({
+        feedback: 'Language request: Deutsch',
+        submitAnonymously: true,
+        githubLogin: null,
+        githubEmail: null
+      })
+      await act(async () => finish({ ok: true }))
+      expect(screen.getByRole('status').textContent).toContain('recorded')
+      expect(useAppStore.getState().settings?.uiLanguage).toBe('system')
+      expect(telemetryTrack).toHaveBeenCalledWith(
+        'onboarding_language_requested',
+        expect.not.objectContaining({ requested_language: expect.anything() })
       )
-    )
-    fireEvent.click(screen.getByRole('button', { name: 'Other language…' }))
-    const form = screen.getByRole('textbox').closest('form')
-    if (!form) {
-      throw new Error('Request form missing')
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: 'deutsch' } })
+      fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
+      expect(submit).toHaveBeenCalledTimes(1)
+      expect(screen.getByRole('status').textContent).toContain('recorded')
     }
-    fireEvent.submit(form)
-    expect(submit).toHaveBeenCalledTimes(1)
-    expect(screen.queryByRole('status')).toBeNull()
-    await act(async () => finishRequest({ ok: true }))
-    expect(screen.getByRole('status').textContent).toContain('recorded')
-  })
+  )
 
-  // Off until the feedback backend exists (canRequestLanguage).
-  it.skip('rejects empty and oversized input before transport', async () => {
-    await openRequest()
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: ' ' } })
-    const form = screen.getByRole('textbox').closest('form')
-    if (!form) {
-      throw new Error('Request form missing')
+  it.skipIf(!LANGUAGE_REQUESTS_ENABLED)(
+    'retains a failed draft and retries without claiming success',
+    async () => {
+      submit
+        .mockResolvedValueOnce({ ok: false, status: null, error: 'Offline' })
+        .mockResolvedValueOnce({ ok: true })
+      await openRequest()
+      fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
+      await waitFor(() =>
+        expect(screen.getByRole('alert').textContent).toContain('Could not record')
+      )
+      expect(screen.queryByRole('status')).toBeNull()
+      expect(telemetryTrack).not.toHaveBeenCalledWith(
+        'onboarding_language_requested',
+        expect.anything()
+      )
+      fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
+      await waitFor(() => expect(screen.getByRole('status').textContent).toContain('recorded'))
+      expect(submit).toHaveBeenCalledTimes(2)
     }
-    fireEvent.submit(form)
-    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'x'.repeat(81) } })
-    fireEvent.submit(form)
-    expect(submit).not.toHaveBeenCalled()
-  })
+  )
+
+  it.skipIf(!LANGUAGE_REQUESTS_ENABLED)(
+    'allows language selection after leaving a pending request and still prevents duplicate requests',
+    async () => {
+      let finishRequest: (value: { ok: true }) => void = () => {}
+      submit.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            finishRequest = resolve
+          })
+      )
+      let settings = getDefaultSettings('/tmp')
+      const save = vi.fn(async (updates: Partial<GlobalSettings>) => {
+        settings = { ...settings, ...updates }
+        return settings
+      })
+      Object.defineProperty(window, 'api', {
+        configurable: true,
+        value: { feedback: { submit }, telemetryTrack, settings: { set: save } }
+      })
+      await openRequest()
+      fireEvent.click(screen.getByRole('button', { name: 'Request language' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Languages' }))
+
+      expect(screen.getByRole('radiogroup').getAttribute('aria-disabled')).toBe('false')
+      fireEvent.click(screen.getByRole('radio', { name: 'Français' }))
+
+      await waitFor(() =>
+        expect(screen.getByRole('radio', { name: 'Français' }).getAttribute('data-state')).toBe(
+          'checked'
+        )
+      )
+      expect(useAppStore.getState().settings?.uiLanguage).toBe('fr')
+      await waitFor(() =>
+        expect(
+          screen.getByRole('button', { name: 'Other language…' }).hasAttribute('disabled')
+        ).toBe(false)
+      )
+      fireEvent.click(screen.getByRole('button', { name: 'Other language…' }))
+      const form = screen.getByRole('textbox').closest('form')
+      if (!form) {
+        throw new Error('Request form missing')
+      }
+      fireEvent.submit(form)
+      expect(submit).toHaveBeenCalledTimes(1)
+      expect(screen.queryByRole('status')).toBeNull()
+      await act(async () => finishRequest({ ok: true }))
+      expect(screen.getByRole('status').textContent).toContain('recorded')
+    }
+  )
+
+  it.skipIf(!LANGUAGE_REQUESTS_ENABLED)(
+    'rejects empty and oversized input before transport',
+    async () => {
+      await openRequest()
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: ' ' } })
+      const form = screen.getByRole('textbox').closest('form')
+      if (!form) {
+        throw new Error('Request form missing')
+      }
+      fireEvent.submit(form)
+      fireEvent.change(screen.getByRole('textbox'), { target: { value: 'x'.repeat(81) } })
+      fireEvent.submit(form)
+      expect(submit).not.toHaveBeenCalled()
+    }
+  )
 
   it('freezes switcher eligibility after selecting English', async () => {
     const save = vi.fn(async () => {

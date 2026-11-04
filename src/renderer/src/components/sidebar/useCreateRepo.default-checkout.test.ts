@@ -17,7 +17,9 @@ const mocks = vi.hoisted(() => ({
   callRuntimeRpc: vi.fn(),
   fetchWorktrees: vi.fn(),
   onGitRepoReady: vi.fn(),
-  activateAndRevealWorktree: vi.fn(),
+  revealOnboardingFolderWithAgentLaunch: vi.fn(),
+  resolveNewFolderAgentLaunch: vi.fn(() => null),
+  setUpProject: vi.fn(async () => ({ ok: true })),
   markOnboardingProjectAdded: vi.fn()
 }))
 
@@ -46,8 +48,9 @@ vi.mock('@/hooks/useMountedRef', () => ({
   useMountedRef: () => ({ current: true })
 }))
 
-vi.mock('@/lib/worktree-activation', () => ({
-  activateAndRevealWorktree: mocks.activateAndRevealWorktree
+vi.mock('@/lib/onboarding-folder-agent-launch', () => ({
+  revealOnboardingFolderWithAgentLaunch: mocks.revealOnboardingFolderWithAgentLaunch,
+  resolveNewFolderAgentLaunch: mocks.resolveNewFolderAgentLaunch
 }))
 
 vi.mock('@/lib/onboarding-project-checklist', () => ({
@@ -115,7 +118,8 @@ describe('useCreateRepo default-checkout handoff', () => {
         repos: {
           create: mocks.createRepo,
           pickDirectory: vi.fn()
-        }
+        },
+        researchTools: { setUpProject: mocks.setUpProject }
       }
     })
   })
@@ -132,7 +136,7 @@ describe('useCreateRepo default-checkout handoff', () => {
     expect(mocks.createRepo).toHaveBeenCalledWith({
       parentPath: '/projects',
       name: 'created',
-      kind: 'git'
+      kind: 'folder'
     })
     expect(mocks.fetchWorktrees).toHaveBeenCalledWith(repo.id, {
       requireAuthoritative: true
@@ -204,12 +208,13 @@ describe('useCreateRepo default-checkout handoff', () => {
     expect(mocks.createRepo).toHaveBeenCalledWith({
       parentPath: '/projects',
       name: 'created',
-      kind: 'git'
+      kind: 'folder'
     })
     expect(mocks.fetchWorktrees).toHaveBeenCalledWith(repo.id)
-    expect(mocks.activateAndRevealWorktree).toHaveBeenCalledWith(worktree.id, {
-      sidebarRevealBehavior: 'auto'
-    })
+    expect(mocks.setUpProject).toHaveBeenCalledWith({ projectPath: repo.path })
+    expect(mocks.revealOnboardingFolderWithAgentLaunch).toHaveBeenCalledWith(
+      expect.objectContaining({ worktreeId: worktree.id })
+    )
     expect(mocks.markOnboardingProjectAdded).toHaveBeenCalledWith('addedFolder')
     expect(closeModal).toHaveBeenCalled()
     expect(mocks.onGitRepoReady).not.toHaveBeenCalled()
@@ -233,7 +238,7 @@ describe('useCreateRepo default-checkout handoff', () => {
       {
         parentPath: '/projects',
         name: 'created',
-        kind: 'git'
+        kind: 'folder'
       },
       { timeoutMs: 60_000 }
     )
