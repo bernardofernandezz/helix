@@ -10,9 +10,6 @@ type Representation = (typeof REPRESENTATIONS)[number]
 type Coloring = (typeof COLORINGS)[number]
 
 const SEPARATOR = ' · '
-const TOGGLE_ITEM_CLASS =
-  'h-[23px] px-2 text-2xs data-[state=on]:border-foreground/20 data-[state=on]:bg-foreground/10 data-[state=on]:text-foreground'
-
 function cartoonColor(coloring: Coloring): Record<string, unknown> {
   switch (coloring) {
     case 'spectrum':
@@ -127,41 +124,41 @@ export default function StructureViewer({
           <div className="ml-auto flex items-center gap-2">
             <ToggleGroup
               type="single"
-              size="sm"
-              variant="outline"
+              size="xs"
+              variant="segmented"
               value={representation}
               onValueChange={(value) =>
                 setRepresentation((current) => REPRESENTATIONS.find((r) => r === value) ?? current)
               }
               aria-label={translate('helix.structureViewer.representation', 'Representation')}
             >
-              <ToggleGroupItem value="cartoon" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="cartoon">
                 {translate('helix.structureViewer.cartoon', 'Cartoon')}
               </ToggleGroupItem>
-              <ToggleGroupItem value="sticks" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="sticks">
                 {translate('helix.structureViewer.sticks', 'Sticks')}
               </ToggleGroupItem>
-              <ToggleGroupItem value="surface" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="surface">
                 {translate('helix.structureViewer.surface', 'Surface')}
               </ToggleGroupItem>
             </ToggleGroup>
             <ToggleGroup
               type="single"
-              size="sm"
-              variant="outline"
+              size="xs"
+              variant="segmented"
               value={coloring}
               onValueChange={(value) =>
                 setColoring((current) => COLORINGS.find((c) => c === value) ?? current)
               }
               aria-label={translate('helix.structureViewer.coloring', 'Coloring')}
             >
-              <ToggleGroupItem value="spectrum" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="spectrum">
                 {translate('helix.structureViewer.spectrum', 'Spectrum')}
               </ToggleGroupItem>
-              <ToggleGroupItem value="chain" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="chain">
                 {translate('helix.structureViewer.chain', 'Chain')}
               </ToggleGroupItem>
-              <ToggleGroupItem value="confidence" className={TOGGLE_ITEM_CLASS}>
+              <ToggleGroupItem value="confidence">
                 {translate('helix.structureViewer.confidence', 'pLDDT')}
               </ToggleGroupItem>
             </ToggleGroup>
