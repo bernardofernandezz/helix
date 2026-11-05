@@ -1,7 +1,7 @@
 'use client'
 
 import { useDocsSearch } from 'fumadocs-core/search/client'
-import { GitBranch, MessageCircle, Search, X } from 'lucide-react'
+import { GitBranch, Search, X } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
@@ -273,23 +273,6 @@ export default function SearchDialog({ dialogId = 'docs-search-dialog', onClose 
                       <div className="font-medium">View on GitHub</div>
                       <div className="truncate text-[11px] text-muted-foreground">
                         Browse the source code
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <a
-                  href="https://github.com/bernardofernandezz/helix/issues"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={onClose}
-                  className="flex-1 rounded-md border border-border bg-card px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-                >
-                  <div className="flex items-center gap-2.5 text-left">
-                    <MessageCircle className="size-4 shrink-0" aria-hidden="true" />
-                    <div className="min-w-0">
-                      <div className="font-medium">Report an issue</div>
-                      <div className="truncate text-[11px] text-muted-foreground">
-                        Bugs and feature requests
                       </div>
                     </div>
                   </div>

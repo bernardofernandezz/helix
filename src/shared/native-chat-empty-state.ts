@@ -9,7 +9,8 @@ export const NATIVE_CHAT_EMPTY_STATE_COPY = {
   },
   empty: {
     title: 'Start a chat with {{value0}}',
-    subtitle: 'Ask {{value0}} to inspect code, explain output, or make a change.'
+    subtitle:
+      'Ask {{value0}} to analyze your data, explain results, search the literature, or run a pipeline.'
   },
   /** A chat whose conversation the host has not found: new, or not reported by the agent. */
   notFound: {

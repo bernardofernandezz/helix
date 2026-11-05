@@ -4,7 +4,7 @@ import { getDefaultOnboardingState } from '../../../../shared/onboarding-default
 import type { OnboardingState } from '../../../../shared/onboarding-state-types'
 import { useAppStore } from '@/store'
 import {
-  resolveDismissedOnboardingFolderAgentLaunch,
+  resolveNewFolderAgentLaunch,
   revealOnboardingFolderWithAgentLaunch
 } from '@/lib/onboarding-folder-agent-launch'
 import {
@@ -49,14 +49,14 @@ beforeEach(() => {
   })
 })
 
-describe('repo slice skipped-onboarding folder startup', () => {
-  it('only seeds the onboarding default agent for the first dismissed-onboarding folder', async () => {
+describe('repo slice new folder startup', () => {
+  it('seeds the default agent for new folders but not for re-added ones', async () => {
     reposAdd
       .mockResolvedValueOnce({
         repo: { id: 'folder-1', path: '/first', displayName: 'First', addedAt: 1 }
       })
       .mockResolvedValueOnce({
-        repo: { id: 'folder-2', path: '/second', displayName: 'Second', addedAt: 2 }
+        repo: { id: 'folder-1', path: '/first', displayName: 'First', addedAt: 1 }
       })
     worktreesListDetected.mockImplementation(({ repoId }: { repoId: string }) =>
       makeDetectedResult(repoId, [makeWorktree({ id: `${repoId}::/folder`, repoId })])
@@ -78,7 +78,7 @@ describe('repo slice skipped-onboarding folder startup', () => {
     })
 
     await store.getState().addNonGitFolder('/first')
-    await store.getState().addNonGitFolder('/second')
+    await store.getState().addNonGitFolder('/first')
 
     expect(worktreeActivation.activateAndRevealWorktree).toHaveBeenNthCalledWith(
       1,
@@ -105,7 +105,7 @@ describe('repo slice skipped-onboarding folder startup', () => {
     )
     expect(worktreeActivation.activateAndRevealWorktree).toHaveBeenNthCalledWith(
       2,
-      'folder-2::/folder',
+      'folder-1::/folder',
       { sidebarRevealBehavior: 'auto' }
     )
   })
@@ -152,12 +152,11 @@ it.each(['paired-linux', 'local-bash', 'withheld', 'structured-withheld'] as con
       ])
     })
     vi.spyOn(useAppStore, 'getState').mockImplementation(store.getState)
-    const launch = await resolveDismissedOnboardingFolderAgentLaunch({
+    const launch = await resolveNewFolderAgentLaunch({
       store: store.getState(),
       worktreeId: worktree.id,
       executionHostId: hostId,
-      onboarding: { ...getDefaultOnboardingState(), outcome: 'dismissed' },
-      hasExistingProject: false
+      isNewProject: true
     })
     if (target === 'structured-withheld') {
       expect(launch.plan?.route).toBe('structured-native-chat')

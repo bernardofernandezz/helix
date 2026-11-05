@@ -1,5 +1,6 @@
 import { net } from 'electron'
 import type { ChangelogData } from '../shared/update-status-types'
+import { HELIX_RELEASES_URL, HELIX_SITE_ORIGIN } from '../shared/helix-site-url'
 import { compareVersions } from './updater-fallback'
 
 type ChangelogEntry = {
@@ -10,7 +11,7 @@ type ChangelogEntry = {
   releaseNotesUrl: string
 }
 
-const CHANGELOG_URL = 'https://helix.invalid/changelog'
+const CHANGELOG_URL = HELIX_RELEASES_URL
 
 function isValidEntry(entry: ChangelogEntry): boolean {
   return (
@@ -29,7 +30,7 @@ export async function fetchChangelog(
   incomingVersion: string,
   localVersion: string
 ): Promise<ChangelogData | null> {
-  const res = await net.fetch('https://helix.invalid/whats-new/changelog.json', {
+  const res = await net.fetch(`${HELIX_SITE_ORIGIN}/whats-new/changelog.json`, {
     signal: AbortSignal.timeout(5000)
   })
   if (!res.ok) {

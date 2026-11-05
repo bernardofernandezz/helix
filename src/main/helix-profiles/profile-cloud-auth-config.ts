@@ -22,7 +22,6 @@ export type HelixCloudAuthConfig = {
 }
 
 const DEFAULT_SCOPE = 'openid profile email offline_access'
-const PRODUCTION_API_BASE_URL = 'https://login.helix.invalid'
 const PRODUCTION_CLIENT_ID = 'helix-desktop'
 const PRODUCTION_RELAY_DIRECTOR_URL = 'https://relay.helix.invalid'
 
@@ -50,12 +49,7 @@ export function getHelixCloudAuthConfig(
   const cleanEndpointUrl = (value: string | undefined): string | null =>
     cleanUrl(value, allowLoopbackHttp)
   const configuredApiBaseUrl = env.HELIX_CLOUD_API_URL?.trim()
-  // Packaged builds need defaults; first-party endpoints and public client IDs are not secrets.
-  const apiBaseUrl = configuredApiBaseUrl
-    ? cleanEndpointUrl(configuredApiBaseUrl)
-    : packaged
-      ? PRODUCTION_API_BASE_URL
-      : null
+  const apiBaseUrl = configuredApiBaseUrl ? cleanEndpointUrl(configuredApiBaseUrl) : null
   const clientId =
     env.HELIX_CLOUD_CLIENT_ID?.trim() || (packaged ? PRODUCTION_CLIENT_ID : undefined)
   if (!apiBaseUrl || !clientId) {

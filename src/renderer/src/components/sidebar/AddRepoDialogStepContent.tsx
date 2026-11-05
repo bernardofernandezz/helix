@@ -9,7 +9,6 @@ import { AddRepoNestedImportStep } from './AddRepoNestedImportStep'
 import type { AddRepoDialogStep } from './add-repo-dialog-types'
 import type { NestedRepoScanResult } from '../../../../shared/project-group-types'
 import type { SshConnectionState, SshTarget } from '../../../../shared/ssh-types'
-import type { GitAvailability } from './create-project-defaults'
 
 type AddRepoDialogStepContentProps = {
   step: AddRepoDialogStep
@@ -47,7 +46,6 @@ type AddRepoDialogStepContentProps = {
   manualCreateParentEntry?: boolean
   browseHostKind?: 'local' | 'runtime'
   createDefaultParent: string
-  createGitAvailability: GitAvailability
   createRuntimeParentStatus: 'idle' | 'checking' | 'failed'
   createParentDefaultPending: boolean
   onBrowse: () => void
@@ -110,7 +108,6 @@ export function AddRepoDialogStepContent({
   manualCreateParentEntry = isRuntimeEnvironmentActive,
   browseHostKind = 'local',
   createDefaultParent,
-  createGitAvailability,
   createRuntimeParentStatus,
   createParentDefaultPending,
   onBrowse,
@@ -244,7 +241,6 @@ export function AddRepoDialogStepContent({
         createError={createError}
         isCreating={isCreating}
         defaultParent={createDefaultParent}
-        gitAvailability={createGitAvailability}
         runtimeParentStatus={createRuntimeParentStatus}
         parentDefaultPending={createParentDefaultPending}
         manualParentEntry={manualCreateParentEntry}

@@ -26,7 +26,8 @@ describe('mobileNativeChatEmptyState', () => {
   it('invites a first message into a loaded, empty chat, matching desktop copy', () => {
     expect(mobileNativeChatEmptyState('ready', 'codex')).toEqual({
       title: 'Start a chat with Codex',
-      subtitle: 'Ask Codex to inspect code, explain output, or make a change.'
+      subtitle:
+        'Ask Codex to analyze your data, explain results, search the literature, or run a pipeline.'
     })
   })
 

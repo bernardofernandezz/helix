@@ -105,7 +105,7 @@ export function ShareUsageButton(props: ShareUsageButtonProps): React.JSX.Elemen
     }
 
     const lines = [
-      `My ${rangeLabel} ${providerName} usage via @helix_build`,
+      `My ${rangeLabel} ${providerName} usage via Helix`,
       '',
       `${fmtTokens(totalTokens)} tokens · ${costStr} est. cost`,
       '',

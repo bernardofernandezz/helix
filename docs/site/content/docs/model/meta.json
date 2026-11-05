@@ -1,6 +1,6 @@
 {
   "title": "The Helix Model",
-  "defaultOpen": true,
+  "defaultOpen": false,
   "pages": [
     "worktrees",
     "helix-yaml",

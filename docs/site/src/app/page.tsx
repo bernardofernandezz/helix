@@ -4,7 +4,7 @@ import { LandingPage } from '@/components/landing/LandingPage'
 export const metadata: Metadata = {
   title: 'Helix: an agentic research environment for the life sciences',
   description:
-    'Run AI agents side by side on research projects: literature, biological databases, Nextflow and Snakemake pipelines and SLURM jobs, with every answer cited.',
+    'Chat with Claude Code, Codex or any CLI agent on your research project: literature, biological databases, Nextflow and SLURM, and viewers for FASTA, VCF and 3D structures, with every answer cited.',
   alternates: { canonical: '/' }
 }
 

@@ -136,7 +136,6 @@ export default React.memo(function AddRepoDialog({
 
   const {
     createDefaultParent,
-    createGitAvailability,
     createRuntimeParentStatus,
     createParentDefaultPending,
     resetCreateDefaultState,
@@ -332,7 +331,6 @@ export default React.memo(function AddRepoDialog({
         actionsDisabled={!hostSelection.selectedHostId}
         browseHostKind={selectedHostKind === 'local' ? 'local' : 'runtime'}
         createDefaultParent={createDefaultParent}
-        createGitAvailability={createGitAvailability}
         createRuntimeParentStatus={createRuntimeParentStatus}
         createParentDefaultPending={createParentDefaultPending}
         manualCreateParentEntry={isRuntimeEnvironmentActive}

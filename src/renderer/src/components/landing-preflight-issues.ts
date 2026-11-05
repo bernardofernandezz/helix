@@ -8,7 +8,7 @@ export type PreflightIssue = {
   description: string
   fixLabel: string
   fixUrl: string
-  /** Git is required globally; provider CLI setup nudges remain dismissible. */
+  /** Git is required once a Git project exists; provider CLI setup nudges remain dismissible. */
   dismissible?: boolean
 }
 
@@ -19,6 +19,8 @@ export type LandingPreflightStatus = {
 
 export type LandingPreflightIssueOptions = {
   hasGitHubBackedProject: boolean
+  /** Research folders work without Git, so only nag once a Git project depends on it. */
+  hasGitProject: boolean
 }
 
 export function hasGitHubBackedProject(repos: readonly Repo[]): boolean {
@@ -32,7 +34,7 @@ export function getLandingPreflightIssues(
 ): PreflightIssue[] {
   const issues: PreflightIssue[] = []
 
-  if (!status.git.installed) {
+  if (options.hasGitProject && !status.git.installed) {
     issues.push({
       id: 'git',
       title: translate('auto.components.Landing.e5b7296d9d', 'Git is not installed'),

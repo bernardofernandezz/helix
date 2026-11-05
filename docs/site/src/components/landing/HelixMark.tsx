@@ -2,7 +2,7 @@
 export function HelixMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 120 120" aria-hidden="true" className={className} fill="none">
-      <g stroke="var(--primary)" strokeWidth="5" strokeLinecap="round" opacity="0.85">
+      <g stroke="var(--brand)" strokeWidth="5" strokeLinecap="round" opacity="0.85">
         <line x1="44" y1="20" x2="76" y2="20" />
         <line x1="47" y1="47" x2="73" y2="47" />
         <line x1="41" y1="60" x2="79" y2="60" />

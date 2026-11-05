@@ -98,6 +98,7 @@ docs/**
 !docs/reference/
 !docs/reference/cross-platform-support.md
 !docs/reference/git-workflow.md
+!docs/reference/helix-research-architecture.md
 !docs/reference/test-antipatterns.md
 !docs/reference/component-fixtures.md
 !docs/reference/mobile-connection.md

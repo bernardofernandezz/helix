@@ -1,5 +1,3 @@
-export type GitAvailability = 'checking' | 'available' | 'unavailable' | 'unknown'
-
 function pathSeparatorFor(pathValue: string): '/' | '\\' {
   return pathValue.includes('\\') ? '\\' : '/'
 }

@@ -258,7 +258,7 @@ export function buildComposerCardProps(state: ComposerModel) {
     onSparseSelectPreset: isProjectGroupTarget ? () => {} : handleSparseSelectPreset,
     branchesEnabled: !isProjectGroupTarget,
     setupControlsEnabled: !isProjectGroupTarget,
-    sparseControlsEnabled: !isProjectGroupTarget
+    sparseControlsEnabled: !isProjectGroupTarget && selectedRepoIsGit
   }
 
   return { cardProps, createDisabled }
