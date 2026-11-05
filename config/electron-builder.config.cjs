@@ -81,6 +81,8 @@ const isWinHourly = process.env.HELIX_WIN_HOURLY === '1'
 const isWinDaily = process.env.HELIX_WIN_DAILY === '1'
 const isWinAdhoc = process.env.HELIX_WIN_ADHOC === '1'
 const isWinDevChannel = isWinHourly || isWinDaily || isWinAdhoc
+// Beta releases ship without SignPath; updater must not demand a publisher signature.
+const isWinUnsigned = isWinDevChannel || process.env.HELIX_WIN_UNSIGNED === '1'
 const isMacRelease =
   process.env.HELIX_MAC_RELEASE === '1' || isMacHourly || isMacDaily || isMacAdhoc
 const isLinuxArm64Release = process.env.HELIX_LINUX_ARM64_RELEASE === '1'
@@ -155,7 +157,8 @@ const commonExtraResources = [
   skillFreshnessResources,
   ...agentBrowserSkillResources,
   nativeChatVisualsResource,
-  emojiShortcodeDatasetResource
+  emojiShortcodeDatasetResource,
+  { from: 'out/THIRD_PARTY_NOTICES.txt', to: 'THIRD_PARTY_NOTICES.txt' }
 ]
 // Native speech addons need real disk paths; copy only the artifact target’s variant.
 const macSpeechNativeResource = {
@@ -508,9 +511,9 @@ module.exports = {
     // Sign hook signs nothing: it relays transient NSIS uninstaller files to CI SignPath; unset relay env leaves local/dev builds inert.
     signtoolOptions: {
       sign: signWindowsUninstallerViaSignPath,
-      ...(isWinDevChannel ? {} : { publisherName: 'SignPath Foundation' })
+      ...(isWinUnsigned ? {} : { publisherName: 'SignPath Foundation' })
     },
-    ...(isWinDevChannel ? { verifyUpdateCodeSignature: false } : {}),
+    ...(isWinUnsigned ? { verifyUpdateCodeSignature: false } : {}),
     extraResources: [
       ...commonExtraResources,
       ...windowsRuntimeResources,
