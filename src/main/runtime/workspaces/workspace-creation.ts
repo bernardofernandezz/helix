@@ -106,7 +106,7 @@ export abstract class HelixRuntimeWithCreateManagedWorktree extends HelixRuntime
     // Match IPC routing: executionHostId-only SSH repos must not create locally.
     const createRoute = resolveWorktreeCreateRoute(repo)
     if (isFolderRepo(repo)) {
-      // A folder workspace is a registration, not a filesystem create, so it is host-agnostic.
+      // Folder workspaces register metadata plus a local analysis dir; non-local repos skip the dir.
       return createRuntimeFolderWorktree({
         request: args,
         repo,

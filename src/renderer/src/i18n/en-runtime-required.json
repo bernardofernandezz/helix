@@ -3192,7 +3192,7 @@
       },
       "state": {
         "empty": {
-          "subtitle": "Ask {{value0}} to inspect code, explain output, or make a change.",
+          "subtitle": "Ask {{value0}} to analyze your data, explain results, search the literature, or run a pipeline.",
           "title": "Start a chat with {{value0}}"
         },
         "error": {

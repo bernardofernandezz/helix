@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { getDefaultSettings } from '../../../../shared/constants'
-import { getDefaultOnboardingState } from '../../../../shared/onboarding-defaults'
-import {
-  buildOnboardingFolderAgentStartup,
-  shouldSeedFolderAgentAfterDismissedOnboarding
-} from '@/lib/onboarding-folder-agent-startup'
+import { buildOnboardingFolderAgentStartup } from '@/lib/onboarding-folder-agent-startup'
 
 const HOST = { platform: 'linux', shell: undefined, isRemote: false } as const
 const buildStartup = (settings: Parameters<typeof buildOnboardingFolderAgentStartup>[0]) =>
@@ -72,42 +68,5 @@ describe('buildOnboardingFolderAgentStartup', () => {
     })
 
     expect(startup).toBeUndefined()
-  })
-
-  it('seeds after a dismissed onboarding run before any project was added', () => {
-    expect(
-      shouldSeedFolderAgentAfterDismissedOnboarding(
-        {
-          ...getDefaultOnboardingState(),
-          outcome: 'dismissed'
-        },
-        false
-      )
-    ).toBe(true)
-  })
-
-  it('does not seed after another project was already added outside onboarding', () => {
-    expect(
-      shouldSeedFolderAgentAfterDismissedOnboarding(
-        {
-          ...getDefaultOnboardingState(),
-          outcome: 'dismissed'
-        },
-        true
-      )
-    ).toBe(false)
-  })
-
-  it('does not seed after onboarding already added a project', () => {
-    expect(
-      shouldSeedFolderAgentAfterDismissedOnboarding(
-        {
-          ...getDefaultOnboardingState(),
-          outcome: 'dismissed',
-          checklist: { ...getDefaultOnboardingState().checklist, addedFolder: true }
-        },
-        false
-      )
-    ).toBe(false)
   })
 })
