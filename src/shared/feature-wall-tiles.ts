@@ -1,5 +1,3 @@
-import { HELIX_DOCS_URL } from './helix-site-url'
-
 export type FeatureWallTileId =
   | 'tile-01'
   | 'tile-02'
@@ -19,7 +17,7 @@ type FeatureWallTileBase = {
   title: string
   caption: string
   owner: string
-  docsUrl: string
+  docsPath: string
 }
 
 export type FeatureWallTile =
@@ -67,7 +65,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-01.poster.jpg',
     recordedAtPath: 'tile-01.recorded-at.json',
     owner: 'worktree-orchestration',
-    docsUrl: `${HELIX_DOCS_URL}/model/worktrees`
+    docsPath: '/model/worktrees'
   },
   {
     id: 'tile-02',
@@ -79,7 +77,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-02.poster.jpg',
     recordedAtPath: 'tile-02.recorded-at.json',
     owner: 'terminal',
-    docsUrl: `${HELIX_DOCS_URL}/terminal`
+    docsPath: '/terminal'
   },
   {
     id: 'tile-03',
@@ -91,7 +89,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-03.poster.jpg',
     recordedAtPath: 'tile-03.recorded-at.json',
     owner: 'task-integrations',
-    docsUrl: `${HELIX_DOCS_URL}/review/linear`
+    docsPath: '/review/linear'
   },
   {
     id: 'tile-04',
@@ -102,7 +100,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-04.poster.jpg',
     recordedAtPath: 'tile-04.recorded-at.json',
     owner: 'agent-integrations',
-    docsUrl: `${HELIX_DOCS_URL}/agents/supported`
+    docsPath: '/agents/supported'
   },
   {
     id: 'tile-05',
@@ -114,7 +112,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-05.poster.jpg',
     recordedAtPath: 'tile-05.recorded-at.json',
     owner: 'browser-experience',
-    docsUrl: `${HELIX_DOCS_URL}/browser/design-mode`
+    docsPath: '/browser/design-mode'
   },
   {
     id: 'tile-06',
@@ -126,7 +124,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-06.poster.jpg',
     recordedAtPath: 'tile-06.recorded-at.json',
     owner: 'ssh-workspaces',
-    docsUrl: `${HELIX_DOCS_URL}/ssh`
+    docsPath: '/ssh'
   },
   {
     id: 'tile-07',
@@ -139,7 +137,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-07.poster.jpg',
     recordedAtPath: 'tile-07.recorded-at.json',
     owner: 'editor',
-    docsUrl: `${HELIX_DOCS_URL}/editing/file-explorer`
+    docsPath: '/editing/file-explorer'
   },
   {
     id: 'tile-08',
@@ -151,7 +149,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-08.poster.jpg',
     recordedAtPath: 'tile-08.recorded-at.json',
     owner: 'diff-review',
-    docsUrl: `${HELIX_DOCS_URL}/review/annotate-ai-diff`
+    docsPath: '/review/annotate-ai-diff'
   },
   {
     id: 'tile-09',
@@ -162,7 +160,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-09.poster.jpg',
     recordedAtPath: 'tile-09.recorded-at.json',
     owner: 'helix-cli',
-    docsUrl: `${HELIX_DOCS_URL}/cli/overview`
+    docsPath: '/cli/overview'
   },
   {
     id: 'tile-10',
@@ -174,7 +172,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-10.poster.jpg',
     recordedAtPath: 'tile-10.recorded-at.json',
     owner: 'keyboard-ux',
-    docsUrl: `${HELIX_DOCS_URL}/model/quick-open`
+    docsPath: '/model/quick-open'
   },
   {
     id: 'tile-11',
@@ -186,7 +184,7 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-11.poster.jpg',
     recordedAtPath: 'tile-11.recorded-at.json',
     owner: 'usage-rate-limits',
-    docsUrl: `${HELIX_DOCS_URL}/agents/usage-tracking`
+    docsPath: '/agents/usage-tracking'
   },
   {
     id: 'tile-12',
@@ -198,6 +196,6 @@ export const FEATURE_WALL_TILES: readonly FeatureWallTile[] = [
     posterPath: 'tile-12.poster.jpg',
     recordedAtPath: 'tile-12.recorded-at.json',
     owner: 'file-preview',
-    docsUrl: `${HELIX_DOCS_URL}/editing/viewers`
+    docsPath: '/editing/viewers'
   }
 ] as const
