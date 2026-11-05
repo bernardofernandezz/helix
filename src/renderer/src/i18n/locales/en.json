@@ -1983,7 +1983,6 @@
         "commentTooLarge": "Comment is too large to submit safely."
       },
       "Landing": {
-        "76a95f7f47": "Create",
         "f05d237049": "Add a project first",
         "f9eaa9e12d": "Add project",
         "6ca6ff404e": "HELIX",
@@ -1996,13 +1995,14 @@
         "5beaef5f9e": "GitHub CLI is not installed",
         "b673e7cf1b": "Git is required for Git projects, source control, and workspace management.",
         "e5b7296d9d": "Git is not installed",
-        "cd21242762": "Add a project to get started.",
-        "9c00bd4adf": "Select a workspace from the sidebar to begin.",
         "16e9e3df89": "starred",
         "0d0ace8861": "Star on GitHub",
         "ec43b38ba7": "Starred on GitHub",
         "157bb5ecbb": "Open GitHub",
-        "preflightDismiss": "Dismiss"
+        "preflightDismiss": "Dismiss",
+        "researchHasProjects": "Pick a project in the sidebar or start a new chat about your data.",
+        "researchNoProjects": "Create a research project or open a data folder, then chat with an agent about it.",
+        "newChat": "New chat"
       },
       "LinearIssueMarkdownDescriptionEditor": {
         "d9c47069ef": "Markdown",
@@ -5691,12 +5691,9 @@
         "AddRepoCreateStep": {
           "0ae45b8238": "my-project",
           "a8149a3a5a": "Name",
-          "11fd2a7db8": "Git repository",
           "c7b9f94456": "Create a new project",
           "b100311784": "Name it and Helix will create a real project with sensible defaults.",
           "685b5eefe1": "{{kind}} in {{parent}}",
-          "2a762f3b19": "Checking Git on this host...",
-          "fe1e616c5b": "Git is required to create a project.",
           "c234df77f7": "Choose or enter a host parent folder before creating.",
           "3a13f6e88b": "location not selected",
           "6ed14c0281": "host folder not selected",
@@ -5704,7 +5701,8 @@
           "2c12db1511": "Project already added",
           "875dda0995": "Enter a host parent path.",
           "45b7c26034": "Create project",
-          "85085d74d2": "Creating…"
+          "85085d74d2": "Creating…",
+          "researchProjectKind": "Research project"
         },
         "AddRepoHostSelector": {
           "host": "Host",
@@ -6487,16 +6485,16 @@
             "local": {
               "start": {
                 "actions": {
-                  "d72789705e": "Start from an empty folder",
                   "c709860596": "Create new project",
                   "5f9ffac036": "Clone a remote Git repository",
                   "7edb8ebe24": "Clone from URL",
                   "a6c20dca96": "Open a project from an SSH target",
                   "serverSshTitle": "Project on this server's SSH host",
                   "serverSshAddOnThisComputer": "Not available from a server. Add the SSH host on this computer to open its projects.",
-                  "fb4fc5380e": "Local project, Git repo, or folder with many repos",
                   "2281fdc8c7": "Browse folder",
-                  "runtimeBrowseDescription": "Existing Git repository or folder on this host"
+                  "runtimeBrowseDescription": "Existing Git repository or folder on this host",
+                  "researchBrowseDescription": "Folder with your data, notebooks, or code",
+                  "researchCreateDescription": "New folder for data, notebooks, and results"
                 }
               }
             }
@@ -14914,11 +14912,15 @@
           "d7b3ef168b": "Detected on your system",
           "9c163bb0e0": "Install instructions",
           "69af7e9c1c": "isn't on your PATH yet. Helix will set it as your default and you can install it any time.",
-          "1eee1c7bd8": "No agents detected on your PATH. Pick one to install later, or continue with a blank terminal.",
           "hideAgents": "Hide agents",
           "showMoreAgents": "Show {{value0}} more agents →",
           "yoloModeLabel": "Yolo mode",
-          "yoloPermissionsDescription": "Agents run commands and edit files without asking, and some also bypass their sandbox. Use only in projects you trust."
+          "yoloPermissionsDescription": "Agents run commands and edit files without asking, and some also bypass their sandbox. Use only in projects you trust.",
+          "noAgentsResearch": "No AI agent found yet. Pick Claude Code and Helix installs it for you.",
+          "installAgent": "Install",
+          "installTitle": "Install {{agent}}",
+          "installAriaLabel": "Agent install command",
+          "installDescription": "Press Enter to run the official installer. Helix detects the agent when it finishes."
         },
         "IntegrationsStep": {
           "277f30eb34": "Linear, GitLab, Bitbucket, Azure DevOps, Gitea, and Jira live in Settings > Integrations.",
@@ -19020,7 +19022,7 @@
         },
         "empty": {
           "title": "Start a chat with {{value0}}",
-          "subtitle": "Ask {{value0}} to inspect code, explain output, or make a change."
+          "subtitle": "Ask {{value0}} to analyze your data, explain results, search the literature, or run a pipeline."
         }
       },
       "stop": "Stop the agent",

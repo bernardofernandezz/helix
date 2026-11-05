@@ -1,28 +1,19 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react'
-import { AlertTriangle, ExternalLink, FolderPlus, GitBranchPlus, Star, X } from 'lucide-react'
+import { AlertTriangle, ExternalLink, FolderPlus, MessageSquarePlus, Star, X } from 'lucide-react'
 import { cn } from '../lib/utils'
 import { useAppStore } from '../store'
-import { isGitRepoKind } from '../../../shared/repo-kind'
 import type { Repo } from '../../../shared/repo-types'
 import {
   dismissPreflightIssue,
   githubProjectKeys,
   isPreflightIssueDismissed
 } from './landing-preflight-dismissal'
-import { ShortcutKeyCombo } from './ShortcutKeyCombo'
-import { useShortcutKeyDetails, type ShortcutKeyComboDetails } from '@/hooks/useShortcutLabel'
 import { useMountedRef } from '@/hooks/useMountedRef'
 import logo from '../../../../resources/logo.svg'
 import { translate } from '@/i18n/i18n'
 import { hasGitHubBackedProject, type PreflightIssue } from './landing-preflight-issues'
 import { useLandingPreflightRuntime } from './landing-preflight-runtime'
 import { useLandingHelixStarState, type LandingStarState } from './landing-github-star-state'
-
-type ShortcutItem = {
-  id: string
-  shortcut: ShortcutKeyComboDetails
-  action: string
-}
 
 // Do not deep-link to /stargazers: GitHub 404s that page for users without repo write access.
 const HELIX_GITHUB_URL = 'https://github.com/bernardofernandezz/helix'
@@ -216,30 +207,13 @@ export default function Landing(): React.JSX.Element {
   const repos = useAppStore((s) => s.repos)
   const openModal = useAppStore((s) => s.openModal)
 
-  const createTargetLabel =
-    repos.length > 0 && repos.every((repo) => isGitRepoKind(repo)) ? 'Worktree' : 'Workspace'
   const hasProjects = repos.length > 0
   const hasGitHubProject = useMemo(() => hasGitHubBackedProject(repos), [repos])
-  const showGitHubSupportFooter = repos.length === 0 || hasGitHubProject
+  const showGitHubSupportFooter = hasGitHubProject
 
   // Probe the active execution host, including remote runtimes.
   const { preflightIssues } = useLandingPreflightRuntime()
   const [starState, setStarState] = useLandingHelixStarState()
-
-  const createWorktreeShortcut = useShortcutKeyDetails('workspace.create')
-  const previousWorktreeShortcut = useShortcutKeyDetails('worktree.navigateUp')
-  const nextWorktreeShortcut = useShortcutKeyDetails('worktree.navigateDown')
-  const shortcuts = useMemo<ShortcutItem[]>(() => {
-    return [
-      {
-        id: 'create',
-        shortcut: createWorktreeShortcut,
-        action: `Create ${createTargetLabel.toLowerCase()}`
-      },
-      { id: 'up', shortcut: previousWorktreeShortcut, action: 'Move up workspace' },
-      { id: 'down', shortcut: nextWorktreeShortcut, action: 'Move down workspace' }
-    ]
-  }, [createTargetLabel, createWorktreeShortcut, nextWorktreeShortcut, previousWorktreeShortcut])
 
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-background">
@@ -264,10 +238,13 @@ export default function Landing(): React.JSX.Element {
           <p className="text-sm text-muted-foreground text-center">
             {hasProjects
               ? translate(
-                  'auto.components.Landing.9c00bd4adf',
-                  'Select a workspace from the sidebar to begin.'
+                  'auto.components.Landing.researchHasProjects',
+                  'Pick a project in the sidebar or start a new chat about your data.'
                 )
-              : translate('auto.components.Landing.cd21242762', 'Add a project to get started.')}
+              : translate(
+                  'auto.components.Landing.researchNoProjects',
+                  'Create a research project or open a data folder, then chat with an agent about it.'
+                )}
           </p>
 
           <div className="flex items-center justify-center gap-2.5 flex-wrap">
@@ -279,27 +256,19 @@ export default function Landing(): React.JSX.Element {
               {translate('auto.components.Landing.f9eaa9e12d', 'Add project')}
             </button>
 
-            <button
-              className="inline-flex items-center gap-1.5 bg-secondary/70 border border-border/80 text-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-accent transition-colors"
-              onClick={() => openModal('new-workspace-composer', { telemetrySource: 'unknown' })}
-            >
-              <GitBranchPlus className="size-3.5" />
-              {translate('auto.components.Landing.76a95f7f47', 'Create')}{' '}
-              {createTargetLabel.toLowerCase()}
-            </button>
-          </div>
-
-          <div className="mt-6 w-full max-w-xs space-y-2">
-            {shortcuts.map((shortcut) => (
-              <div key={shortcut.id} className="grid grid-cols-[1fr_auto] items-center gap-3">
-                <span className="text-sm text-muted-foreground">{shortcut.action}</span>
-                <ShortcutKeyCombo
-                  keys={shortcut.shortcut.keys}
-                  doubleTap={shortcut.shortcut.doubleTap}
-                  separatorClassName="mx-0.5 text-[10px] text-muted-foreground"
-                />
-              </div>
-            ))}
+            {hasProjects && (
+              <button
+                className="inline-flex items-center gap-1.5 bg-secondary/70 border border-border/80 text-foreground font-medium text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-accent transition-colors"
+                onClick={() =>
+                  openModal('new-workspace-composer', {
+                    telemetrySource: 'unknown'
+                  })
+                }
+              >
+                <MessageSquarePlus className="size-3.5" />
+                {translate('auto.components.Landing.newChat', 'New chat')}
+              </button>
+            )}
           </div>
         </div>
       </div>

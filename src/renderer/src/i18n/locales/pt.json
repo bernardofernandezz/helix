@@ -1946,11 +1946,15 @@
           "d7b3ef168b": "Detectado no seu sistema",
           "9c163bb0e0": "Instruções de instalação",
           "69af7e9c1c": "ainda não está no seu PATH. O Helix vai defini-lo como seu padrão e você pode instalá-lo quando quiser.",
-          "1eee1c7bd8": "Nenhum agente detectado no seu PATH. Escolha um para instalar depois, ou continue com um terminal em branco.",
           "hideAgents": "Ocultar agentes",
           "showMoreAgents": "Mostrar mais {{value0}} agentes→",
           "yoloModeLabel": "Modo Yolo",
-          "yoloPermissionsDescription": "Os agentes executam comandos e editam arquivos sem perguntar, e alguns também ignoram o sandbox. Use apenas em projetos nos quais você confia."
+          "yoloPermissionsDescription": "Os agentes executam comandos e editam arquivos sem perguntar, e alguns também ignoram o sandbox. Use apenas em projetos nos quais você confia.",
+          "noAgentsResearch": "Nenhum agente de IA encontrado. Escolha o Claude Code e o Helix instala para você.",
+          "installAgent": "Instalar",
+          "installTitle": "Instalar {{agent}}",
+          "installAriaLabel": "Comando de instalação do agente",
+          "installDescription": "Pressione Enter para rodar o instalador oficial. O Helix detecta o agente quando terminar."
         },
         "IntegrationsStep": {
           "277f30eb34": "Linear, GitLab, Bitbucket, Azure DevOps, Gitea e Jira estão em Configurações > Integrações.",
@@ -10899,12 +10903,9 @@
         "AddRepoCreateStep": {
           "0ae45b8238": "meu-projeto",
           "a8149a3a5a": "Nome",
-          "11fd2a7db8": "Repositório Git",
           "c7b9f94456": "Criar um novo projeto",
           "b100311784": "Dê um nome e o Helix vai criar um projeto real com padrões sensatos.",
           "685b5eefe1": "{{kind}} em {{parent}}",
-          "2a762f3b19": "Verificando o Git neste host...",
-          "fe1e616c5b": "O Git é necessário para criar um projeto.",
           "c234df77f7": "Escolha ou digite uma pasta pai do host antes de criar.",
           "3a13f6e88b": "local não selecionado",
           "6ed14c0281": "pasta do host não selecionada",
@@ -10912,7 +10913,8 @@
           "2c12db1511": "Projeto já adicionado",
           "875dda0995": "Digite um caminho pai do host.",
           "45b7c26034": "Criar projeto",
-          "85085d74d2": "Criando…"
+          "85085d74d2": "Criando…",
+          "researchProjectKind": "Projeto de pesquisa"
         },
         "HostRemoveDialog": {
           "1a2b3c4d5e": "{{value0}} removido",
@@ -11081,16 +11083,16 @@
             "local": {
               "start": {
                 "actions": {
-                  "d72789705e": "Iniciar a partir de uma pasta vazia",
                   "c709860596": "Criar novo projeto",
                   "5f9ffac036": "Clonar um repositório Git remoto",
                   "7edb8ebe24": "Clonar de URL",
                   "a6c20dca96": "Abrir um projeto de um destino SSH",
-                  "fb4fc5380e": "Projeto local, repositório Git, ou pasta com vários repositórios",
                   "2281fdc8c7": "Navegar pela pasta",
                   "runtimeBrowseDescription": "Repositório Git ou pasta existente neste host",
                   "serverSshTitle": "Projeto no host SSH deste servidor",
-                  "serverSshAddOnThisComputer": "Indisponível a partir de um servidor. Adicione o host SSH neste computador para abrir os projetos dele."
+                  "serverSshAddOnThisComputer": "Indisponível a partir de um servidor. Adicione o host SSH neste computador para abrir os projetos dele.",
+                  "researchBrowseDescription": "Pasta com seus dados, notebooks ou código",
+                  "researchCreateDescription": "Nova pasta para dados, notebooks e resultados"
                 }
               }
             }
@@ -17746,7 +17748,6 @@
         }
       },
       "Landing": {
-        "76a95f7f47": "Criar",
         "f05d237049": "Adicione um projeto primeiro",
         "f9eaa9e12d": "Adicionar projeto",
         "6ca6ff404e": "HELIX",
@@ -17759,13 +17760,14 @@
         "5beaef5f9e": "A CLI do GitHub não está instalada",
         "b673e7cf1b": "O Git é necessário para projetos Git, controle de código-fonte e gerenciamento de espaços de trabalho.",
         "e5b7296d9d": "O Git não está instalado",
-        "cd21242762": "Adicione um projeto para começar.",
-        "9c00bd4adf": "Selecione um espaço de trabalho na barra lateral para começar.",
         "16e9e3df89": "com estrela",
         "0d0ace8861": "Dar estrela no GitHub",
         "ec43b38ba7": "Com estrela no GitHub",
         "157bb5ecbb": "Abrir GitHub",
-        "preflightDismiss": "Descartar"
+        "preflightDismiss": "Descartar",
+        "researchHasProjects": "Escolha um projeto na barra lateral ou comece um novo chat sobre seus dados.",
+        "researchNoProjects": "Crie um projeto de pesquisa ou abra uma pasta de dados e converse com um agente sobre ela.",
+        "newChat": "Novo chat"
       },
       "QuickOpen": {
         "1dbd3f59ff": "Mover",
@@ -18949,7 +18951,7 @@
         },
         "empty": {
           "title": "Inicie um chat com {{value0}}",
-          "subtitle": "Peça a {{value0}} para inspecionar código, explicar a saída ou fazer uma alteração."
+          "subtitle": "Peça ao {{value0}} para analisar seus dados, explicar resultados, buscar na literatura ou rodar um pipeline."
         }
       },
       "stop": "Parar o agente",

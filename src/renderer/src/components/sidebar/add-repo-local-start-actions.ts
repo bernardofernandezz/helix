@@ -46,8 +46,8 @@ export function getAddRepoLocalStartActions({
             'Existing Git repository or folder on this host'
           )
         : translate(
-            'auto.components.sidebar.add.repo.local.start.actions.fb4fc5380e',
-            'Local project, Git repo, or folder with many repos'
+            'auto.components.sidebar.add.repo.local.start.actions.researchBrowseDescription',
+            'Folder with your data, notebooks, or code'
           ),
     onClick: onBrowse
   }
@@ -90,13 +90,13 @@ export function getAddRepoLocalStartActions({
       'Create new project'
     ),
     description: translate(
-      'auto.components.sidebar.add.repo.local.start.actions.d72789705e',
-      'Start from an empty folder'
+      'auto.components.sidebar.add.repo.local.start.actions.researchCreateDescription',
+      'New folder for data, notebooks, and results'
     ),
     onClick: onOpenCreateStep
   }
 
-  const secondaryActions = remote ? [clone, remote, create] : [clone, create]
+  const secondaryActions = remote ? [create, clone, remote] : [create, clone]
 
   return { primaryAction, secondaryActions }
 }

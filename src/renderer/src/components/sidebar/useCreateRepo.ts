@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { useAppStore } from '@/store'
 import { useMountedRef } from '@/hooks/useMountedRef'
-import { activateAndRevealWorktree } from '@/lib/worktree-activation'
 import { markOnboardingProjectAdded } from '@/lib/onboarding-project-checklist'
 import { callRuntimeRpc } from '@/runtime/runtime-rpc-client'
 import { isGitRepoKind } from '../../../../shared/repo-kind'
@@ -12,7 +11,7 @@ import { extractIpcErrorMessage } from '@/lib/ipc-error'
 import { upsertAddedRepoWithProjectHostSetup } from './add-repo-store-upsert'
 import { selectWorktreesByRepo } from '@/store/workspace-record-selectors'
 import { resolveAddRepoRuntimeTarget, worktreeRefreshOptions } from './add-repo-runtime-owner'
-import type { ExecutionHostId } from '../../../../shared/execution-host'
+import { LOCAL_EXECUTION_HOST_ID, type ExecutionHostId } from '../../../../shared/execution-host'
 
 export function useCreateRepo(
   fetchWorktrees: (
@@ -87,7 +86,8 @@ export function useCreateRepo(
     setCreateError(null)
     try {
       const target = resolveAddRepoRuntimeTarget(options.runtimeEnvironmentId)
-      const createKind = 'git' as const
+      // Research projects are plain folders; Git stays opt-in via folder-to-Git conversion.
+      const createKind = 'folder' as const
       const result =
         target.kind === 'environment'
           ? await callRuntimeRpc<{ repo: Repo } | { error: string }>(
@@ -137,6 +137,16 @@ export function useCreateRepo(
           }
         )
       }
+      // The research scaffold writes through local IPC only; remote hosts keep a bare folder.
+      if (!wasDeduped && target.kind !== 'environment') {
+        const setup = await window.api.researchTools.setUpProject({ projectPath: repo.path })
+        if (!setup.ok) {
+          toast.warning(setup.detail)
+        }
+        if (!isCurrent()) {
+          return
+        }
+      }
       const ownerOptions = worktreeRefreshOptions(options.runtimeEnvironmentId)
       if (isGitRepoKind(repo)) {
         // Reveal persisted projects even after transient non-authoritative refreshes.
@@ -160,15 +170,22 @@ export function useCreateRepo(
             ownerOptions.executionHostId === undefined ||
             worktree.hostId === ownerOptions.executionHostId
         )
+        await markOnboardingProjectAdded('addedFolder')
         if (folderWorktree) {
-          activateAndRevealWorktree(folderWorktree.id, {
-            sidebarRevealBehavior: 'auto',
-            ...(ownerOptions.executionHostId
-              ? { executionHostId: ownerOptions.executionHostId }
-              : {})
+          // Lazy: the launch graph imports the store root.
+          const { resolveNewFolderAgentLaunch, revealOnboardingFolderWithAgentLaunch } =
+            await import('@/lib/onboarding-folder-agent-launch')
+          await revealOnboardingFolderWithAgentLaunch({
+            worktreeId: folderWorktree.id,
+            executionHostId: ownerOptions.executionHostId,
+            launch: resolveNewFolderAgentLaunch({
+              worktreeId: folderWorktree.id,
+              store: useAppStore.getState(),
+              isNewProject: !wasDeduped,
+              executionHostId: ownerOptions.executionHostId ?? LOCAL_EXECUTION_HOST_ID
+            })
           })
         }
-        await markOnboardingProjectAdded('addedFolder')
         closeModal()
       }
     } catch (err) {

@@ -21,21 +21,31 @@ const missingGhStatus: LandingPreflightStatus = {
 }
 
 describe('landing preflight issues', () => {
-  it('keeps Git issues even when no GitHub-backed project is registered', () => {
+  it('keeps Git issues for Git projects even when none is GitHub-backed', () => {
     const issues = getLandingPreflightIssues(
       {
         git: { installed: false },
         gh: { installed: false, authenticated: false }
       },
-      { hasGitHubBackedProject: false }
+      { hasGitHubBackedProject: false, hasGitProject: true }
     )
 
     expect(issues.map((issue) => issue.id)).toEqual(['git'])
   })
 
+  it('does not require Git when only folder projects exist', () => {
+    const issues = getLandingPreflightIssues(
+      { git: { installed: false }, gh: { installed: false, authenticated: false } },
+      { hasGitHubBackedProject: false, hasGitProject: false }
+    )
+
+    expect(issues).toEqual([])
+  })
+
   it('does not report GitHub CLI issues when no GitHub-backed project is registered', () => {
     const issues = getLandingPreflightIssues(missingGhStatus, {
-      hasGitHubBackedProject: false
+      hasGitHubBackedProject: false,
+      hasGitProject: true
     })
 
     expect(issues.some((issue) => issue.id.startsWith('gh'))).toBe(false)
@@ -43,7 +53,8 @@ describe('landing preflight issues', () => {
 
   it('keeps GitHub CLI issues when a GitHub-backed project is registered', () => {
     const issues = getLandingPreflightIssues(missingGhStatus, {
-      hasGitHubBackedProject: true
+      hasGitHubBackedProject: true,
+      hasGitProject: true
     })
 
     expect(issues.map((issue) => issue.id)).toContain('gh')
@@ -55,7 +66,7 @@ describe('landing preflight issues', () => {
         git: { installed: true },
         gh: { installed: true, authenticated: false }
       },
-      { hasGitHubBackedProject: true }
+      { hasGitHubBackedProject: true, hasGitProject: true }
     )
 
     expect(issues.map((issue) => issue.id)).toContain('gh-auth')

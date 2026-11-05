@@ -16,10 +16,6 @@ type TaskSourcesGithubStatus = TaskSourcesSnapshotProps['github_status']
 type TaskSourcesLinearStatus = TaskSourcesSnapshotProps['linear_status']
 export type TaskSourcesExitAction = TaskSourcesSnapshotProps['exit_action']
 
-export function shouldSkipIntegrationsStep(status: AppState['preflightStatus']): boolean {
-  return status?.gh.installed === true
-}
-
 export function shouldSkipWindowsTerminalStep(isWindows: boolean): boolean {
   return !isWindows
 }

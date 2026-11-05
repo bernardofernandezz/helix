@@ -1,12 +1,10 @@
-// Resolve parent and Git defaults on the chosen host while rejecting stale async results.
+// Resolve parent defaults on the chosen host while rejecting stale async results.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { browseRuntimeServerDirectory } from '@/runtime/runtime-server-directory-browser'
-import { callRuntimeRpc } from '@/runtime/runtime-rpc-client'
 import type { AddRepoDialogStep } from './add-repo-dialog-types'
-import { getDefaultCreateProjectParent, type GitAvailability } from './create-project-defaults'
+import { getDefaultCreateProjectParent } from './create-project-defaults'
 
-const LOCAL_GIT_AVAILABILITY_TIMEOUT_MS = 1500
-const RUNTIME_GIT_AVAILABILITY_TIMEOUT_MS = 3000
+const RUNTIME_PARENT_DEFAULT_TIMEOUT_MS = 3000
 
 export type CreateRuntimeParentStatus = 'idle' | 'checking' | 'failed'
 
@@ -53,14 +51,12 @@ export function useCreateProjectDefaults({
   setCreateParent: (value: string) => void
 }): {
   createDefaultParent: string
-  createGitAvailability: GitAvailability
   createRuntimeParentStatus: CreateRuntimeParentStatus
   createParentDefaultPending: boolean
   resetCreateDefaultState: () => void
   markCreateParentTouched: (value?: string) => void
 } {
   const [createDefaultParent, setCreateDefaultParent] = useState('')
-  const [createGitAvailability, setCreateGitAvailability] = useState<GitAvailability>('unknown')
   const [createRuntimeParentStatus, setCreateRuntimeParentStatus] =
     useState<CreateRuntimeParentStatus>('idle')
   const createStepAutoFilledRef = useRef(false)
@@ -68,7 +64,6 @@ export function useCreateProjectDefaults({
   const createParentProvenanceRef = useRef<CreateParentProvenance | null>(null)
   const createParentTouchedRef = useRef(false)
   const createParentDefaultGenRef = useRef(0)
-  const createGitProbeGenRef = useRef(0)
   const activeCreateParentRuntimeEnvironmentId = activeRuntimeEnvironmentId?.trim() || null
   const activeCreateParentTargetKey = activeCreateParentRuntimeEnvironmentId
     ? `runtime:${activeCreateParentRuntimeEnvironmentId}`
@@ -84,13 +79,11 @@ export function useCreateProjectDefaults({
 
   const resetCreateDefaultState = useCallback(() => {
     createParentDefaultGenRef.current++
-    createGitProbeGenRef.current++
     createStepAutoFilledRef.current = false
     autoFilledCreateParentRef.current = null
     createParentProvenanceRef.current = null
     createParentTouchedRef.current = false
     setCreateDefaultParent('')
-    setCreateGitAvailability('unknown')
     setCreateRuntimeParentStatus('idle')
   }, [])
 
@@ -212,7 +205,7 @@ export function useCreateProjectDefaults({
     setCreateRuntimeParentStatus('checking')
     void withTimeout(
       browseRuntimeServerDirectory(runtimeEnvironmentId, '~'),
-      RUNTIME_GIT_AVAILABILITY_TIMEOUT_MS
+      RUNTIME_PARENT_DEFAULT_TIMEOUT_MS
     )
       .then((result) => {
         if (
@@ -250,43 +243,8 @@ export function useCreateProjectDefaults({
     step
   ])
 
-  useEffect(() => {
-    if (step !== 'create') {
-      return
-    }
-    const runtimeEnvironmentId = activeRuntimeEnvironmentId?.trim()
-    const gen = ++createGitProbeGenRef.current
-    setCreateGitAvailability('checking')
-    const probe = runtimeEnvironmentId
-      ? callRuntimeRpc<{ available: boolean }>(
-          { kind: 'environment', environmentId: runtimeEnvironmentId },
-          'repo.gitAvailable',
-          undefined,
-          { timeoutMs: RUNTIME_GIT_AVAILABILITY_TIMEOUT_MS }
-        ).then((result) => result.available)
-      : window.api.repos.isGitAvailable()
-    const timeoutMs = runtimeEnvironmentId
-      ? RUNTIME_GIT_AVAILABILITY_TIMEOUT_MS
-      : LOCAL_GIT_AVAILABILITY_TIMEOUT_MS
-
-    void withTimeout(probe, timeoutMs)
-      .then((available) => {
-        if (gen !== createGitProbeGenRef.current) {
-          return
-        }
-        setCreateGitAvailability(available ? 'available' : 'unavailable')
-      })
-      .catch(() => {
-        if (gen !== createGitProbeGenRef.current) {
-          return
-        }
-        setCreateGitAvailability('unknown')
-      })
-  }, [activeRuntimeEnvironmentId, step])
-
   return {
     createDefaultParent,
-    createGitAvailability,
     createRuntimeParentStatus,
     createParentDefaultPending: createParentPending,
     resetCreateDefaultState,

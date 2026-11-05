@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { ChevronDown, GitBranch, Loader2 } from 'lucide-react'
+import { ChevronDown, FlaskConical } from 'lucide-react'
 import { DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -9,11 +9,7 @@ import {
   CreateProjectParentBrowser
 } from './CreateProjectLocationField'
 import { translate } from '@/i18n/i18n'
-import {
-  formatCreateProjectParentSummary,
-  joinCreateProjectPath,
-  type GitAvailability
-} from './create-project-defaults'
+import { formatCreateProjectParentSummary, joinCreateProjectPath } from './create-project-defaults'
 
 const CREATE_PROJECT_NAME_PLACEHOLDER = 'project-name'
 
@@ -23,7 +19,6 @@ type CreateStepProps = {
   createError: string | null
   isCreating: boolean
   defaultParent?: string
-  gitAvailability?: GitAvailability
   runtimeParentStatus?: 'idle' | 'checking' | 'failed'
   parentDefaultPending?: boolean
   manualParentEntry?: boolean
@@ -42,7 +37,6 @@ export function CreateStep({
   createError,
   isCreating,
   defaultParent = '',
-  gitAvailability = 'unknown',
   runtimeParentStatus = 'idle',
   parentDefaultPending = false,
   manualParentEntry = false,
@@ -57,12 +51,9 @@ export function CreateStep({
   // Remote hosts need typed paths; expose Location so creation does not appear blocked.
   const [advancedOpen, setAdvancedOpen] = useState(manualParentEntry)
 
-  // Unknown probe results must not block creation; require a confirmed Git miss.
   const canSubmit =
     createName.trim().length > 0 &&
     createParent.trim().length > 0 &&
-    gitAvailability !== 'checking' &&
-    gitAvailability !== 'unavailable' &&
     !parentDefaultPending &&
     !isCreating &&
     !submitDisabled
@@ -100,11 +91,9 @@ export function CreateStep({
     return createParent.trim() ? joinCreateProjectPath(createParent, name) : ''
   }, [createName, createParent])
   const kindLabel = translate(
-    'auto.components.sidebar.AddRepoCreateStep.11fd2a7db8',
-    'Git repository'
+    'auto.components.sidebar.AddRepoCreateStep.researchProjectKind',
+    'Research project'
   )
-  const showGitFallback = gitAvailability === 'unavailable'
-  const showGitChecking = gitAvailability === 'checking'
   const showRuntimeMissingParent =
     runtimeEnvironmentId && !createParent.trim() && runtimeParentStatus !== 'checking'
 
@@ -168,7 +157,7 @@ export function CreateStep({
             className="flex w-full min-w-0 items-start gap-2.5 rounded-md px-3 py-2.5 text-left transition-colors cursor-pointer hover:bg-accent/50 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
           >
             <span className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-md border border-border bg-background/60 text-muted-foreground">
-              <GitBranch className="size-3.5" />
+              <FlaskConical className="size-3.5" />
             </span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-medium">
@@ -181,22 +170,7 @@ export function CreateStep({
                   }
                 )}
               </p>
-              {showGitChecking ? (
-                <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                  <Loader2 className="size-3 animate-spin" />
-                  {translate(
-                    'auto.components.sidebar.AddRepoCreateStep.2a762f3b19',
-                    'Checking Git on this host...'
-                  )}
-                </p>
-              ) : showGitFallback ? (
-                <p className="mt-0.5 text-[11px] text-destructive">
-                  {translate(
-                    'auto.components.sidebar.AddRepoCreateStep.fe1e616c5b',
-                    'Git is required to create a project.'
-                  )}
-                </p>
-              ) : showRuntimeMissingParent ? (
+              {showRuntimeMissingParent ? (
                 <p className="mt-0.5 text-[11px] text-muted-foreground">
                   {translate(
                     'auto.components.sidebar.AddRepoCreateStep.c234df77f7',

@@ -1,5 +1,4 @@
 import type { ExecutionHostId } from '../../../shared/execution-host'
-import type { OnboardingState } from '../../../shared/onboarding-state-types'
 import type { TuiAgent } from '../../../shared/tui-agent'
 import type { useAppStore } from '@/store'
 import { resolveAgentLaunchExecutionContext } from '@/lib/launch-agent-execution-context'
@@ -11,7 +10,6 @@ import { newAgentLaunchRequestId } from '@/lib/agent-launch-request-id'
 import {
   buildOnboardingFolderAgentStartup,
   onboardingFolderDefaultAgent,
-  shouldSeedFolderAgentAfterDismissedOnboarding,
   type OnboardingFolderAgentStartup
 } from '@/lib/onboarding-folder-agent-startup'
 import { activateAndRevealWorktree } from '@/lib/worktree-activation'
@@ -25,18 +23,15 @@ export type OnboardingFolderAgentLaunch = {
 }
 
 /** Keep planning beside launch: the eagerly imported startup builder cannot reach the launch graph without cycling through store root. */
-export function resolveDismissedOnboardingFolderAgentLaunch(args: {
+export function resolveNewFolderAgentLaunch(args: {
   store: ReturnType<typeof useAppStore.getState>
-  onboarding: OnboardingState | null
-  hasExistingProject: boolean
+  /** Chat-first: every newly added folder opens the default agent; re-adds keep their tabs. */
+  isNewProject: boolean
   executionHostId: string
   worktreeId: string
 }): OnboardingFolderAgentLaunch {
   const agent = onboardingFolderDefaultAgent(args.store.settings)
-  if (
-    !agent ||
-    !shouldSeedFolderAgentAfterDismissedOnboarding(args.onboarding, args.hasExistingProject)
-  ) {
+  if (!agent || !args.isNewProject) {
     return { agent: null, plan: null }
   }
   // Resolved once per added folder: adding it is the one action this chat serves.
