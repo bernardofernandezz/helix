@@ -25,6 +25,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-annotation-highlight: var(--annotation-highlight);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -88,63 +90,68 @@
     monospace;
   --radius: 0.625rem;
 
-  --background: #fbfcfc;
-  --foreground: #0a1214;
-  --card: #fff;
-  --card-foreground: #0a1214;
+  /* Mono base; --brand (Helix teal) is reserved for small accents. */
+  --brand: #0b6658;
+  --annotation-highlight: #b45309;
+  --background: #fff;
+  --foreground: #0a0a0a;
+  --card: #fafafa;
+  --card-foreground: #0a0a0a;
   --popover: #fff;
-  --popover-foreground: #0a1214;
-  --primary: #0b6658;
-  --primary-foreground: #f3fffc;
-  --secondary: #eef3f3;
-  --secondary-foreground: #0f1a1c;
-  --muted: #eef3f3;
-  --muted-foreground: #5b6b70;
-  --accent: #eef3f3;
-  --accent-foreground: #0f1a1c;
+  --popover-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-foreground: #fafafa;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f4f4f5;
+  --muted-foreground: #63636b;
+  --accent: #f0f0f1;
+  --accent-foreground: #0a0a0a;
   --destructive: #e40014;
   --destructive-foreground: #fcf3f3;
-  --border: #dde5e6;
-  --input: #dde5e6;
-  --ring: #2ba08c;
-  --sidebar: #f7f9f9;
-  --sidebar-foreground: #0a1214;
-  --sidebar-primary: #0b6658;
-  --sidebar-primary-foreground: #f3fffc;
-  --sidebar-accent: #eef3f3;
-  --sidebar-accent-foreground: #0f1a1c;
-  --sidebar-border: #dde5e6;
-  --sidebar-ring: #2ba08c;
+  --border: #e6e6e8;
+  --input: #e6e6e8;
+  --ring: #0b6658;
+  --sidebar: #fff;
+  --sidebar-foreground: #0a0a0a;
+  --sidebar-primary: #0a0a0a;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f4f4f5;
+  --sidebar-accent-foreground: #0a0a0a;
+  --sidebar-border: #e6e6e8;
+  --sidebar-ring: #0b6658;
 }
 
 .dark {
+  --brand: #46d6bc;
+  --annotation-highlight: #fbbf24;
   --background: #080c0e;
   --foreground: #e9eef0;
-  --card: #111719;
+  --card: #0e1416;
   --card-foreground: #e9eef0;
   --popover: #111719;
   --popover-foreground: #e9eef0;
-  --primary: #46d6bc;
-  --primary-foreground: #032820;
-  --secondary: #182024;
+  --primary: #f2f6f7;
+  --primary-foreground: #080c0e;
+  --secondary: #151c1f;
   --secondary-foreground: #e9eef0;
-  --muted: #182024;
+  --muted: #131a1d;
   --muted-foreground: #94a6ab;
-  --accent: #26343a;
+  --accent: #1a2326;
   --accent-foreground: #e9eef0;
   --destructive: #ff6568;
   --destructive-foreground: #df2225;
-  --border: rgb(180 230 225 / 0.08);
+  --border: rgb(180 230 225 / 0.09);
   --input: rgb(180 230 225 / 0.16);
-  --ring: #2bb39b;
-  --sidebar: #0d1315;
+  --ring: #46d6bc;
+  --sidebar: #080c0e;
   --sidebar-foreground: #e9eef0;
-  --sidebar-primary: #46d6bc;
-  --sidebar-primary-foreground: #032820;
-  --sidebar-accent: #182024;
+  --sidebar-primary: #f2f6f7;
+  --sidebar-primary-foreground: #080c0e;
+  --sidebar-accent: #151c1f;
   --sidebar-accent-foreground: #e9eef0;
-  --sidebar-border: rgb(180 230 225 / 0.08);
-  --sidebar-ring: #2bb39b;
+  --sidebar-border: rgb(180 230 225 / 0.09);
+  --sidebar-ring: #46d6bc;
 }
 
 @layer base {
@@ -158,7 +165,6 @@
 
   body {
     @apply bg-background text-foreground;
-    letter-spacing: 0.01em;
   }
 }
 
@@ -197,10 +203,11 @@
 /* Landing motifs (docs/styleguide/brand.md): grid field, base-pair rule, live glow. */
 .landing-grid-field {
   background-image:
-    linear-gradient(color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--border) 70%, transparent) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--border) 80%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 80%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: center top;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black 30%, transparent 100%);
 }
 
 .landing-base-pair-rule {
@@ -216,6 +223,6 @@
 
 .dark .landing-live-dot {
   box-shadow:
-    0 0 0 1px var(--ring),
-    0 0 12px color-mix(in srgb, var(--ring) 30%, transparent);
+    0 0 0 1px var(--brand),
+    0 0 12px color-mix(in srgb, var(--brand) 30%, transparent);
 }

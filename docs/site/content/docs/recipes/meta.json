@@ -1,6 +1,6 @@
 {
   "title": "Recipes",
-  "defaultOpen": true,
+  "defaultOpen": false,
   "pages": [
     "parallel-agents",
     "review-ai-diff",
