@@ -2,6 +2,7 @@ import { DEFAULT_WORKSPACE_STATUS_ID } from '../../shared/workspace-statuses'
 import type { Repo } from '../../shared/repo-types'
 import type { WorktreeMeta } from '../../shared/worktree/meta-types'
 import type { Worktree } from '../../shared/worktree/types'
+import { folderWorkspacePath } from '../../shared/folder-workspace-analysis-dir'
 import {
   FOLDER_WORKSPACE_INSTANCE_SEPARATOR,
   getRepoMainWorktreeId
@@ -40,7 +41,7 @@ export function mergeRuntimeFolderWorkspace(
       ? { projectHostSetupId: meta.projectHostSetupId }
       : {}),
     ...(creatorProvenance ? { creatorProvenance } : {}),
-    path: repo.path,
+    path: folderWorkspacePath(repo.path, meta.analysisDir),
     head: '',
     branch: '',
     isBare: false,

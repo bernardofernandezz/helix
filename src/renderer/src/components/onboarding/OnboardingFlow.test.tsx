@@ -54,8 +54,8 @@ describe('OnboardingFlow', () => {
   })
 
   it.each([
-    [3, 'Set up GitHub tasks'],
-    [4, 'Set up GitHub tasks'],
+    [3, 'Set up notifications'],
+    [4, 'Set up notifications'],
     [5, 'Set up notifications'],
     [9, 'Set up notifications']
   ])(
@@ -77,7 +77,7 @@ describe('OnboardingFlow', () => {
   )
 
   it.each([
-    [3, 'Set up GitHub tasks'],
+    [3, 'Set up notifications'],
     [4, 'Set up notifications'],
     [5, 'Set up notifications'],
     [9, 'Set up notifications']
@@ -132,7 +132,7 @@ describe('OnboardingFlow', () => {
     })
 
     expect(html).toContain('Set Windows terminal defaults')
-    expect(html).toContain('4 of 5')
+    expect(html).toContain('3 of 4')
   })
 
   it('drops the skipped integrations step from the stepper on Windows', () => {
@@ -187,7 +187,7 @@ describe('OnboardingFlow', () => {
     expect(html).not.toContain('Integrations')
   })
 
-  it('shows only GitHub on the task setup page when the GitHub CLI is missing', () => {
+  it('keeps GitHub task setup out of onboarding even when the GitHub CLI is missing', () => {
     useAppStore.setState({
       preflightStatus: {
         git: { installed: true },
@@ -204,15 +204,9 @@ describe('OnboardingFlow', () => {
       onOnboardingChange: vi.fn()
     })
 
-    expect(html).toContain('Set up GitHub tasks')
-    expect(html).toContain('Install the GitHub CLI to:')
-    expect(html).toContain('GitHub')
-    expect(html).not.toContain(
-      '<h3 class="text-[15px] font-semibold leading-tight text-foreground">Linear</h3>'
-    )
-    expect(html).toContain(
-      'Linear, GitLab, Bitbucket, Azure DevOps, Gitea, and Jira live in Settings'
-    )
+    expect(html).toContain('Set up notifications')
+    expect(html).not.toContain('Set up GitHub tasks')
+    expect(html).toContain('3 of 3')
   })
 
   it('exposes an accessible onboarding dialog', () => {

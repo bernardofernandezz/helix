@@ -7,8 +7,6 @@ const mocks = vi.hoisted(() => ({
   refValues: [] as { current: unknown }[],
   refIndex: 0,
   browseRuntimeServerDirectory: vi.fn(),
-  callRuntimeRpc: vi.fn(),
-  isGitAvailable: vi.fn(),
   getDefaultCreateProjectParent: vi.fn()
 }))
 
@@ -44,14 +42,11 @@ vi.mock('@/runtime/runtime-server-directory-browser', () => ({
   browseRuntimeServerDirectory: mocks.browseRuntimeServerDirectory
 }))
 
-vi.mock('@/runtime/runtime-rpc-client', () => ({ callRuntimeRpc: mocks.callRuntimeRpc }))
-
 import { useCreateProjectDefaults } from './useCreateProjectDefaults'
 
-// State order inside the hook: [defaultParent, gitAvailability, runtimeParentStatus].
+// State order inside the hook: [defaultParent, runtimeParentStatus].
 const DEFAULT_PARENT_STATE = 0
-const GIT_AVAILABILITY_STATE = 1
-const RUNTIME_PARENT_STATUS_STATE = 2
+const RUNTIME_PARENT_STATUS_STATE = 1
 
 function flushAsync(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, 0))
@@ -81,7 +76,6 @@ describe('useCreateProjectDefaults', () => {
     vi.stubGlobal('window', {
       api: {
         repos: {
-          isGitAvailable: mocks.isGitAvailable,
           getDefaultCreateProjectParent: mocks.getDefaultCreateProjectParent
         }
       }
@@ -89,22 +83,16 @@ describe('useCreateProjectDefaults', () => {
     mocks.getDefaultCreateProjectParent.mockResolvedValue('/Users/alice/helix/projects')
   })
 
-  it('auto-fills the local default parent and reports Git availability', async () => {
-    mocks.isGitAvailable.mockResolvedValue(true)
-
+  it('auto-fills the local default parent', async () => {
     const { setCreateParent } = useHarness()
     await flushAsync()
 
     expect(setCreateParent).toHaveBeenCalledWith('/Users/alice/helix/projects')
     expect(mocks.stateValues[DEFAULT_PARENT_STATE]).toBe('/Users/alice/helix/projects')
-    expect(mocks.stateValues[GIT_AVAILABILITY_STATE]).toBe('available')
     expect(mocks.getDefaultCreateProjectParent).toHaveBeenCalled()
-    expect(mocks.callRuntimeRpc).not.toHaveBeenCalled()
   })
 
   it('keeps the local default marker after the auto-filled parent rerenders the hook', async () => {
-    mocks.isGitAvailable.mockResolvedValue(true)
-
     useHarness()
     await flushAsync()
     useHarness({ createParent: '/Users/alice/helix/projects' })
@@ -112,27 +100,7 @@ describe('useCreateProjectDefaults', () => {
     expect(mocks.stateValues[DEFAULT_PARENT_STATE]).toBe('/Users/alice/helix/projects')
   })
 
-  it('reports unavailable Git without changing the fixed project kind', async () => {
-    mocks.isGitAvailable.mockResolvedValue(false)
-
-    useHarness()
-    await flushAsync()
-
-    expect(mocks.stateValues[GIT_AVAILABILITY_STATE]).toBe('unavailable')
-  })
-
-  it('reports unknown availability when the Git probe fails', async () => {
-    mocks.isGitAvailable.mockRejectedValue(new Error('probe failed'))
-
-    useHarness()
-    await flushAsync()
-
-    expect(mocks.stateValues[GIT_AVAILABILITY_STATE]).toBe('unknown')
-  })
-
   it('does not overwrite a parent the user already chose', async () => {
-    mocks.isGitAvailable.mockResolvedValue(true)
-
     const { setCreateParent } = useHarness({ createParent: '/tmp/custom' })
     await flushAsync()
 
@@ -141,7 +109,6 @@ describe('useCreateProjectDefaults', () => {
 
   it('resolves the runtime default parent from the host home directory', async () => {
     mocks.browseRuntimeServerDirectory.mockResolvedValue({ resolvedPath: '/home/alice' })
-    mocks.callRuntimeRpc.mockResolvedValue({ available: true })
 
     const { setCreateParent } = useHarness({ activeRuntimeEnvironmentId: 'env-1' })
     await flushAsync()
@@ -150,19 +117,10 @@ describe('useCreateProjectDefaults', () => {
     expect(setCreateParent).toHaveBeenCalledWith('/home/alice/helix/projects')
     expect(mocks.stateValues[DEFAULT_PARENT_STATE]).toBe('/home/alice/helix/projects')
     expect(mocks.stateValues[RUNTIME_PARENT_STATUS_STATE]).toBe('idle')
-    expect(mocks.callRuntimeRpc).toHaveBeenCalledWith(
-      { kind: 'environment', environmentId: 'env-1' },
-      'repo.gitAvailable',
-      undefined,
-      { timeoutMs: 3000 }
-    )
-    expect(mocks.isGitAvailable).not.toHaveBeenCalled()
   })
 
   it('replaces an untouched local default when switching to a runtime target', async () => {
-    mocks.isGitAvailable.mockResolvedValue(true)
     mocks.browseRuntimeServerDirectory.mockResolvedValue({ resolvedPath: '/home/alice' })
-    mocks.callRuntimeRpc.mockResolvedValue({ available: true })
 
     const local = useHarness()
     await flushAsync()
@@ -191,9 +149,7 @@ describe('useCreateProjectDefaults', () => {
   })
 
   it('does not replace a touched parent when switching to a runtime target', async () => {
-    mocks.isGitAvailable.mockResolvedValue(true)
     mocks.browseRuntimeServerDirectory.mockResolvedValue({ resolvedPath: '/home/alice' })
-    mocks.callRuntimeRpc.mockResolvedValue({ available: true })
 
     const local = useHarness({ createParent: '/Users/alice/helix/projects' })
     local.result.markCreateParentTouched('/Users/alice/helix/projects/pr5115-target-switch')
@@ -219,7 +175,6 @@ describe('useCreateProjectDefaults', () => {
 
   it('marks the runtime parent lookup failed without filling a parent', async () => {
     mocks.browseRuntimeServerDirectory.mockRejectedValue(new Error('disconnected'))
-    mocks.callRuntimeRpc.mockResolvedValue({ available: true })
 
     const { setCreateParent } = useHarness({ activeRuntimeEnvironmentId: 'env-1' })
     await flushAsync()
@@ -233,7 +188,6 @@ describe('useCreateProjectDefaults', () => {
     await flushAsync()
 
     expect(setCreateParent).not.toHaveBeenCalled()
-    expect(mocks.isGitAvailable).not.toHaveBeenCalled()
     expect(mocks.browseRuntimeServerDirectory).not.toHaveBeenCalled()
   })
 })

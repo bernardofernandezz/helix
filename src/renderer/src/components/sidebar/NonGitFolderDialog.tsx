@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useAppStore } from '@/store'
 import {
-  resolveDismissedOnboardingFolderAgentLaunch,
+  resolveNewFolderAgentLaunch,
   revealOnboardingFolderWithAgentLaunch
 } from '@/lib/onboarding-folder-agent-launch'
 import { markOnboardingProjectAdded } from '@/lib/onboarding-project-checklist'
@@ -94,20 +94,18 @@ const NonGitFolderDialog = React.memo(function NonGitFolderDialog() {
             displayName
           })
           const state = useAppStore.getState()
-          const hadProjectBeforeAdd = stateBeforeAdd.repos.length > 0
-          const onboardingBeforeAdd = await markOnboardingProjectAdded('addedFolder')
+          await markOnboardingProjectAdded('addedFolder')
           await state.fetchWorktrees(repo.id, ownerOptions)
           // Reveal the synthetic folder workspace so successful adds show a visible result, matching local folders.
           const folderWorktree = selectWorktreesByRepo(useAppStore.getState())[repo.id]?.find(
             (worktree) => worktree.hostId === ownerOptions.executionHostId
           )
           if (folderWorktree) {
-            // SSH adds can bypass addNonGitFolder after onboarding dismissal; resolve the default agent here too.
-            const launch = resolveDismissedOnboardingFolderAgentLaunch({
+            // SSH adds bypass addNonGitFolder; resolve the default agent here too.
+            const launch = resolveNewFolderAgentLaunch({
               worktreeId: folderWorktree.id,
               store: useAppStore.getState(),
-              onboarding: onboardingBeforeAdd,
-              hasExistingProject: hadProjectBeforeAdd,
+              isNewProject: !stateBeforeAdd.repos.some((r) => r.id === repo.id),
               executionHostId: ownerOptions.executionHostId ?? connectionId
             })
             await revealOnboardingFolderWithAgentLaunch({

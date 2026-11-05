@@ -22,6 +22,7 @@ import type {
   WorktreeStartupFollowup
 } from './runtime-worktree-agent-startup'
 import { hostWorktreeTargetForRepo } from '../persistence/host-qualified-worktree-meta'
+import { createAnalysisDir } from '../folder-workspace-analysis-dir-create'
 
 type RuntimeFolderWorktreeCreateDeps = {
   store: RuntimeStore
@@ -76,8 +77,10 @@ export async function createRuntimeFolderWorktree(args: {
     request.nameWasGenerated === true
   )
   const resolvedFolderDisplayName = displayNameRequest.value
+  const analysisDir = await createAnalysisDir(repo, resolvedFolderDisplayName || request.name)
   const meta = deps.store.setWorktreeMeta(hostWorktreeTargetForRepo(worktreeId, repo), {
     instanceId,
+    ...(analysisDir ? { analysisDir } : {}),
     ...getProjectHostSetupWorktreeMeta(deps.store.getProjectHostSetups?.() ?? [], repo),
     displayName: resolvedFolderDisplayName ?? request.name,
     ...(displayNameRequest.kind === 'user' && resolvedFolderDisplayName

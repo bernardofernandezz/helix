@@ -1,5 +1,5 @@
 {
   "name": "helix-native-chat",
   "version": "1.0.0",
-  "description": "Teaches an Helix chat agent to show charts, diagrams and mockups inline in the chat."
+  "description": "Teaches a Helix chat agent to work with scientists and show charts, structures, sequences and diagrams inline in the chat."
 }

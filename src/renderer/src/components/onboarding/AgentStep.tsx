@@ -5,8 +5,21 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Switch } from '@/components/ui/switch'
+import { isWindowsUserAgent } from '@/components/terminal-pane/pane-helpers'
+import { useAppStore } from '@/store'
 import type { TuiAgent } from '../../../../shared/tui-agent'
 import { translate } from '@/i18n/i18n'
+import { OnboardingInlineCommandTerminal } from './OnboardingInlineCommandTerminal'
+
+// Official installers, so non-developers never leave onboarding to set up the chat agent.
+function agentInstallCommand(agent: TuiAgent): string | null {
+  if (agent !== 'claude') {
+    return null
+  }
+  return isWindowsUserAgent()
+    ? 'irm https://claude.ai/install.ps1 | iex'
+    : 'curl -fsSL https://claude.ai/install.sh | bash'
+}
 
 type AgentStepProps = {
   selectedAgent: TuiAgent | null
@@ -26,6 +39,8 @@ export function AgentStep({
   yoloPermissions = true,
   onYoloPermissionsChange
 }: AgentStepProps) {
+  const refreshDetectedAgents = useAppStore((s) => s.refreshDetectedAgents)
+  const [installingAgent, setInstallingAgent] = useState<TuiAgent | null>(null)
   const agentCatalog = getAgentCatalog()
   const detected = agentCatalog.filter((agent) => detectedSet.has(agent.id))
   const rest = agentCatalog.filter((agent) => !detectedSet.has(agent.id))
@@ -36,6 +51,7 @@ export function AgentStep({
     selectedAgent && !detectedSet.has(selectedAgent)
       ? agentCatalog.find((a) => a.id === selectedAgent)
       : undefined
+  const installCommand = selectedEntry ? agentInstallCommand(selectedEntry.id) : null
   const selectedEntryIsCollapsed =
     selectedAgent != null && fallbackRest.some((a) => a.id === selectedAgent)
   // Auto-open when selection enters the fallback bucket; never force-close a disclosure the user can toggle.
@@ -63,8 +79,8 @@ export function AgentStep({
       {!hasDetected && !isDetecting && (
         <div className="shrink-0 rounded-lg border border-border px-4 py-3 text-xs text-muted-foreground">
           {translate(
-            'auto.components.onboarding.AgentStep.1eee1c7bd8',
-            'No agents detected on your PATH. Pick one to install later, or continue with a blank terminal.'
+            'auto.components.onboarding.AgentStep.noAgentsResearch',
+            'No AI agent found yet. Pick Claude Code and Helix installs it for you.'
           )}
         </div>
       )}
@@ -77,17 +93,51 @@ export function AgentStep({
               "isn't on your PATH yet. Helix will set it as your default and you can install it any time."
             )}
           </span>
-          <Button
-            type="button"
-            variant="outline"
-            size="xs"
-            className="shrink-0"
-            onClick={() => void window.api.shell.openUrl(selectedEntry.homepageUrl)}
-          >
-            {translate('auto.components.onboarding.AgentStep.9c163bb0e0', 'Install instructions')}
-            <ExternalLink className="size-3" />
-          </Button>
+          {installCommand ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="xs"
+              className="shrink-0"
+              onClick={() => setInstallingAgent(selectedEntry.id)}
+            >
+              {translate('auto.components.onboarding.AgentStep.installAgent', 'Install')}
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              variant="outline"
+              size="xs"
+              className="shrink-0"
+              onClick={() => void window.api.shell.openUrl(selectedEntry.homepageUrl)}
+            >
+              {translate('auto.components.onboarding.AgentStep.9c163bb0e0', 'Install instructions')}
+              <ExternalLink className="size-3" />
+            </Button>
+          )}
         </div>
+      )}
+      {selectedEntry && installCommand && installingAgent === selectedEntry.id && (
+        <OnboardingInlineCommandTerminal
+          command={installCommand}
+          title={translate(
+            'auto.components.onboarding.AgentStep.installTitle',
+            'Install {{agent}}',
+            {
+              agent: selectedEntry.label
+            }
+          )}
+          ariaLabel={translate(
+            'auto.components.onboarding.AgentStep.installAriaLabel',
+            'Agent install command'
+          )}
+          description={translate(
+            'auto.components.onboarding.AgentStep.installDescription',
+            'Press Enter to run the official installer. Helix detects the agent when it finishes.'
+          )}
+          terminalHeightPx={200}
+          onCommandFinished={() => void refreshDetectedAgents()}
+        />
       )}
       <section className="flex min-h-0 flex-col gap-3 overflow-hidden">
         <SectionHeader

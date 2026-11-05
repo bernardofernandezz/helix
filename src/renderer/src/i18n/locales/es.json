@@ -1702,7 +1702,6 @@
         "commentTooLarge": "El comentario es demasiado grande para enviarlo de forma segura."
       },
       "Landing": {
-        "76a95f7f47": "Crear",
         "f05d237049": "Añade un proyecto primero",
         "f9eaa9e12d": "Agregar proyecto",
         "6ca6ff404e": "HELIX",
@@ -1715,8 +1714,6 @@
         "5beaef5f9e": "La CLI de GitHub no está instalada",
         "b673e7cf1b": "Se requiere Git para proyectos Git, control de código fuente y gestión del espacio de trabajo.",
         "e5b7296d9d": "Git no está instalado",
-        "cd21242762": "Agrega un proyecto para comenzar.",
-        "9c00bd4adf": "Selecciona un espacio de trabajo en la barra lateral para comenzar.",
         "16e9e3df89": "con estrella",
         "0d0ace8861": "Dar estrella en GitHub",
         "ec43b38ba7": "Con estrella en GitHub",
@@ -5346,7 +5343,6 @@
         "AddRepoCreateStep": {
           "0ae45b8238": "my-project",
           "a8149a3a5a": "Nombre",
-          "11fd2a7db8": "Repositorio Git",
           "5e97f0c4b9": "Proyecto creado",
           "2c12db1511": "Proyecto ya agregado",
           "875dda0995": "Introduce una ruta padre del host.",
@@ -5355,8 +5351,6 @@
           "c7b9f94456": "Crear un proyecto nuevo",
           "b100311784": "Ponle un nombre y Helix creará un proyecto real con valores predeterminados sensatos.",
           "685b5eefe1": "{{kind}} en {{parent}}",
-          "2a762f3b19": "Comprobando Git en este host...",
-          "fe1e616c5b": "Git es necesario para crear un proyecto.",
           "c234df77f7": "Elige o introduce una carpeta padre del host antes de crear.",
           "3a13f6e88b": "ubicación no seleccionada",
           "6ed14c0281": "carpeta del host no seleccionada"
@@ -5620,28 +5614,6 @@
           "7275f674cc": "Setup detectado",
           "822ff300ad": "Descartar",
           "5bfd5c8779": "Descartar scripts de configuración"
-        },
-        "SidebarFeedbackDialog": {
-          "8bf619e4cf": "Cancelar",
-          "8de03e23c5": "Envíalo solo con tu feedback escrito o conecta `gh` para incluir tu identidad de GitHub.",
-          "d20439c560": "Comprobando identidad de GitHub...",
-          "5b120b9634": "Enviar de forma anónima",
-          "c9e5ea0791": "GitHub:",
-          "d46ddd66fc": "¿Qué podríamos mejorar?",
-          "d245c4ef6c": "Issues de GitHub",
-          "9b33530b3d": "Otras formas de contactarnos",
-          "a828fa4aee": "Comparte qué funciona, qué está roto o qué debería hacer Helix después.",
-          "0eb643f07f": "Enviar feedback",
-          "60b721e857": "No se pudo enviar el feedback. Inténtalo de nuevo.",
-          "7a46c228b8": "Gracias por el feedback.",
-          "a2fd890d9e": "Introduce feedback antes de enviarlo.",
-          "f2e42e1307": "Enviar",
-          "69969ba364": "Envío…",
-          "imageReadFailed": "No se pudieron leer las imágenes adjuntas. Intente adjuntarlos nuevamente.",
-          "attachWhileSending": "Espere a que terminen de enviarse los comentarios actuales antes de adjuntar más imágenes.",
-          "imagesNotDelivered": "Comentarios enviados, pero no se pudo confirmar la entrega de la imagen.",
-          "imagesNotIncluded": "Comentarios enviados. No se pudieron subir tus capturas de pantalla y no se incluyeron.",
-          "imagesRejected": "Comentarios enviados. Tus capturas de pantalla eran demasiado grandes para subirlas y no se incluyeron."
         },
         "SidebarFilter": {
           "e3b3898218": "Agregar proyecto",
@@ -6141,14 +6113,12 @@
             "local": {
               "start": {
                 "actions": {
-                  "d72789705e": "Comenzar desde una carpeta vacía",
                   "c709860596": "Crear nuevo proyecto",
                   "5f9ffac036": "Clonar un repositorio Git remoto",
                   "7edb8ebe24": "Clonar desde URL",
                   "a6c20dca96": "Abrir un proyecto desde un destino SSH",
                   "serverSshTitle": "Proyecto en un host SSH de este servidor",
                   "serverSshAddOnThisComputer": "No disponible desde un servidor. Añade el host SSH en este ordenador para abrir sus proyectos.",
-                  "fb4fc5380e": "Proyecto local, repositorio de Git o carpeta con muchos repositorios",
                   "2281fdc8c7": "Explorar carpeta",
                   "runtimeBrowseDescription": "Repositorio Git o carpeta existente en este host"
                 }
@@ -14505,7 +14475,6 @@
           "d7b3ef168b": "Detectados en tu sistema",
           "9c163bb0e0": "Instrucciones de instalación",
           "69af7e9c1c": "aún no está en tu PATH. Helix lo configurará como predeterminado y podrás instalarlo en cualquier momento.",
-          "1eee1c7bd8": "No se detectaron agentes en tu PATH. Elige uno para instalarlo más tarde o continúa con una terminal en blanco.",
           "hideAgents": "Ocultar agentes",
           "showMoreAgents": "Mostrar {{value0}} agentes más →",
           "yoloModeLabel": "Modo Yolo",

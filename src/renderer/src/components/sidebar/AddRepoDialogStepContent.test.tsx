@@ -54,7 +54,6 @@ function renderStepContent(overrides: Partial<StepContentProps>): string {
     createError: null,
     isCreating: false,
     createDefaultParent: '',
-    createGitAvailability: 'unknown',
     createRuntimeParentStatus: 'idle',
     createParentDefaultPending: false,
     onBrowse: vi.fn(),

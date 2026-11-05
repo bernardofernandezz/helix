@@ -3,6 +3,11 @@ import type { Repo } from '../../shared/repo-types'
 import { createRuntimeFolderWorktree } from './runtime-folder-worktree-create'
 import type { HostWorktreeTarget } from '../../shared/worktree/host-qualified-identity'
 
+// Fixture paths like /folder are not writable; analysis dirs are covered in their own test.
+vi.mock('../folder-workspace-analysis-dir-create', () => ({
+  createAnalysisDir: async () => undefined
+}))
+
 vi.mock('../../shared/layout-owner-switch', () => ({ HELIX_LAYOUT_OWNER_IS_MAIN: true }))
 
 type CreateArgs = Parameters<typeof createRuntimeFolderWorktree>[0]
