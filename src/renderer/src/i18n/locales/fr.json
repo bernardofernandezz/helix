@@ -5778,28 +5778,6 @@
           "822ff300ad": "Ignorer",
           "5bfd5c8779": "Ignorer les scripts de setup"
         },
-        "SidebarFeedbackDialog": {
-          "8bf619e4cf": "Annuler",
-          "8de03e23c5": "Envoyez avec votre commentaire texte uniquement, ou connectez `gh` pour inclure votre identité GitHub.",
-          "d20439c560": "Vérification de l'identité GitHub…",
-          "5b120b9634": "Envoyer anonymement",
-          "c9e5ea0791": "GitHub :",
-          "d46ddd66fc": "Que pouvons-nous améliorer ?",
-          "d245c4ef6c": "Issues GitHub",
-          "9b33530b3d": "Autres moyens de nous contacter",
-          "a828fa4aee": "Partagez ce qui fonctionne, ce qui est cassé, ou ce qu'Helix devrait faire ensuite.",
-          "0eb643f07f": "Envoyer un commentaire",
-          "60b721e857": "Échec de l'envoi du commentaire. Réessayez.",
-          "7a46c228b8": "Merci pour votre commentaire.",
-          "a2fd890d9e": "Saisissez un commentaire avant d'envoyer.",
-          "f2e42e1307": "Envoyer",
-          "69969ba364": "Envoi…",
-          "imageReadFailed": "Impossible de lire les images jointes. Essayez de les joindre à nouveau.",
-          "attachWhileSending": "Attendez la fin de l'envoi du commentaire en cours avant de joindre d'autres images.",
-          "imagesNotDelivered": "Commentaire envoyé, mais la livraison des images n'a pas pu être confirmée.",
-          "imagesNotIncluded": "Commentaire envoyé. Vos captures d'écran n'ont pas pu être téléversées et n'ont pas été incluses.",
-          "imagesRejected": "Commentaire envoyé. Vos captures d'écran étaient trop volumineuses pour être téléversées et n'ont pas été incluses."
-        },
         "SidebarFilter": {
           "e3b3898218": "Ajouter un projet",
           "92a23e6d07": "Réinitialiser les filtres",

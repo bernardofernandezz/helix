@@ -10758,28 +10758,6 @@
           "6149d5203f": "Nenhum repositório está selecionado. Abra a pasta pai em vez disso para usar editor, terminal e busca sem recursos do Git.",
           "e52454b7f6": "Abrir como Pasta"
         },
-        "SidebarFeedbackDialog": {
-          "8bf619e4cf": "Cancelar",
-          "8de03e23c5": "Envie apenas com o seu feedback digitado, ou conecte o `gh` para incluir sua identidade do GitHub.",
-          "d20439c560": "Verificando identidade do GitHub…",
-          "5b120b9634": "Enviar anonimamente",
-          "c9e5ea0791": "GitHub:",
-          "d46ddd66fc": "O que poderíamos melhorar?",
-          "d245c4ef6c": "Issues do GitHub",
-          "9b33530b3d": "Outras formas de nos contatar",
-          "a828fa4aee": "Compartilhe o que está funcionando, o que está quebrado, ou o que o Helix deveria fazer a seguir.",
-          "0eb643f07f": "Enviar Feedback",
-          "60b721e857": "Falha ao enviar o feedback. Tente novamente.",
-          "7a46c228b8": "Obrigado pelo feedback.",
-          "a2fd890d9e": "Digite um feedback antes de enviar.",
-          "f2e42e1307": "Enviar",
-          "69969ba364": "Enviando…",
-          "imageReadFailed": "Não foi possível ler as imagens anexadas. Tente anexá-las novamente.",
-          "attachWhileSending": "Aguarde o envio do feedback atual terminar antes de anexar mais imagens.",
-          "imagesNotDelivered": "Feedback enviado, mas não foi possível confirmar o envio das imagens.",
-          "imagesRejected": "Feedback enviado. Suas capturas de tela eram grandes demais para enviar e não foram incluídas.",
-          "imagesNotIncluded": "Feedback enviado. Não foi possível enviar suas capturas de tela e elas não foram incluídas."
-        },
         "AddRepoServerStartStep": {
           "ae990c86a0": "Voltar às opções de adição",
           "e1710bf831": "Abrir como Pasta",

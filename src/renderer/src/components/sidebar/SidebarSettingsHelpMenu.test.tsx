@@ -14,7 +14,6 @@ const mocks = vi.hoisted(() => ({
   updaterCheck: vi.fn(),
   shellOpenUrl: vi.fn(),
   useShortcutKeyDetails: vi.fn(),
-  feedbackChunkLoads: 0,
   setupProgress: {
     ready: true,
     coreDoneCount: 2,
@@ -125,11 +124,6 @@ vi.mock('sonner', () => ({
     error: vi.fn()
   }
 }))
-
-vi.mock('./SidebarFeedbackDialog', () => {
-  mocks.feedbackChunkLoads += 1
-  return { SidebarFeedbackDialog: () => <div data-testid="feedback-dialog" /> }
-})
 
 function installWindowApi(): void {
   Object.assign(window, {
@@ -260,10 +254,16 @@ describe('SidebarSettingsHelpMenu', () => {
     expect(html).toContain('GitHub')
   })
 
-  it('offers no third-party community links', () => {
-    const html = renderToStaticMarkup(<SidebarSettingsHelpMenu />)
-    expect(html).not.toContain('Discord')
-    expect(html).not.toContain('>X<')
+  it('opens a GitHub issue for Send Feedback', async () => {
+    const container = await renderMenu()
+
+    await act(async () => {
+      findMenuItem(container, 'Send Feedback').click()
+    })
+
+    expect(mocks.shellOpenUrl).toHaveBeenCalledWith(
+      'https://github.com/bernardofernandezz/helix/issues/new'
+    )
   })
 
   it('renders Check for Updates menu item', () => {
@@ -306,19 +306,6 @@ describe('SidebarSettingsHelpMenu', () => {
       includePrerelease: false,
       includePerfPrerelease: false
     })
-  })
-
-  // Only this test opens the menu, so its first warm must cause the chunk’s sole evaluation regardless of order.
-  it('warms the feedback chunk when the menu opens, before Send Feedback is selected', async () => {
-    const container = await renderMenu()
-    expect(mocks.feedbackChunkLoads).toBe(0)
-
-    await act(async () => {
-      container.querySelector<HTMLButtonElement>('[data-testid="open-menu"]')?.click()
-    })
-
-    expect(mocks.feedbackChunkLoads).toBe(1)
-    expect(document.body.querySelector('[data-testid="feedback-dialog"]')).toBeNull()
   })
 
   it('renders shortcut keys in the settings tooltip', () => {
