@@ -88,8 +88,8 @@ describe('Store', () => {
     expect(settings.terminalTuiScrollSensitivityDefaultedToOne).toBe(true)
     expect(settings.terminalUseSeparateLightTheme).toBe(true)
     expect(settings.rightSidebarOpenByDefault).toBe(true)
-    expect(settings.showTasksButton).toBe(true)
-    expect(settings.showAutomationsButton).toBe(true)
+    expect(settings.showTasksButton).toBe(false)
+    expect(settings.showAutomationsButton).toBe(false)
     expect(settings.visibleTaskProviders).toEqual(['github', 'gitlab', 'linear', 'jira'])
     expect(settings.openInApplications).toEqual([
       { id: 'vscode', label: 'VS Code', command: 'code' }
@@ -98,7 +98,7 @@ describe('Store', () => {
     expect(settings.experimentalActivityDefaultedOffForAllUsers).toBe(true)
     expect(settings.experimentalTerminalAttention).toBe(false)
     expect(settings.experimentalNewWorktreeCardStyle).toBe(false)
-    expect(settings.floatingTerminalEnabled).toBe(true)
+    expect(settings.floatingTerminalEnabled).toBe(false)
     expect(settings.floatingTerminalDefaultedForAllUsers).toBe(true)
     expect(settings.notifications.customSoundPath).toBeNull()
     expect(settings.notifications.customSoundVolume).toBe(100)
@@ -129,7 +129,7 @@ describe('Store', () => {
     expect(ui.lastActiveRepoId).toBeNull()
     expect(ui.dismissedUpdateVersion).toBeNull()
     expect(ui.lastUpdateCheckAt).toBeNull()
-    expect(ui.setupGuideSidebarDismissed).toBe(false)
+    expect(ui.setupGuideSidebarDismissed).toBe(true)
     expect(ui.setupGuideBrowserMilestoneMigrated).toBe(true)
     expect(ui.setupGuideBrowserMilestoneLegacyComplete).toBe(false)
     // New profiles never saw the former remaining-percentage default.

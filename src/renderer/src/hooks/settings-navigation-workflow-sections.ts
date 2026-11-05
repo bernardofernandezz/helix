@@ -23,12 +23,14 @@ import {
   SquareTerminal
 } from 'lucide-react'
 import type { SettingsNavigationBuildOptions } from './settings-navigation-build-options'
+import { isGitRepoKind } from '../../../shared/repo-kind'
 
 export function buildWorkflowSettingsSections(
-  { isWebClient }: SettingsNavigationBuildOptions,
+  { isWebClient, repos }: SettingsNavigationBuildOptions,
   terminalPaneSearchEntries: SettingsNavSection['searchEntries']
 ): SettingsNavSection[] {
   const showDesktopOnlySettings = !isWebClient
+  const hasGitProject = repos.some(isGitRepoKind)
   return [
     {
       id: 'automations',
@@ -85,36 +87,41 @@ export function buildWorkflowSettingsSections(
       ],
       group: 'workflows'
     },
-    {
-      id: 'git',
-      title: translate(
-        'auto.hooks.useSettingsNavigationMetadata.09607cb0fe',
-        'Git & Source Control'
-      ),
-      description: translate(
-        'auto.hooks.useSettingsNavigationMetadata.ab4b21b58e',
-        'Branch naming, base refs, and Git AI Author.'
-      ),
-      icon: GitBranch,
-      // Git AI Author lives inside Git, so search metadata covers both surfaces.
-      searchEntries: [
-        ...getGitPaneSearchEntries(),
-        ...getCommitMessageAiPaneSearchEntries(),
-        ...getGitProviderApiBudgetSearchEntries()
-      ],
-      group: 'workflows'
-    },
-    {
-      id: 'tasks',
-      title: translate('auto.hooks.useSettingsNavigationMetadata.85f4fd7710', 'Task Sources'),
-      description: translate(
-        'auto.hooks.useSettingsNavigationMetadata.tasksDescription',
-        'Connect providers, install the Linear skill, and choose what appears in Tasks.'
-      ),
-      icon: ListChecks,
-      searchEntries: getTasksPaneSearchEntries(),
-      group: 'workflows'
-    },
+    // Research folders never touch Git or task trackers; reveal these once a Git project exists.
+    ...(hasGitProject
+      ? [
+          {
+            id: 'git',
+            title: translate(
+              'auto.hooks.useSettingsNavigationMetadata.09607cb0fe',
+              'Git & Source Control'
+            ),
+            description: translate(
+              'auto.hooks.useSettingsNavigationMetadata.ab4b21b58e',
+              'Branch naming, base refs, and Git AI Author.'
+            ),
+            icon: GitBranch,
+            // Git AI Author lives inside Git, so search metadata covers both surfaces.
+            searchEntries: [
+              ...getGitPaneSearchEntries(),
+              ...getCommitMessageAiPaneSearchEntries(),
+              ...getGitProviderApiBudgetSearchEntries()
+            ],
+            group: 'workflows'
+          },
+          {
+            id: 'tasks',
+            title: translate('auto.hooks.useSettingsNavigationMetadata.85f4fd7710', 'Task Sources'),
+            description: translate(
+              'auto.hooks.useSettingsNavigationMetadata.tasksDescription',
+              'Connect providers, install the Linear skill, and choose what appears in Tasks.'
+            ),
+            icon: ListChecks,
+            searchEntries: getTasksPaneSearchEntries(),
+            group: 'workflows'
+          }
+        ]
+      : []),
     {
       id: 'terminal',
       title: translate('auto.hooks.useSettingsNavigationMetadata.a9fb10afca', 'Terminal'),

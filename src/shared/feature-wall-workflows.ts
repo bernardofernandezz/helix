@@ -1,3 +1,4 @@
+import { HELIX_DOCS_URL } from './helix-site-url'
 import {
   FEATURE_WALL_TILES,
   isFeatureWallMediaTile,
@@ -30,7 +31,7 @@ export const FEATURE_WALL_WORKFLOWS: readonly FeatureWallWorkflow[] = [
     lede: 'Helix splits each task into an isolated workspace so agents can run in parallel.',
     primaryTileId: 'tile-01',
     relatedTileIds: ['tile-10'],
-    docsUrl: 'https://www.helix.invalid/docs/model/worktrees'
+    docsUrl: `${HELIX_DOCS_URL}/model/worktrees`
   },
   {
     id: 'tasks',
@@ -39,7 +40,7 @@ export const FEATURE_WALL_WORKFLOWS: readonly FeatureWallWorkflow[] = [
     lede: 'Start work directly from GitHub or Linear.',
     primaryTileId: 'tile-03',
     relatedTileIds: [],
-    docsUrl: 'https://www.helix.invalid/docs/review/linear'
+    docsUrl: `${HELIX_DOCS_URL}/review/linear`
   },
   {
     id: 'agents-orchestration',
@@ -48,7 +49,7 @@ export const FEATURE_WALL_WORKFLOWS: readonly FeatureWallWorkflow[] = [
     lede: 'Run several agents at once, track their progress, and let automation drive Helix when it helps.',
     primaryTileId: 'tile-04',
     relatedTileIds: ['tile-11', 'tile-09'],
-    docsUrl: 'https://www.helix.invalid/docs/agents/supported'
+    docsUrl: `${HELIX_DOCS_URL}/agents/supported`
   },
   {
     id: 'workbench',
@@ -57,7 +58,7 @@ export const FEATURE_WALL_WORKFLOWS: readonly FeatureWallWorkflow[] = [
     lede: 'Bring your terminal setup into Helix, then split panes to keep servers, tests, logs, and agents running side by side.',
     primaryTileId: 'tile-02',
     relatedTileIds: ['tile-07', 'tile-05', 'tile-12'],
-    docsUrl: 'https://www.helix.invalid/docs/terminal'
+    docsUrl: `${HELIX_DOCS_URL}/terminal`
   },
   {
     id: 'review',
@@ -66,7 +67,7 @@ export const FEATURE_WALL_WORKFLOWS: readonly FeatureWallWorkflow[] = [
     lede: 'Review what changed, leave focused feedback, and send it back to the agent.',
     primaryTileId: 'tile-08',
     relatedTileIds: [],
-    docsUrl: 'https://www.helix.invalid/docs/review/annotate-ai-diff'
+    docsUrl: `${HELIX_DOCS_URL}/review/annotate-ai-diff`
   }
 ] as const
 

@@ -6,6 +6,7 @@ import {
   type FeatureWallWorkflow
 } from '../../../../shared/feature-wall-workflows'
 import type { FeatureWallOpenSourceTelemetry } from '../../../../shared/telemetry-events'
+import { HELIX_DOCS_URL } from '../../../../shared/helix-site-url'
 import { track } from '@/lib/telemetry'
 import { translate } from '@/i18n/i18n'
 
@@ -84,7 +85,7 @@ export function RelatedFeatures(props: {
                   source
                 })
                 track('feature_wall_tile_clicked', { tile_id: tile.id })
-                void window.api.shell.openUrl(tile.docsUrl)
+                void window.api.shell.openUrl(`${HELIX_DOCS_URL}${tile.docsPath}`)
               }}
               className="inline-flex items-center gap-1.5 text-left text-[13px] hover:underline hover:underline-offset-2"
             >

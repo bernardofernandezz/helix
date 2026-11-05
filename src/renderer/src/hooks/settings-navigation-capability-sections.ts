@@ -22,6 +22,7 @@ import {
   UserCog
 } from 'lucide-react'
 import type { SettingsNavigationBuildOptions } from './settings-navigation-build-options'
+import { isGitRepoKind } from '../../../shared/repo-kind'
 
 export function buildCapabilitySettingsSections({
   isLocalWindowsHost,
@@ -121,7 +122,8 @@ export function buildCapabilitySettingsSections({
 
 export function buildSetupSettingsSections({
   isLocalWindowsHost,
-  isWebClient
+  isWebClient,
+  repos
 }: SettingsNavigationBuildOptions): SettingsNavSection[] {
   const showDesktopOnlySettings = !isWebClient
   return [
@@ -181,19 +183,25 @@ export function buildSetupSettingsSections({
         'Workspace defaults, app setup, and maintenance.'
       ),
       icon: SlidersHorizontal,
-      searchEntries: getGeneralPaneSearchEntries({ includeProjectRuntime: isLocalWindowsHost }),
+      searchEntries: getGeneralPaneSearchEntries({
+        includeProjectRuntime: isLocalWindowsHost
+      }),
       group: 'setup'
     },
-    {
-      id: 'integrations',
-      title: translate('auto.hooks.useSettingsNavigationMetadata.2b043783ef', 'Integrations'),
-      description: translate(
-        'auto.hooks.useSettingsNavigationMetadata.33a5e1d597',
-        'Connect GitHub, GitLab, Linear, and source-hosting services.'
-      ),
-      icon: Blocks,
-      searchEntries: getIntegrationsPaneSearchEntries(),
-      group: 'setup'
-    }
+    ...(repos.some(isGitRepoKind)
+      ? [
+          {
+            id: 'integrations',
+            title: translate('auto.hooks.useSettingsNavigationMetadata.2b043783ef', 'Integrations'),
+            description: translate(
+              'auto.hooks.useSettingsNavigationMetadata.33a5e1d597',
+              'Connect GitHub, GitLab, Linear, and source-hosting services.'
+            ),
+            icon: Blocks,
+            searchEntries: getIntegrationsPaneSearchEntries(),
+            group: 'setup'
+          }
+        ]
+      : [])
   ]
 }
