@@ -7,12 +7,13 @@ import type { CreateWorktreeArgsWithSystemProvenance } from '../ipc-context-sche
 import { getFolderWorkspaceInstanceId, mergeFolderWorkspace } from '../folder-workspace-model'
 import { resolveWorktreeCreateDisplayNameRequest } from '../../worktree-display-name'
 import { hostWorktreeTargetForRepo } from '../../../persistence/host-qualified-worktree-meta'
+import { createAnalysisDir } from '../../../folder-workspace-analysis-dir-create'
 
-export function createFolderWorkspace(
+export async function createFolderWorkspace(
   args: CreateWorktreeArgsWithSystemProvenance,
   repo: Repo,
   store: Store
-): CreateWorktreeResult {
+): Promise<CreateWorktreeResult> {
   const now = Date.now()
   const instanceId = randomUUID()
   const worktreeId = getFolderWorkspaceInstanceId(repo, instanceId)
@@ -23,8 +24,10 @@ export function createFolderWorkspace(
     args.cliProvenance?.kind === 'created-by-cli',
     args.nameWasGenerated === true
   )
+  const analysisDir = await createAnalysisDir(repo, displayNameRequest.value || args.name)
   const meta = store.setWorktreeMeta(hostWorktreeTargetForRepo(worktreeId, repo), {
     instanceId,
+    ...(analysisDir ? { analysisDir } : {}),
     ...(store.getProjectHostSetups
       ? getProjectHostSetupWorktreeMeta(store.getProjectHostSetups(), repo)
       : {}),
