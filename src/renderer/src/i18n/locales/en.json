@@ -20863,6 +20863,21 @@
       "truncated": "Showing the first {{value}} records. Switch to Source to see the whole file.",
       "headerLines": "Header lines ({{value}})",
       "noMatches": "No records match the filter."
+    },
+    "structureViewer": {
+      "atoms": "{{value}} atoms",
+      "chains": "chains {{value}}",
+      "ligands": "ligands {{value}}",
+      "molecules": "{{value}} molecules",
+      "representation": "Representation",
+      "cartoon": "Cartoon",
+      "sticks": "Sticks",
+      "surface": "Surface",
+      "coloring": "Coloring",
+      "spectrum": "Spectrum",
+      "chain": "Chain",
+      "confidence": "pLDDT",
+      "error": "Could not display this structure ({{value}}). Switch to Source to inspect the file."
     }
   }
 }
